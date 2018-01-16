@@ -1,2 +1,3 @@
 # summary-documents
 学习心得与总结文档
+提示：文件格式使用的是类似word的rtf富文本文件格式，在github页面上不能正常查看，需要下载到本地，使用特定wps或office查看
