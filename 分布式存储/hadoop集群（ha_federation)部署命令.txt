@@ -1,0 +1,5 @@
+hdfs --daemon start journalnode
+
+hdfs namenode -format -clusterId mycluster
+
+hdfs --daemon start namenode
