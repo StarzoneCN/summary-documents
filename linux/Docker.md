@@ -1,6 +1,7 @@
 # <font color="red">Docker</font>
 Docker 的基础是 Linux 容器（LXC）等技术。
 Docker是一款针对程序开发人员和系统管理员来开发、部署、运行应用的一款虚拟化平台。
+*Docker的运行需要Root权限，所以启动Docker的时候最好进行参数的安全检查*
 ***
 ## 简介
 #### Docker 组件
@@ -74,9 +75,10 @@ Docker是一款针对程序开发人员和系统管理员来开发、部署、�
 # This is a comment     # 注释
 FROM ubuntu:14.04       # 基础镜像
 MAINTAINER Docker Newbee <newbee@docker.com>    # 维护人
-RUN apt-get -qq update  # 创建中运行
+RUN apt-get -qq update  # 创建一层
 RUN apt-get -qqy install ruby ruby-dev
 RUN gem install sinatra 
+CMD /usr/sbin/nginx  # 指定运行容器时的操作指令
 ```
 * 注意：*一个镜像不能超过 127 层*
 
@@ -97,6 +99,8 @@ RUN gem install sinatra
 #### 网络
 * 容器互联：[传送门](http://www.dockerinfo.net/%E4%BD%BF%E7%94%A8%E7%BD%91%E7%BB%9C)
 * 高级网络配置：[传送门](http://www.dockerinfo.net/%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE)
+#### 安全介绍
+* 安全配置值得注意：[传送门](http://www.dockerinfo.net/%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)
 
 
 
