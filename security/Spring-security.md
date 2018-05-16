@@ -17,6 +17,7 @@
 
 
 ## 知识点
+* **`WebSecurityConfiguration`**类的文档说明详细地表明了`Spring-security`的定制化配置是如何导入的；
 * 只继承`AbstractSecurityWebApplicationInitializer`类，便可以继承`spring-security`（前提是使用了`spring-mvc`框架）  
 
     ```java
