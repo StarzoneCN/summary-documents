@@ -13,7 +13,7 @@
 * `ObjectPostProcessor`
 * `SecurityContextHolder`、`SecurityContext `、`Authentication`
 * `AbstractSecurityInterceptor`
-* `SessionRegistry`
+* `SessionRegistry`、`SessionManagementConfigurer`、`SessionAuthenticationStrategy`
 
 
 ## 知识点
