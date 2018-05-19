@@ -1,6 +1,4 @@
 # lettuce 学习记录
-
-## 知识点
 ### 简单知识点集合
 * `Redis`的连接是`长连接`并`线程安全`的；
 * 如果链接丢失，会自动重连接；
@@ -85,7 +83,7 @@
         System.out.println("Current state: " + future.isDone()); // false
         future.complete("my value");
         System.out.println("Current state: " + future.isDone()) // true
-```
+        ```
 * haah 
 
 
