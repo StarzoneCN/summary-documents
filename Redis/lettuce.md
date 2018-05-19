@@ -7,6 +7,7 @@
 * 所有异常父类——`RedisException`
 * `同步`状态下，如果Redis返回错误，框架会抛出异常`RedisCommandExecutionException`，但是`异步`状态下，不会抛出异常；
 ### **`Redis URI`**支持的格式：
+
   * `redis://[password@]host[:port][/databaseNumber]`   一般形式
   * `rediss://[password@]host[:port][/databaseNumber]`  SSL形式(3.1开始支持单例模式，4.2开始支持集群模式)
     * 此框架（`Lettuce`没有实现SSL，而是使用的[`stunnel`][stunnel]工具）
@@ -43,7 +44,7 @@
       ````java
         RedisClient redisClient = RedisClient.create("redis://192.168.76.130:6379/0");
         StatefulRedisConnection<String, String> connection = redisClient.connect();
-      ````  
+      ````
 
 ### **[`Client options`][ClientOptions]**
   * `Since: 3.1, 4.0`：实现连接之前进行`PING`检测，如果ping失败，那么就表示一定连接失败；  
