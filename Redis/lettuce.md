@@ -84,7 +84,6 @@
         System.out.println("Current state: " + future.isDone()); // false
         future.complete("my value");
         System.out.println("Current state: " + future.isDone()) // true
-        ```
 * haah 
 
 
