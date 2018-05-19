@@ -23,9 +23,8 @@
         ① If you need to add your own root certificate, so you can configure `SslOptions`, import it either to `cacerts` or ② you provide an own trust store and set the necessary system properties.
 * 默认不支持`TLS`，可以通过`redisUri.setStartTls(true)`打开；<br> <br> <br> 
   
-***  
-  
-   
+***
+
 * **创建`RedisClient`实例**：
   * 方式一：
       ````java
@@ -40,6 +39,7 @@
                                         .withDatabase(2)
                                         .build();
         RedisClient client = RedisClient.create(rediUri);
+      ````
   * 方式三：
       ````java
         RedisClient redisClient = RedisClient.create("redis://192.168.76.130:6379/0");
@@ -61,10 +61,11 @@
             executions.forEach(result -> result.thenAccept(keys -> System.out.println(keys)));
         ```
   * `lettuce`支持在Runtime时向集群中添加节点；`RedisClusterClient`管理着集群的拓扑结构；
+* 同步/异步
 
 
 [RedisCluster]:https://github.com/lettuce-io/lettuce-core/wiki/Redis-Cluster  "集群连接"
 [ClientOptions]:https://github.com/lettuce-io/lettuce-core/wiki/Client-options  "各种client参数设置"
-[UDS]:https://blog.csdn.net/z2066411585/article/details/78966434/ "Unix进程间通信"      
+[UDS]:https://blog.csdn.net/z2066411585/article/details/78966434/ "Unix进程间通信"
 [SSL]:https://github.com/lettuce-io/lettuce-core/wiki/SSL-Connections
 [stunnel]:https://github.com/StarzoneCN/summary-documents/blob/master/%E7%BD%91%E7%BB%9C/stunnel-SSL%E5%B7%A5%E5%85%B7.md
