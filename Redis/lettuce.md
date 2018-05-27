@@ -117,6 +117,7 @@
         RedisFuture<Void> future = async.subscribe("channel");
 
 * **[`Reactive API`][ReactiveAPI]**机制搞不懂；
+
 ### Connection Events
 * **`3.4/4.1`**版本之前：`lettuce`会向用户发送`connnected`、`Disconnected`、  以及各种异常（原文：`Exceptions in the connection handler pipeline`）；
   * `RedisClient#addListener()`   监听事件
@@ -142,7 +143,7 @@
         * `Completion Latency`: 从`命令开始发送`开始 到 `所有返回字节都已接收到并将字节处理完成`
         * `Cluster events`不是立马响应，因为拓扑视图是客户端从`集群`拉取得到的；  
 
-### **[`Transactions`][Transactions]**
+### [Transactions][Transactions]
 * 同步的时候，如果命令在一个事务中执行，那么将返回一个`null`；
 * 如果是`异步`，在命令被处理的时刻，`Future`会收到`Response`；
   * 异步的结果可以获取2次：既可以在每个命令的`Future`中获取，也可以在`exe()`的`Future`中获取；因为异步时候，它的命令是单独执行的；
