@@ -106,18 +106,103 @@ ASIN(x)；COS(x)；ACOS(x)；TAN(x)；ATAN(x) ATAN2(x)；COT(x)；
 
 
 ## 条件判断函数
-
-
+* **IF(expr,v1,v2)**  
+如果`expr`成立，返回v1；否则，返回v2；
+* **IFNULL(v1,v2)**  
+如果`v1`不为null，返回v1,；否则，返回v2；  
+* **CASE**  
+  ```SQL
+    -- 语法一
+    SELECT CASE
+    　　WHEN e1
+    　　THEN v1
+    　　WHEN e2
+    　　THEN e2
+    　　...
+    　　ELSE vn
+    END
+    -- 语法二
+    SELECT CASE 1
+  　　WHEN 1 THEN '我是1'
+  　　WHEN 2 THEN '我是2'
+    ELSE '你是谁'
+  ```
 
 ## 系统信息函数
-
-
+* **VERSION()**  
+版本；
+* **CONNECTION_ID()**  
+用户登录MySQL时，系统分配的连接id
+* **DATABASE()**、**SCHEMA**  
+当前使用数据库；
+* **USER()**、**SYSTEM_USER()**、**SESSION_USER()**、**CURRENT_USER()**、**CURRENT_USER**  
+当前用户；
+* **CHARSET(str)**  
+字符集；如：返回utf8mb4
+* **COLLATION(str)**  
+返回字符串str的字符排列方式；如：返回utf8mb4_general_ci
+* **LAST_INSERT_ID()**  
+返回最近生成的`AUTO_INCREMENT`值；
 
 ## 加密函数
-
+* **PASSWORD(str)**  
+密码加密函数；
+* **MD5(str)**  
+求散列值；
+* **ENCODE(str,pswd_str)** 与 **DECODE(crypt_str,pswd_str)**  
+使用`pswd_str`对`str`进行加密/解密
 
 
 ## And So On
+* **FORMAT(x,n)**  
+格式化；
+  ```sql
+    SELECT FORMAT(3.1415926,3)
+        ->3.142
+  ```
+* **进制转化**  
+`ASCII(str)` —— 返回str的第一个字符的`ASCII`码；  
+`BIN(x)` —— 返回x的二进制；    
+`HEX(x)` —— 返回x的十六进制；  
+`OCT(x)` —— 返回x的八进制；  
+`CONV(x,f1,f2)` —— 返回f1进制数变成f2进制数；
+* **IP地址函数**  
+`ATON` —— address to number  
+`NTOA` —— number to address
+  ```sql
+    SELECT INET_ATON('192.168.0.1')
+    ->3232235521
+    SELECT INET_NTOA(3232235521)
+    ->192.168.0.1
+  ```
+* **GET_LOCK(name,time)**  
+加锁；
+* **IS_FREE_LOCK(name)**  
+锁是否被占用；
+* **RELEASE_LOCK(name)**  
+释放锁；
+* **BENCHMARK(count,expr)**   
+将表达式**expr**重复执行**count**次；
+* **改变字符集**  
+  ```sql
+    SELECT CHARSET('ABC')
+    ->utf-8    
 
+    SELECT CHARSET(CONVERT('ABC' USING gbk))
+    ->gbk
+  ```
+* **转换数据类型**  
+  - `CONVERT(x,type)`
+  - `CAST(x AS type)`
+  ```sql
+    -- 2个函数只对BINARY、CHAR、DATE、DATETIME、TIME、SIGNED INTEGER、UNSIGNED INTEGER等类型起效；
+    SELECT CAST('123' AS UNSIGNED INTEGER) + 1
+      ->124
 
+    SELECT '123' + 1
+      ->124  -- 其实MySQL能默认转换
+
+    SELECT CAST(NOW() AS DATE)
+      ->2014-12-18
+  ```
 总结自：[_MySQL函数_](https://www.cnblogs.com/kissdodog/p/4168721.html)
