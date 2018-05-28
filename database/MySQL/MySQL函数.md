@@ -73,10 +73,9 @@ ASIN(x)；COS(x)；ACOS(x)；TAN(x)；ATAN(x) ATAN2(x)；COT(x)；
 * **ELT(n,s1,s2,...)**  
 `ELemenT`,返回第`n`个字符串；eg：`SELECT ELT(2,'a','b','c') -- b`；参考`FIELD(s,s1,s2...)`；
 * **EXPORT_SET(int, s1, s0, separator, n)**   
-> For every bit of the first argument (which is supplied as an integer but the function works by converting it into bits) it checks whether it is 1 or 0. The order of checking is right to left.  
->
   - 将int的二进制从右向左，0转为s0，1转为s1，并用`separator`作为分隔符拼接为长度为n字符串；eg:`select EXPORT_SET(5,'1','0','', 10)  —— 1010000000`、`select EXPORT_SET(5,'Y','N','/', 10) —— Y/N/Y/N/N/N/N/N/N/N`
   - n的默认值为64，最大值也是64（即使n大于64，结果长度也是64）
+  > For every bit of the first argument (which is supplied as an integer but the function works by converting it into bits) it checks whether it is 1 or 0. The order of checking is right to left.  
 
 * **FIELD(s,s1,s2...)**  
 返回第一个与字符串s匹配的字符串位置，eg：`SELECT FIELD('c','a','b','c') -- 3`
