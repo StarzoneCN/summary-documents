@@ -55,6 +55,7 @@
 * `Riak` 分布式-高可用-kv数据库
 * `Hbase`  分布式的、面向列数据库
 * `Cassandra` 一种`nosql`数据库
+* `Anna` 一种超高性能的`nosql`数据库
 * `Memcached`
 * `ASM`不是新技术了，但是比较底层，`cglib`就是对`asm`的友好封装
 * `Lighttpd`（性能高，轻量，但是存在内存泄漏问题）、`nginx`
