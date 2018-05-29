@@ -296,6 +296,8 @@
   - `protected` : 对同一包内的类和所有子类可见。使用对象：变量、方法。 注意：`不能修饰类（外部类）`；
 * 一个静态内部类的使用例子：
 [![image.png](https://s15.postimg.cc/lf1p7a8wb/image.png)](https://postimg.cc/image/a2p3pi07b/)
+[![image.png](https://s15.postimg.cc/ismn9rocr/image.png)](https://postimg.cc/image/6dzv9fwuf/)
+* 如果成员类不要求访问外围实例，就要始终添加`static`修饰符，因为非静态内部类总会保存一个外围实例的引用，保存这份引用会额外消耗时间和空间，并可能导致外围实例符合垃圾回收时却任然被保留。
 
 
 ----
