@@ -2,8 +2,8 @@
 * **优点**
   - 与`构造器`相比，有`名称`；
   - 与`构造器`相比，不必每次都创建新对象；
-  - 与`构造器`相比，可以返回原返回类型的任何子类型；（如：`java集合框架`的`Collections`类）
-   [![image.png](https://s31.postimg.cc/fewu3tu9n/image.png)](https://postimg.cc/image/b5s41nr07/)
+  - 与`构造器`相比，可以返回原返回类型的任何子类型；（如：`java集合框架`的`Collections`类）  
+   [![image.png](https://s31.postimg.cc/fewu3tu9n/image.png)](https://postimg.cc/image/b5s41nr07/)  
   - 与构造器相比，创建参数化类型实例时，代码更加简洁——这一点好像在jdk8中，并没有区别；  
   书中**举例**：使用`Map<String, List<String>> map = HashMap.newInstance()`代替`Map<String, List<String>> map = new HashMap<String, List<String>>()`，理由是静态工厂方法可以进行类型推导（值得推荐）；
 * **缺点**
@@ -43,8 +43,8 @@
 ## 避免创建不必要的对象
 * `String a = new String(“string”);`此句创建了2次实例：参数`string`就是一个实例；
 * 优先使用`基本类型`，而不是`封装类型`；
-* 有时候`重用对象`会导致代码很乱，逻辑糟糕，比重建对象的代价更大：
-[![image.png](https://s7.postimg.cc/p1zl7nle3/image.png)](https://postimg.cc/image/wuq8zmrd3/)
+* 有时候`重用对象`会导致代码很乱，逻辑糟糕，比重建对象的代价更大：  
+[![image.png](https://s7.postimg.cc/p1zl7nle3/image.png)](https://postimg.cc/image/wuq8zmrd3/)  
 
 ## 及时清除过期引用
 * `缓存`、`监听器`/其他`回调`都比较容易发生内存泄漏
@@ -116,10 +116,10 @@
 * 类的每个实例实质上都是唯一的；
 * 不关心类是否提供`逻辑相等`的测试功能；
 * 超类的`equals`方法也适合子类；
-* 不明白：
-[![image.png](https://s31.postimg.cc/lfz4em3or/image.png)](https://postimg.cc/image/67970ua07/)
+* 不明白：  
+[![image.png](https://s31.postimg.cc/lfz4em3or/image.png)](https://postimg.cc/image/67970ua07/)  
 * 什么时候需要覆盖`equals`方法：
-[![image.png](https://s31.postimg.cc/hjlsir0qj/image.png)](https://postimg.cc/image/k0xjq0kmv/)
+[![image.png](https://s31.postimg.cc/hjlsir0qj/image.png)](https://postimg.cc/image/k0xjq0kmv/)  
 对于枚举类，逻辑相等和对象相等时一个意思，所以没必要覆盖`equals`；
 * 覆盖`equals`需要遵守几个特性：`自反性`、`对称性`、`传递性`、`一致性`、以及`null`；
 * `氏替换原则`简单粗暴的理解：任何基类可以出现的地方，子类一定可以出现；
@@ -128,12 +128,12 @@
   - 使用`==`检查对象引用;
   - 使用`instanceof`检查类型；
   - 把参数转化成正确的类型（如：`date`转成`long`）；
-  - 调整域的比较顺序：
-   [![image.png](https://s31.postimg.cc/avp6w7u3v/image.png)](https://postimg.cc/image/cni5r4dgn/)
+  - 调整域的比较顺序：  
+   [![image.png](https://s31.postimg.cc/avp6w7u3v/image.png)](https://postimg.cc/image/cni5r4dgn/)  
 * 重写`equals`的时候也要重写`hashcode`；
 * 不要将`equals(Object obj)`中的`Object`替换为其他类型（如：`MyClass`），这样就不是重写了，而是重载；添加`@Override`可以避免；
-* 尴尬：
-[![image.png](https://s31.postimg.cc/7q4l5stff/image.png)](https://postimg.cc/image/4w1fscr93/)
+* 尴尬：  
+[![image.png](https://s31.postimg.cc/7q4l5stff/image.png)](https://postimg.cc/image/4w1fscr93/)  
 
 ## 重写`equals`的时候也要重写`hashcode`
 * `Hashcode`也有一致性；
@@ -159,8 +159,8 @@
 * 好处：解耦（开发、理解、测试、维护都比较容易）；
 * 实例的域决不能是公有的；
 * Final域应当只包含基本类型的值或不可变对象的引用；
-* final修饰的数组几乎总是错误的，解决这种矛盾的方法有2种：
-   [![image.png](https://s31.postimg.cc/xzhdzzgi3/image.png)](https://postimg.cc/image/47kbkston/)
+* final修饰的数组几乎总是错误的，解决这种矛盾的方法有2种：  
+   [![image.png](https://s31.postimg.cc/xzhdzzgi3/image.png)](https://postimg.cc/image/47kbkston/)  
 
 ## 避免直接访问域
 * 如果公有类暴露了它的数据域，要想在将来改变其内部表示法是不可能的；
@@ -176,23 +176,23 @@
   - 避免引用可变组件（如其他可变类引用）；
 * 对于不可变类，本质上就没有拷贝的必要，所以是实现`clone`是不必要的，`String`就是反面教材（jdk8中String#clone已经被移除）；
 * 不可变类会造成性能的浪费（MutableBigInteger就是BigInteger的性能优化版）;
-* 另外：
-[![image.png](https://s31.postimg.cc/evo2jrtez/image.png)](https://postimg.cc/image/evo2jrtev/)
+* 另外：  
+[![image.png](https://s31.postimg.cc/evo2jrtez/image.png)](https://postimg.cc/image/evo2jrtev/)  
 
 ## 复合（`composition`）优先于继承
 * 继承比较脆弱，如果新版本中添加新的方法很可能对子类造成很大影响，导致不稳定。复合不存在这种问题，复合类似于`适配器`模式；
 
 ## 要么为继承而设计，并提供文档说明，要么禁止继承
 * 关于文档：好的`api文档`应该描述一个给定的方法做了什么，而不是如何做的；
-* 构造器决不能调用可被重写的方法：
-[![image.png](https://s31.postimg.cc/vku3t37kr/image.png)](https://postimg.cc/image/e7jte8c9j/)
+* 构造器决不能调用可被重写的方法：  
+[![image.png](https://s31.postimg.cc/vku3t37kr/image.png)](https://postimg.cc/image/e7jte8c9j/)  
 * 为继承而设计的类，应该慎重考虑实现`Cloneable`和`Serializable`接口；
 
 ## 接口优于抽象类
 * 现有类易被更新，以实现新的接口；比如`jdk`添加`Comparable`接口的时候；
 * 接口是定义`mixin`（`混合类型`）的理想选择；
-* 接口定义类型，抽象类（一般命名AbstractXXX，如AbstractList）搭建骨架：
-[![image.png](https://s7.postimg.cc/dkfk54lkr/image.png)](https://postimg.cc/image/6tz2voyev/)
+* 接口定义类型，抽象类（一般命名AbstractXXX，如AbstractList）搭建骨架：  
+[![image.png](https://s7.postimg.cc/dkfk54lkr/image.png)](https://postimg.cc/image/6tz2voyev/)  
 * 公有接口的设计一定要谨慎，一旦公开发行，并被广泛实现，再想修改接口，几乎是不可能的（不过`jdk8`中，接口可以有默认实现）；
 * 接口实现起来比抽象类灵活，但设计了接口，最好定义一个骨架（抽象类）；
 
@@ -283,22 +283,142 @@
   ```  
 
 ## 用函数对象表示策略
-* 函数对象：
-[![image.png](https://s31.postimg.cc/omzmxx54r/image.png)](https://postimg.cc/image/4sdlbspx3/)
+* 函数对象：  
+[![image.png](https://s31.postimg.cc/omzmxx54r/image.png)](https://postimg.cc/image/4sdlbspx3/)  
 
 ## 优先考虑静态成员类
 * **名词解释**  
   - 定义在代码块、方法体内的类叫`局部内部类`；
+  - `函数对象`做了这么一件事，我们可以定义一个只有方法而没有数据的类，然后把这个类的对象传递给别的方法，这时传递的这个对象就是一个函数对象。jdk8的
 * **访问控制修饰符**  
   - `default` (即缺省，什么也不写）: 在同一包内可见，不使用任何修饰符。使用对象：类、接口、变量、方法；
   - `private` : 在同一类内可见。使用对象：变量、方法。 注意：`不能修饰类（外部类）`；
   - `public` : 对所有类可见。使用对象：类、接口、变量、方法；
   - `protected` : 对同一包内的类和所有子类可见。使用对象：变量、方法。 注意：`不能修饰类（外部类）`；
-* 一个静态内部类的使用例子：
-[![image.png](https://s15.postimg.cc/lf1p7a8wb/image.png)](https://postimg.cc/image/a2p3pi07b/)
-[![image.png](https://s15.postimg.cc/ismn9rocr/image.png)](https://postimg.cc/image/6dzv9fwuf/)
+* 一个静态内部类的使用例子：  
+[![image.png](https://s15.postimg.cc/lf1p7a8wb/image.png)](https://postimg.cc/image/a2p3pi07b/)  
+[![image.png](https://s15.postimg.cc/ismn9rocr/image.png)](https://postimg.cc/image/6dzv9fwuf/)  
 * 如果成员类不要求访问外围实例，就要始终添加`static`修饰符，因为非静态内部类总会保存一个外围实例的引用，保存这份引用会额外消耗时间和空间，并可能导致外围实例符合垃圾回收时却任然被保留。
+* 当且仅当**匿名内部类**出现在`非静态环境`中时才包含外围实例的引用；（`局部类`也是如此）
+* 即使**匿名内部类**在`静态环境`中，也不可能拥有任何静态成员；（`局部类`也是如此）
+* 匿名内部类使用场景：
+  - 函数对象；
+  - 过程对象，eg：`Runable`、`Thread`、`TimerTask`等；
+  - 静态工厂方法的内部；
 
+## 请不要在新代码中使用原生态类型
+* 比如：`List<E>`对应的原生态类型是`List`；
+* 泛型有子类型化规则：`List<String>`是`List`的子类，但不是`List<Object>`的子类；  
+[![image.png](https://s15.postimg.cc/cyvlcm5rv/image.png)](https://postimg.cc/image/4gm589z93/)  
+
+## 消除非受检警告
+* `SuppressWarning`可以用在任何力度的级别，应该始终在尽可能小的范围内使用`SuppressWarning`；
+
+## 列表优先于数组
+* 数组是`协变的`（`convariant`）
+  - 如果Sub是Super的子类，那么Sub[]也是Super[]的子类；
+* 泛型是`不可变`的（`invariant`）
+  - 对于不同类型Type1和Type2，`List<Type1>`既不是`List<Type2>`的子类，也不是的父类；
+* 相较于列表（list），数组（array）是有缺陷的：
+  ```java
+    Object[] objcetArray = new Long[1];
+    objcetArray[0] = "I don't fit in"; // 抛出ArrayStoreException
+  ```
+* 为什么创建泛型数组是非法的？(如：new ArrayList<String>[10])  
+  [![image.png](https://s15.postimg.cc/5muqktknf/image.png)](https://postimg.cc/image/7rf3lwm9z/)  
+  但是无限制通配符类型和数组可以同用，比如：List<?>、Map<?,?> ；
+
+## 优先考虑泛型
+* 下面是一个泛型
+  ```java
+  public class Stack<E> {
+    private E[] elements;
+    private int size = 0;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+    public Stack() {
+      elements = new E[DEFAULT_INITIAL_CAPACITY]; // 这样写的话会报错
+
+    public void push(E e) {
+      ensureCapacity();
+      elements[size++] = e;
+    }
+    public E pop() {
+      if (size == 0)
+        throw new EmptyStackException();
+      E result = elements[--size];
+      elements[size] = null; // Eliminate obsolete reference
+      return result;
+    }
+    ... // no changes in isEmpty or ensureCapacity
+  }
+  ```
+  上面的例子中`elements = new E[DEFAULT_INITIAL_CAPACITY];`会报错误或警告，是因为不能创建泛型数组（见“列表优先于数组”）；  
+  解决`方案一`：
+  ```java
+  @SuppressWarnings("unchecked")  // 此处确定是安全的，可以抑制掉非受检警告
+  elements = (E[])new Object[DEFAULT_INITIAL_CAPACITY];
+  ```
+  解决`方案二`：  
+  ```java
+  // 定义elements为Object数组
+  private Object[] elements;
+
+  //修改pop方法
+  public E pop() {
+      if (size == 0)
+        throw new EmptyStackException();
+      @SuppressWarnings("unchecked") // 此处确定是安全的，可以抑制掉非受检警告
+      E result = (E)elements[--size];
+      elements[size] = null; // Eliminate obsolete reference
+      return result;
+    }
+  ```
+
+## 优先考虑泛型化
+* 没有类型推导的jdk6中：
+  ```java
+  static <T> T pick(T a1, T a2) { return a2; }
+  // 比较特别的语法 this.<Serializable>
+  Serializable s = this.<Serializable>pick("d", new ArrayList<String>());
+  ```
+
+## 利用有限通配符来提升API的灵活性
+* 如下代码：假如SubE是E的子类，则`pushAll(Iterable<SubE>)`在代码一的情况下，就会出错，因为`参数化类型`是`不可变的`（`List<SubE>`既不是`List<E>`的子类，也不是`List<E>`的超类）；代码二就刚好解决这问题
+  ```java
+  // 代码一
+  public void pushAll(Iterable<E> src) {
+    for (E e : src)
+      push(e);
+  }
+
+  // 代码二
+  public void pushAll(Iterable<? extends E> src) {
+    for (E e : src)
+      push(e);
+  }
+  ```
+
+## 优先使用类型安全的异构容器
+* 什么是类型安全的异构容器，我也没明白，读者自己体会，下面列出书中代码示例：
+  ```java
+  public class Favorites {
+    private Map<Class<?>, Object> favorites = new HashMap<>();
+
+    public <T> void putFavorite(Class<T> type, T instance) {
+      favorites.put(Objects.requireNonNull(type), instance);
+    }
+
+    public <T> T getFavorite(Class<T> type) {
+      // java.lang.Class<T>#cast
+      return type.cast(favorites.get(type));
+    }
+  }
+  ```
+  书中提到`Favorites`有2个`局限性`：
+    - 类型安全容易被破坏  
+    [![image.png](https://s33.postimg.cc/b0ab6d9vj/image.png)](https://postimg.cc/image/hdze9merf/)   
+    - 局限二没有很好的解决方案   
+     [![image.png](https://s33.postimg.cc/kxlbzkudr/image.png)](https://postimg.cc/image/e74uq577v/)  
 
 ----
 #### 唠唠其他
