@@ -1,4 +1,5 @@
-## 定义：
+定义：
+
 ```
 在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。
 ```
@@ -15,3 +16,29 @@
 * 获取Class的方法：  
 
   ![](https://img-blog.csdn.net/20160724035029056)
+
+#### [博客观后记录](<https://blog.csdn.net/sinat_38259539/article/details/71799078>)
+
+* *class*文件加载过程
+
+  [![Markdown](http://i2.bvimg.com/649331/aebb27ddb2a29cee.png)](http://i2.bvimg.com/649331/aebb27ddb2a29cee.png)
+
+* 获取Class对象的三种方式
+
+  * Object#`getClass`();
+  * 任何类型都有一个“静态”的`class`属性；
+  * （常用）通过Class类的静态方法`forName(String className)`；
+
+* Class常用API
+
+  [![Markdown](http://i4.bvimg.com/649331/d5a3c3c4ca3c8ec3.png)](http://i4.bvimg.com/649331/d5a3c3c4ca3c8ec3.png)
+
+* 设置对象属性
+
+  [![Markdown](http://i1.bvimg.com/649331/123515e97c2c6d65.png)](http://i1.bvimg.com/649331/123515e97c2c6d65.png)
+
+* 反射执行对象的方法
+
+  [![Markdown](http://i1.bvimg.com/649331/72277e19d73c7eba.png)](http://i1.bvimg.com/649331/72277e19d73c7eba.png)
+
+* 
