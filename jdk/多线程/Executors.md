@@ -29,7 +29,13 @@
 
 
 * **ScheduledThreadPool**  
-`newScheduledThreadPool(int corePoolSize)`和`newScheduledThreadPool(int corePoolSize, ThreadFactory threadFactory)`生成延迟或定期执行任务的线程池；
+  `newScheduledThreadPool(int corePoolSize)`和`newScheduledThreadPool(int corePoolSize, ThreadFactory threadFactory)`生成延迟或定期执行任务的线程池；
+
+* `ScheduledExecutorService#scheduleWithFixedDelay`和`ScheduledExecutorService#scheduleAtFixedRate`
+
+
+  * ScheduledExecutorService#`scheduleWithFixedDelay`：是`前一次执行结束`到`后一次执行开始`的间隔为`delay`；
+  * ScheduledExecutorService#`scheduleAtFixedRate`：执行时刻是`initialDelay`、`initialDelay + period`、`initialDelay + period * 2`、`initialDelay + period * 3` 。。。等，如果任务执行时间大于`period`，那么下一次执行开始时刻就晚一点；
 
 * **单线程**  
   - `newSingleThreadExecutor()`生成一个单线程并执行任务队列；
@@ -43,7 +49,7 @@
   ```
 
 * **单线程 + 定时/延迟**  
-`newSingleThreadScheduledExecutor`
+  `newSingleThreadScheduledExecutor`
 
 * **newWorkStealingPool**  
-作用：貌似是尽可能地利用所有处理器，生成一个线程池；
+  作用：貌似是尽可能地利用所有处理器，生成一个线程池；

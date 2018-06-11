@@ -1,4 +1,5 @@
 #### 记录一些陌生技术，有待学习
+* [Javadoc][javadoc]
 * **`lettuce`**  —— `Redis`连接工具
 * **`iTerm2+Tmux+Vim/NeoVim+Zsh`**  —— 编程神器
 * **RxJava**、**Reactive API** ([`lettuce`][lettuce]使用这两个技术实现发布者/订阅者之间的事件传递）
@@ -73,3 +74,4 @@
 
 [lettuce]: https://github.com/StarzoneCN/summary-documents/blob/master/Redis/lettuce.md
 [DomeOS]:http://gitbook.domeos.org/
+[javadoc]:http://www.runoob.com/java/java-documentation.html
