@@ -1,4 +1,7 @@
 # lettuce 学习记录
+
+> Advanced Redis client for thread-safe sync, async, and reactive usage. Supports Cluster, Sentinel, Pipelining , and codecs. 
+
 ### 简单知识点集合
 * `Redis`的连接是`长连接`并`线程安全`的；
 * 如果链接丢失，会自动重连接；
@@ -71,7 +74,7 @@
         ```java
         // Future的使用示例
         final CompletableFuture<String> future = new CompletableFuture<>();
-
+      
         future.thenRun(new Runnable() {
             @Override
             public void run() {
@@ -80,13 +83,14 @@
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+      
             }
         });
-
+      
         System.out.println("Current state: " + future.isDone()); // false
         future.complete("my value");
         System.out.println("Current state: " + future.isDone()) // true
+        ```
 * 使用`lettuce`获取`Future`：
     ```
      RedisClient client = RedisClient.create("redis://localhost");
@@ -112,9 +116,10 @@
       ```java
         StatefulRedisPubSubConnection<String, String> connection = client.connectPubSub()
         connection.addListener(new RedisPubSubListener<String, String>() { ... })
-
+      
         RedisPubSubAsyncCommands<String, String> async = connection.async();
         RedisFuture<Void> future = async.subscribe("channel");
+      ```
 
 * **[`Reactive API`][ReactiveAPI]**机制搞不懂；
 
@@ -134,7 +139,7 @@
                     System.out.println(event);
                 }
             });
-
+    
             ...
             client.shutdown();
            ```
@@ -162,7 +167,7 @@
    // 自定义编码器
     StatefulRedisConnection<K, V> connect(RedisCodec<K, V> codec);
     StatefulRedisPubSubConnection<K, V> connectPubSub(RedisCodec<K, V> codec);
-    ```
+   ```
 * `Redis`中可能保存各种不同类型的数据，所以每个`key`和`value`之间的编码格式没有相互关联性，这样不同类型的数据就可以同时保存（比如：stream、string）;
 * `lettuce`可以通过配置`codec`实现对key和数据的压缩，比如：`GZIP`；
 
