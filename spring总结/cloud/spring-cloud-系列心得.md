@@ -4,6 +4,12 @@
 
 *<font color="gray">Spring Cloud Eureka是Spring Cloud Netflix项目下的服务治理模块</font>*
 
+### [Eureka Server的自我保护模式](http://itmuch.com/spring-cloud-sum-eureka/)
+
+解决如下警告：
+
+> EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE. 
+
 
 
 
@@ -74,7 +80,9 @@
 
    > 原因是当userName没有被@RequestParam注解修饰时，会自动被当做request body来处理。只要有body，就会被feign认为是post请求，所以整个服务是被当作带有request parameter和body的post请求发送出去的 
 
+### Feign的扩展
 
+> 由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能，也可以通过Ribbon的IRule进行策略扩展。另外，Feign还整合的Hystrix来实现服务的容错保护，在Dalston版本中，Feign的Hystrix默认是关闭的。 
 
 
 
@@ -136,6 +144,47 @@
   ```
 
   * 注意：`yml`文件是不能使用加密/解密的
+
+## Spring Cloud Bus
+
+ *<font color="gray">可实现更改配置后自动应用到应用</font>*
+
+
+
+## [Spring Cloud Hystrix](http://blog.didispace.com/spring-cloud-starter-dalston-4-1/)
+
+ *<font color="gray">实现了线程隔离、断路器 </font>*
+
+### 注解
+
+* `@EnableCircuitBreaker`
+* `@HystrixCommand(fallbackMethod = "fallback")`
+
+* 此处可以了解一下注解：`@SpringCloudApplication`
+
+### [Hystrix-服务降级](http://blog.didispace.com/spring-cloud-starter-dalston-4-1/)
+
+
+
+### [Hystrix-依赖隔离](http://blog.didispace.com/spring-cloud-starter-dalston-4-2/)
+
+#### 原理
+
+> “舱壁模式”对于熟悉Docker的读者一定不陌生，Docker通过“舱壁模式”实现进程的隔离，使得容器与容器之间不会互相影响。而Hystrix则使用该模式实现线程池的隔离，它会为每一个Hystrix命令创建一个独立的线程池，这样就算某个在Hystrix命令包装下的依赖服务出现延迟过高的情况，也只是对该依赖服务的调用产生影响，而不会拖慢其他的服务。 
+
+[博客](http://blog.didispace.com/spring-cloud-starter-dalston-4-2/)中也对**打消Hystrix线程池隔离技术对性能影响的顾虑**进行了解释；也有关于`信号量`的介绍；
+
+* 线程池方式下`业务请求线程`和`执行依赖服务的线程`不是同一个线程
+
+* 信号量方式下`业务请求线程`和`执行依赖服务的线程`是同一个线程
+
+  > 如果通过信号量来控制系统负载，将不再允许设置超时和异步化，这就表示在服务提供者出现高延迟，其调用线程将会被阻塞，直至服务提供者的网络请求超时，如果对服务提供者有足够的信心，可以通过信号量来控制系统的负载。 
+
+
+
+
+
+
 
 
 
