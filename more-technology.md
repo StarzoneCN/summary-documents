@@ -155,7 +155,7 @@
 
 * [fastmybatis](https://www.oschina.net/news/98435/fastmybatis-1-0-11-released) - mybatis开发框架 
 
-* 
+* [SweetAlert2](http://mishengqiang.com/sweetalert2/) - 弹窗神器
 
 
 
