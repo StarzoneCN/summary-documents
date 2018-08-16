@@ -154,7 +154,7 @@
   ```nginx
   server {
       server_name   ~^(www\.)?(?<domain>.+)$;  #命名捕获组
-
+  
       location / {
           root   /sites/$domain;
       }
@@ -190,9 +190,15 @@
    }
    ```
 
-  在这里，我们设置主机名为空字符串以匹配未定义“Host”头的请求，而且返回了一个nginx特有的，非http标准的返回码444，它可以用来关闭连接。
+   在这里，我们设置主机名为空字符串以匹配未定义“Host”头的请求，而且返回了一个nginx特有的，非http标准的返回码444，它可以用来关闭连接。
 
-  > 从0.8.48版本开始，这已成为主机名的默认设置，所以可以省略`server_name ""`。而之前的版本使用机器的*hostname*作为主机名的默认值。
+   > 从0.8.48版本开始，这已成为主机名的默认设置，所以可以省略`server_name ""`。而之前的版本使用机器的*hostname*作为主机名的默认值。
+
+* 特殊的server_name - \*
+
+   * [特殊的名字](http://tengine.taobao.org/nginx_docs/cn/docs/http/server_names.html "搜索'特殊的名字'")
+
+* `确切名字`和`通配符名字`存储在哈希表中。哈希表和监听端口关联。哈希表的尺寸在配置阶段进行了优化，可以以最小的CPU缓存命中失败来找到名字。设置哈希表的细节参见[这篇文档](http://tengine.taobao.org/nginx_docs/cn/docs/hash.html) 
 
 #### location
 
@@ -211,6 +217,14 @@
 #### lingering_close
 
 * [传送门](http://blog.51cto.com/blief/1736849)
+
+#### proxy_pass
+
+* [通俗示例](https://blog.csdn.net/zhongzh86/article/details/70173174)
+
+### 日志配置
+
+* [传送门](http://tengine.taobao.org/nginx_docs/cn/docs/debugging_log.html)
 
 ## 安装设置   <font size="5">[✈](http://tengine.taobao.org/nginx_docs/cn/docs/install.html)</font>
 
@@ -240,6 +254,16 @@
 
 * worker进程数最好和CPU物理核数相同
 * 可以绑定worker进程到特定核心上
+
+### server_name
+
+> nginx首先搜索确切名字的哈希表，如果没有找到，搜索以星号起始的通配符名字的哈希表，如果还是没有找到，继续搜索以星号结束的通配符名字的哈希表。
+>
+> 因为名字是按照域名的节来搜索的，所以搜索通配符名字的哈希表比搜索确切名字的哈希表慢。注意特殊的通配符名字“`.example.org`”存储在通配符名字的哈希表中，而不在确切名字的哈希表中。
+>
+> 正则表达式是一个一个串行的测试，所以是最慢的，而且不可扩展。
+>
+> 鉴于以上原因，请尽可能使用确切的名字。
 
 ## 博文
 

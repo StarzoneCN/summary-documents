@@ -1,4 +1,4 @@
-# WebSocket
+# <div style="text-align:center;color:#FF9900">WebSocket</div>
 
 ## Java-Code
 
@@ -11,30 +11,30 @@
   ```java
   import javax.websocket.server.ServerEndpoint;
   import org.springframework.stereotype.Component;
-  
+
   @Component
   @ServerEndpoint(value = "/echoserver/echo")
   public class AnnotationalEchoServer {
-      
+
       @OnMessage
       public String echo(String message) {
           return "I got this (" + message + ") so I am sending it back!";
       }
-      
+
       @OnOpen
       public void onOpen(Session session) throws InterruptedException {
           // 建立连接
       }
   }
-  
+
   // -------------------另外还要添加配置类-------------------
   import org.springframework.context.annotation.Bean;
   import org.springframework.context.annotation.Configuration;
   import org.springframework.web.socket.server.standard.ServerEndpointExporter;
-  
+
   @Configuration
   public class WebSocketConfig{
-  
+
       // 关键是要把ServerEndpointExporter交给spring管理
       @Bean
       public ServerEndpointExporter serverEndpointExporter() {
@@ -51,14 +51,14 @@
   import javax.websocket.MessageHandler;
   import javax.websocket.Session;
   import java.io.IOException;
-  
+
   public class ProgrammaticEchoServer extends Endpoint {
-  
+
       @Override
       public void onOpen(Session session, EndpointConfig config) {
           final Session s = session;
           s.addMessageHandler(new MessageHandler.Whole<String>() {
-  
+
               @Override
               public void onMessage(String message) {
                   try {
@@ -70,23 +70,23 @@
           });
       }
   }
-  
+
   // -------------------另外还要添加配置类-------------------
   import cn.com.bluemoon.material.delivery.electric.weighter.provider.websocket.ProgrammaticEchoServer;
   import org.springframework.context.annotation.Bean;
   import org.springframework.context.annotation.Configuration;
   import org.springframework.web.socket.server.standard.ServerEndpointExporter;
   import org.springframework.web.socket.server.standard.ServerEndpointRegistration;
-  
+
   @Configuration
   public class WebSocketConfig{
-  
+
       // 关键是要把ServerEndpointExporter交给spring管理
       @Bean
       public ServerEndpointExporter serverEndpointExporter() {
           return new ServerEndpointExporter();
       }
-      
+
       @Bean
       public ServerEndpointRegistration echoEndpoint() {
           return new ServerEndpointRegistration("/echo", ProgrammaticEchoServer.class);
@@ -120,17 +120,16 @@
   * ```java
     // 类注解
     @ServerEndpoint("/chat/{param}")
-    
+
     // 方法注解
     @OnOpen
     public void open(Session session, @PathParam("param")String  param) {
         System.out.println("用户"+param+" 登录");
-    
+
     }
     ```
 
   * 获取方式
 
-    * session.getPathParameters() 
+    * session.getPathParameters()
     * @PathParam
-

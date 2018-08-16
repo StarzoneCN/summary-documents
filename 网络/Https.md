@@ -1,4 +1,4 @@
-# HTTPS
+# <div style="text-align:center;color:#FF9900">HTTPS</div>
 
 ## 名词
 
@@ -6,26 +6,26 @@
 
 * **SSL** - Secure Sockets Layer
   * https的加密是基于SSL的
-  * SSL著名的漏洞 - *心脏出血* 
-* **TLS** - Transport Layer Security 
+  * SSL著名的漏洞 - *心脏出血*
+* **TLS** - Transport Layer Security
   * 它的前身就是`SSL`
 
 ### 证书标准
 
-* **X.509** - 这是一种证书标准,主要定义了证书中应该包含哪些内容.其详情可以参考RFC5280,SSL使用的就是这种证书标准. 
+* **X.509** - 这是一种证书标准,主要定义了证书中应该包含哪些内容.其详情可以参考RFC5280,SSL使用的就是这种证书标准.
 
 ### 编码格式
 
 *同样的X.509证书,可能有不同的编码格式,目前有以下两种编码格式*
 
 * **PEM** - Privacy Enhanced Mail
-  * 打开看文本格式,以"-----BEGIN..."开头, "-----END..."结尾,内容是BASE64编码. 
-  * 查看PEM格式证书的信息:`openssl x509 -in certificate.pem -text -noout` 
-  * Apache和*NIX服务器偏向于使用这种编码格式. 
+  * 打开看文本格式,以"-----BEGIN..."开头, "-----END..."结尾,内容是BASE64编码.
+  * 查看PEM格式证书的信息:`openssl x509 -in certificate.pem -text -noout`
+  * Apache和*NIX服务器偏向于使用这种编码格式.
 * **DER** - Distinguished Encoding Rules
-  * 打开看是二进制格式,不可读. 
-  * 查看DER格式证书的信息:openssl x509 -in certificate.der **-inform der** -text -noout 
-  * Java和Windows服务器偏向于使用这种编码格式 
+  * 打开看是二进制格式,不可读.
+  * 查看DER格式证书的信息:openssl x509 -in certificate.der **-inform der** -text -noout
+  * Java和Windows服务器偏向于使用这种编码格式
 
 ### 相关的文件扩展名
 
@@ -55,20 +55,20 @@
 ### 证书编码的转换
 
 * **PEM转为DER** 
-  * openssl x509 -in cert.crt -outform der -out cert.der 
+  * openssl x509 -in cert.crt -outform der -out cert.der
 * **DER转为PEM** 
-  * openssl x509 -in cert.crt -inform der -outform pem -out cert.pem 
+  * openssl x509 -in cert.crt -inform der -outform pem -out cert.pem
 
-*(提示:要转换KEY文件也类似,只不过把x509换成rsa,要转CSR的话,把x509换成req...)* 
+*(提示:要转换KEY文件也类似,只不过把x509换成rsa,要转CSR的话,把x509换成req...)*
 
 ### 获得证书
 
 * **向权威证书颁发机构申请证书**
   * 用这命令生成一个csr: openssl req -newkey rsa:2048 -new -nodes -keyout my.key -out my.csr
   * 把csr交给权威证书颁发机构,权威证书颁发机构对此进行签名,完成.保留好csr,当权威证书颁发机构颁发的证书过期的时候,你还可以用同样的csr来申请新的证书,key保持不变.
-* **或者生成自签名的证书** 
-  * openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem 
-  * 在生成证书的过程中会要你填一堆的东西,其实真正要填的只有Common Name,通常填写你服务器的域名,如"yourcompany.com",或者你服务器的IP地址,其它都可以留空的. 生产环境中还是不要使用自签的证书,否则浏览器会不认,或者如果你是企业应用的话能够强制让用户的浏览器接受你的自签证书也行.向权威机构要证书通常是要钱的,但现在也有免费的,仅仅需要一个简单的域名验证即可.有兴趣的话查查"沃通数字证书". 
+* **或者生成自签名的证书**
+  * openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+  * 在生成证书的过程中会要你填一堆的东西,其实真正要填的只有Common Name,通常填写你服务器的域名,如"yourcompany.com",或者你服务器的IP地址,其它都可以留空的. 生产环境中还是不要使用自签的证书,否则浏览器会不认,或者如果你是企业应用的话能够强制让用户的浏览器接受你的自签证书也行.向权威机构要证书通常是要钱的,但现在也有免费的,仅仅需要一个简单的域名验证即可.有兴趣的话查查"沃通数字证书".
 
 
 
@@ -85,4 +85,3 @@ windows服务器上通过`Let’s Encrypt`（[教程][LetsEncrypt]）添加证�
 
 
 [LetsEncrypt]:https://blog.csdn.net/lichenzero/article/details/75300792
-

@@ -1,3 +1,4 @@
+# <div style="text-align:center;color:#FF9900">ヽ(｀Д´)ﾉ︵ ┻━┻ ┻━┻ </div>
 #### 记录一些陌生技术，有待学习
 * [Javadoc][javadoc]
 
@@ -139,9 +140,9 @@
 
 * `jSqlBox`  持久层工具，支持分库分表
 
-* `jib`  Google 开发的可以直接构建 Java 应用的 Docker 和 OCI 镜像的类库，以 Maven 和 Gradle 插件形式提供 
+* `jib`  Google 开发的可以直接构建 Java 应用的 Docker 和 OCI 镜像的类库，以 Maven 和 Gradle 插件形式提供
 
-  > 通过 Jib，Java 开发者可以使用他们熟悉的 Java 工具来构建容器。Jib 是一个快速而简单的容器镜像构建工具，它负责处理将应用程序打包到容器镜像中所需的所有步骤。它不需要你编写 Dockerfile 或安装 Docker，而且可以直接集成到 Maven 和 Gradle中 —— 只需要将插件添加到构建中，就可以立即将 Java 应用程序容器化。 
+  > 通过 Jib，Java 开发者可以使用他们熟悉的 Java 工具来构建容器。Jib 是一个快速而简单的容器镜像构建工具，它负责处理将应用程序打包到容器镜像中所需的所有步骤。它不需要你编写 Dockerfile 或安装 Docker，而且可以直接集成到 Maven 和 Gradle中 —— 只需要将插件添加到构建中，就可以立即将 Java 应用程序容器化。
 
 * [Vue-rap](https://www.oschina.net/news/98486/vue-rap-1-1-0-released)
 
@@ -151,9 +152,9 @@
 
 * [gRPC](https://www.oschina.net/p/grpc-framework)
 
-* [Apache Accumulo](https://www.oschina.net/news/98442/apache-accumulo-1-9-2-released) -  Key-Value 存储解决方案 
+* [Apache Accumulo](https://www.oschina.net/news/98442/apache-accumulo-1-9-2-released) -  Key-Value 存储解决方案
 
-* [fastmybatis](https://www.oschina.net/news/98435/fastmybatis-1-0-11-released) - mybatis开发框架 
+* [fastmybatis](https://www.oschina.net/news/98435/fastmybatis-1-0-11-released) - mybatis开发框架
 
 * [SweetAlert2](http://mishengqiang.com/sweetalert2/) - 弹窗神器
 

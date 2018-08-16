@@ -1,4 +1,4 @@
-# 爱的细流
+# <div style="text-align:center;color:#FF9900">爱的细流</div>
 
 * **《奇异恩典》**  
 ```
