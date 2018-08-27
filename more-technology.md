@@ -1,5 +1,6 @@
 # <div style="text-align:center;color:#FF9900">ヽ(｀Д´)ﾉ︵ ┻━┻ ┻━┻ </div>
 #### 记录一些陌生技术，有待学习
+
 * [Javadoc][javadoc]
 
 * **`lettuce`**  —— `Redis`连接工具
@@ -144,19 +145,27 @@
 
   > 通过 Jib，Java 开发者可以使用他们熟悉的 Java 工具来构建容器。Jib 是一个快速而简单的容器镜像构建工具，它负责处理将应用程序打包到容器镜像中所需的所有步骤。它不需要你编写 Dockerfile 或安装 Docker，而且可以直接集成到 Maven 和 Gradle中 —— 只需要将插件添加到构建中，就可以立即将 Java 应用程序容器化。
 
-* [Vue-rap](https://www.oschina.net/news/98486/vue-rap-1-1-0-released)
+* [`Vue-rap`](https://www.oschina.net/news/98486/vue-rap-1-1-0-released)
 
-* [BootDo](https://www.oschina.net/news/98485/bootdo-2-0-0-released)
+* [`BootDo`](https://www.oschina.net/news/98485/bootdo-2-0-0-released)
 
-* [IMI](https://www.oschina.net/news/98482/imi-0-0-7-released)
+* [`IMI`](https://www.oschina.net/news/98482/imi-0-0-7-released)
 
-* [gRPC](https://www.oschina.net/p/grpc-framework)
+* [`gRPC`](https://www.oschina.net/p/grpc-framework)
 
-* [Apache Accumulo](https://www.oschina.net/news/98442/apache-accumulo-1-9-2-released) -  Key-Value 存储解决方案
+* [`Apache Accumulo`](https://www.oschina.net/news/98442/apache-accumulo-1-9-2-released) -  Key-Value 存储解决方案
 
-* [fastmybatis](https://www.oschina.net/news/98435/fastmybatis-1-0-11-released) - mybatis开发框架
+* [`fastmybatis`](https://www.oschina.net/news/98435/fastmybatis-1-0-11-released) - mybatis开发框架
 
-* [SweetAlert2](http://mishengqiang.com/sweetalert2/) - 弹窗神器
+* [`SweetAlert2`](http://mishengqiang.com/sweetalert2/) - 弹窗神器
+
+* [`Vue实现粒子特效`](https://www.oschina.net/p/Particle-Effect-for-Vue) - 酷炫
+
+* [`sofa-rpc`](https://www.oschina.net/news/99145/sofarpc-5-4-4-released) - 蚂蚁金服高性能RPC框架
+
+* [`RedKale`](https://www.oschina.net/news/99141/redkale-1-9-6-released)
+
+* [`MaterialDrawer`](https://www.oschina.net/news/99121/materialdrawer-6-1-0-rc-01-2-released) - [`material-ui`](https://www.oschina.net/p/material+ui)的移动版
 
 
 

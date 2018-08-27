@@ -1,4 +1,4 @@
-# <font color="red">Docker</font>
+# <div style="text-align:center;color:#FF9900">Docker</div>
 Docker 的基础是 Linux 容器（LXC）等技术。
 Docker是一款针对程序开发人员和系统管理员来开发、部署、运行应用的一款虚拟化平台。
 *Docker的运行需要Root权限，所以启动Docker的时候最好进行参数的安全检查*
@@ -19,7 +19,7 @@ Docker是一款针对程序开发人员和系统管理员来开发、部署、�
 #### 原理
 ```
     Docker 镜像是怎么实现增量的修改和维护的？ 每个镜像都由很多层次构成，Docker 使用 Union FS 将这些不同的层结合到一个镜像中去。
-    
+
     通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下,另一个更常用的就是将一个只读的分支和  
 一个可写的分支联合在一起，Live CD 正是基于此方法可以允许在镜像不变的基础上允许用户在其上进行一些写操作。 Docker 在 AUFS 上构建  
 的容器也是利用了类似的原理。
@@ -68,7 +68,7 @@ Docker是一款针对程序开发人员和系统管理员来开发、部署、�
 * 终止容器：`docker stop`
 * 重启运行中的容器：`docker restart`
 * 查看所有变量：`docker inspect`
-  
+
 #### Dockerfile
 ##### 语法
 ```
@@ -77,7 +77,7 @@ FROM ubuntu:14.04       # 基础镜像
 MAINTAINER Docker Newbee <newbee@docker.com>    # 维护人
 RUN apt-get -qq update  # 创建一层
 RUN apt-get -qqy install ruby ruby-dev
-RUN gem install sinatra 
+RUN gem install sinatra
 CMD /usr/sbin/nginx  # 指定运行容器时的操作指令
 ```
 * 注意：*一个镜像不能超过 127 层*
@@ -95,13 +95,9 @@ CMD /usr/sbin/nginx  # 指定运行容器时的操作指令
   * `-v` 创建一个数据卷并挂载到容器里
   * `:/opt/webapp` 指定挂载到容器中的位置
   * `:ro` 只读（默认读写）
-  
+
 #### 网络
 * 容器互联：[传送门](http://www.dockerinfo.net/%E4%BD%BF%E7%94%A8%E7%BD%91%E7%BB%9C)
 * 高级网络配置：[传送门](http://www.dockerinfo.net/%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE)
 #### 安全介绍
 * 安全配置值得注意：[传送门](http://www.dockerinfo.net/%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)
-
-
-
-
