@@ -47,7 +47,6 @@
 
 * [待续](https://www.cnblogs.com/zhru/p/3832968.html)
 
-  
 
 ## min-width
 
@@ -59,7 +58,18 @@
 
 * 
 
+## 方案
 
+### 垂直水平居中
+
+```css
+parentEle {
+    display: flex; /*Flex布局*/
+    display: -webkit-flex; /* Safari */
+    align-items: center; /*指定垂直居中*/
+    text-align: center;
+}
+```
 
 ## 其他
 

@@ -1,4 +1,4 @@
-# JavaScript
+# <div style="text-align:center;color:#FF9900">JavaScript</div>
 
 ## 生僻知识点
 
@@ -37,7 +37,83 @@ isNaN("blabla")   // true: "blabla"不能转换成数值
                   // 转换成数值失败， 返回NaN
 ```
 
+#### 异步/同步
 
+参考代码：
+
+```js
+async function testAsync() {
+  var i = 0;
+  while (i<100){
+    await sleep(1000)
+    console.log('1 - testAsync inner ... ')
+    i++
+  }
+  return '跑完啦。。。'
+}
+
+// 结合‘await’，实现线程休眠
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+```
+
+```js
+console.log('start ---------->')
+testAsync().then(_re => {console.log(_re)})
+console.log('end ---------->')
+```
+
+执行结果：
+
+```
+start ---------->
+end ---------->
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+1 - testAsync inner ... 
+       .
+       .
+       .
+      100次
+跑完啦。。。
+```
+
+
+
+
+
+
+
+
+
+## 踩坑
+
+#### 1. 可以使用`setTimeout`实现循环效果
+
+```js
+function startTime(){
+	var today=new Date();
+	var h=today.getHours();
+	var m=today.getMinutes();
+	var s=today.getSeconds();// 在小于10的数字前加一个‘0’
+	m=checkTime(m);
+	s=checkTime(s);
+	document.getElementById('txt').innerHTML=h+":"+m+":"+s;
+	t=setTimeout(function(){startTime()},500);
+}
+```
+
+不使用**setInterval**的原因：
+
+> 在开发环境下，很少使用间歇调用（`setInterval`），原因是后一个间歇调用很可能在前一个间歇调用结束前启动
 
 
 

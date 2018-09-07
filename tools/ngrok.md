@@ -1,6 +1,6 @@
 # <div style="text-align:center;color:#FF9900">Ngrok</div>
 
-## Ngrok + Nginx 实现端口转发
+## 1. Ngrok + Nginx 实现端口转发
 
 ### nginx配置
 
@@ -22,3 +22,27 @@ server {
         }
     }
 ```
+
+## 2. firewalld设置
+
+```shell
+# 启动防火墙
+systemctl start firewalld
+systemctl enable firewalld
+    
+# 放行ngrok需要的4443端口
+firewall-cmd --zone=public --add-port=4443/tcp --permanent
+    
+# 放行80及443端口
+firewall-cmd --add-service=http --permanent
+firewall-cmd --add-service=https --permanent
+    
+# 放行自定义端口，例如：TCP 7070及7071端口
+firewall-cmd --zone=public --add-port=7070/tcp --permanent
+firewall-cmd --zone=public --add-port=7071/tcp --permanent
+firewall-cmd --zone=public --add-port=7443/tcp --permanent
+    
+# 重新加载防火墙规则
+firewall-cmd --reload  
+```
+
