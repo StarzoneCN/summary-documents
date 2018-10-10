@@ -82,6 +82,12 @@
 
 
 
+## 运行模式
+
+jvm有2种运行模式：server和client  [传送门1](https://blog.csdn.net/zhuyijian135757/article/details/38391785) [传送门2](https://blog.csdn.net/a158123/article/details/77417042)
+
+
+
 
 
 ## 其他

@@ -17,14 +17,24 @@ Docker是一款针对程序开发人员和系统管理员来开发、部署、�
 * `基础镜像`：没有任何父镜像的镜像
 * `镜像ID`: 所有镜像都是通过一个 64 位十六进制字符串 （内部是一个 256 bit 的值）来标识的。 为简化使用，前 12 个字符可以组成  一个短ID，可以在命令行中使用。短ID还是有一定的 碰撞机率，所以服务器总是返回长ID。
 #### 原理
-```
-    Docker 镜像是怎么实现增量的修改和维护的？ 每个镜像都由很多层次构成，Docker 使用 Union FS 将这些不同的层结合到一个镜像中去。
 
-    通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下,另一个更常用的就是将一个只读的分支和  
-一个可写的分支联合在一起，Live CD 正是基于此方法可以允许在镜像不变的基础上允许用户在其上进行一些写操作。 Docker 在 AUFS 上构建  
-的容器也是利用了类似的原理。
 ```
+Docker 镜像是怎么实现增量的修改和维护的？ 每个镜像都由很多层次构成，Docker 使用 Union FS 将这些不同的层结合到一个镜像中去。
+
+通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下,另一个更常用的就是将一个只读的分支和一个可写的分支联合在一起，Live CD 正是基于此方法可以允许在镜像不变的基础上允许用户在其上进行一些写操作。 Docker 在 AUFS 上构建的容器也是利用了类似的原理。
+```
+#### 使用到的Linux底层技术
+
+##### 命名空间机制
+
+> Linux 的命名空间机制提供了以下七种不同的命名空间，包括 `CLONE_NEWCGROUP`、`CLONE_NEWIPC`、`CLONE_NEWNET`、`CLONE_NEWNS`、`CLONE_NEWPID`、`CLONE_NEWUSER` 和 `CLONE_NEWUTS`，通过这七个选项我们能在创建新的进程时设置新进程应该在哪些资源上与宿主机器进行隔离。
+
+> 每一个使用 `docker run` 启动的容器其实都具有单独的网络命名空间，Docker 为我们提供了四种不同的网络模式，Host、Container、None 和 Bridge 模式。
+
+> Docker 默认的网络设置模式：网桥模式。在这种模式下，除了分配隔离的网络命名空间之外，Docker 还会为所有的容器设置 IP 地址。当 Docker 服务器在主机上启动之后会创建新的虚拟网桥 docker0，随后在该主机上启动的全部服务在默认情况下都与该网桥相连。
+
 #### 命令
+
 * 获取镜像：`docker pull ubuntu:12.04` 或 `docker pull registry.hub.docker.com/ubuntu:12.04`
 * 运行镜像： `ocker run -t -i ubuntu:12.04 /bin/bash`   
   * <font color="#E6A23C">*注：如果不指定具体的标记，则默认使用 `latest` 标记信息;*</font>
@@ -48,6 +58,7 @@ Docker是一款针对程序开发人员和系统管理员来开发、部署、�
 * 查看当前映射的端口配置：`docker port`
 * 列出本地镜像：`docker images`
 * 提交更新后的副本：`docker commit -m "备注" -a "作者" 0b2616b0e5a8 ouruser/sinatra:v2`
+
   * `0b2616b0e5a8`是用来创建镜像的容器的 ID
 * 修改标签：`docker tag 5db5f8471261 ouruser/sinatra:devel`
 * 从本地文件系统导入：[传送门](http://www.dockerinfo.net/image%E9%95%9C%E5%83%8F)
@@ -60,9 +71,11 @@ Docker是一款针对程序开发人员和系统管理员来开发、部署、�
   *注意：用户既可以使用`docker load`来导入镜像存储文件到本地镜像库，也可以使用`docker import`来导入一个容器快照到本地镜像库。这两者的区别在于容器快照文件将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），而镜像存储文件将保存完整记录，体积也要大。此外，从容器快照文件导入时可以重新指定标签等元数据信息。*
 * <font color="red">移除容器</font>：`docker rm`
 * 移除镜像：`docker rmi training/sinatra`
+
   * 注意：*在删除镜像之前要先用 `docker rm` 删掉依赖于这个镜像的所有容器。*
 * 启动运行已经终止的容器：`docker start`
 * 查看容器运行信息：`docker ps`
+
   * `-a` 还能查看到已经终止的容器信息
 * 获取容器输出信息：`docker logs`
 * 终止容器：`docker stop`

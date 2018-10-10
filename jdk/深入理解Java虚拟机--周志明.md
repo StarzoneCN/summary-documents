@@ -20,7 +20,7 @@
   * Zing VM是在Hotspot基础上进行了大量的优化改进，是真正的“高性能”
 * **Liquid VM**
 * **运行在JVM上的语言**
-  * JESS、Lisp、groovy、icon、E、Tiger、Tcl、Eiffel、v-language、jRuby、PHP、LLP、Jython、Piccola、Phobos、ObjectScript、Yoix、G、WebL、JavaFX、BeanShell、Pascal、Scala、FScript、Nice、Zigzag、Jickle、JudoScript、Oberon、Sather、Sleep、Bex Script、Pnuts、Anvil、Dawn、Forth、C#、Yassl、JHCR、CAL、Simkin；[![Markdown](http://i4.bvimg.com/649331/26fb3487db4a9539.jpg)](http://i4.bvimg.com/649331/26fb3487db4a9539.jpg)
+  * JESS、Lisp、groovy、icon、E、Tiger、Tcl、Eiffel、v-language、jRuby、PHP、LLP、Jython、Piccola、Phobos、ObjectScript、Yoix、G、WebL、JavaFX、BeanShell、Pascal、Scala、FScript、Nice、Zigzag、Jickle、JudoScript、Oberon、Sather、Sleep、Bex Script、Pnuts、Anvil、Dawn、Forth、C#、Yassl、JHCR、CAL、Simkin；
   * 同一虚拟机上`非Java语言`与Java之间的交互是比较容易的，但`非Java语言`之间的交互就比较烦琐，`dynalang`项目的出现就是为了解决这个问题；
 * **JDK 64bit**
   * 由于`指针膨胀`和各种`数据类型对齐补白`等原因，运行在`64bit系统`上的Java应用会额外增加10%~30%内存消耗，

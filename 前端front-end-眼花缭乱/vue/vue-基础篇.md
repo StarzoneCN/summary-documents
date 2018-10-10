@@ -417,6 +417,47 @@ components: {
   }
 ```
 
+##### 3.2.1.1 组件命名
+
+* 两种形式：
+
+  * **kebab-case** - 连字符
+
+    例：my-component-name
+
+  * **PascalCase** - 驼峰
+
+    例：MyComponentName
+
+* 通用性
+
+  * 组件定义名称为驼峰式的时候，在模板（template）代码中，可以使用`驼峰式`，也可以使用`连字符式`，并且驼峰式首字母大写可以变小写；
+
+    如：定义
+
+    ```js
+    components: {
+        'MyComponent': () => import('./my-async-component')
+      }
+    ```
+
+    template代码块中可以使用的形式：
+
+    ```html
+    <!-- 可以使用的形式 -->
+    <MyComponent></MyComponent>
+    <myComponent></myComponent>
+    <My-Component></My-Component>
+    <my-Component></my-Component>
+    <my-component></my-component>
+    ```
+
+  * 组件定义名称为连字符式的时候，在模板（template）代码中，只可以使用`连字符式`；
+
+
+
+
+
 #### 3.2.2 数据传递（子→父）
 
 子：

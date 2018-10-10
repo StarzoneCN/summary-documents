@@ -5,7 +5,7 @@
 
 * **`lettuce`**  —— `Redis`连接工具
 
-* **`iTerm2+Tmux+Vim/NeoVim+Zsh`**  —— 编程神器
+* **`iTerm2+Tmux+Vim/NeoVim+Zsh`**  —— 编程神器，可惜是MacOS平台的 `￠`
 
 * **RxJava**、**Reactive API** ([`lettuce`][lettuce]使用这两个技术实现发布者/订阅者之间的事件传递）
 
@@ -41,7 +41,7 @@
 
 * `Hikic.js` ：一款类似 `jQuery` 但是又优于 `jQuery` 的高性能 `JavaScript` 库
 
-* `Atom`：`github`提供的文件编辑器，对`html`、`CSS`、js比较友好
+* `Atom`：`github`提供的文件编辑器，对`html`、`CSS`、js比较友好 `￠`
 
 * `HanLP` ：汉语处理工具
 
@@ -121,7 +121,7 @@
 
 * 适合微信小程序的UI：`MinUI`、`zanUI`、`weui`（这个应该是最佳选择）
 
-* `Animate.css` 一个动画库
+* `Animate.css` 一个动画库 `￠`
 
 * `Zulip `
 
@@ -171,7 +171,9 @@
 
 * [CoreUI](https://coreui.io/?utm_source=vuejs&utm_medium=logo&utm_campaign=homepage)
 
+#### 待处理任务
 
+了解[coroutine](https://blog.csdn.net/yeasy/article/details/43152115 "搜索'coroutine'") 
 
 
 

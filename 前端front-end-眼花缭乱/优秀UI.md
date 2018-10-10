@@ -4,6 +4,8 @@
 
 ### [iView 3.0](https://www.oschina.net/news/98484/iview-3-0-released)
 
+iView 是一套基于 Vue.js 的开源 UI 组件库，主要服务于 PC 界面的中后台产品。
+
 
 
 ### 开发者社区 [iView Developer](https://dev.iviewui.com/) 

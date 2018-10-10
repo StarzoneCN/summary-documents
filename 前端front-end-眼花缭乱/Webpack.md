@@ -179,39 +179,261 @@
    }];
    ```
 
-* 
 
-## 3. 踩坑
+
+
+## 3. 配置
+
+### 3.1 output
+
+#### 3.1.1 path [#](https://webpack.docschina.org/configuration/output/#output-path)
+
+编译输出目录，默认当前目录；
+
+#### 3.1.2 filename [#](https://webpack.docschina.org/configuration/output/#output-filename)
+
+* 编译输出文件名，多模块入口时，可以有多个区分变量：
+  * name - 入口名称
+  * id - 内部chunk的id
+  * hash - 每次构建过程中，唯一生成的 hash 
+  * chunkhash - 每个 chunk 内容的 hash
+  * query - 模块的 query，例如，文件名 `?` 后面的字符串
+
+  **例**：[name].js
+
+* `[hash]` 和 `[chunkhash]` 的长度可以使用 `[hash:16]`（默认为20）来指定。或者，通过指定[`output.hashDigestLength`](https://webpack.docschina.org/configuration/output/#output-hashdigestlength) 在全局配置长度。
+
+* 虽然属性名叫“文件名（filename）”，但是也可以定义成文件路径：
+
+  如：/[name]/[id].js
+
+* 此选项不会影响那些「按需加载 chunk」的输出文件。对于这些文件，请使用 [`output.chunkFilename`](https://webpack.docschina.org/configuration/output/#output-chunkfilename) 选项来控制输出。
+
+* 通过 loader 创建的文件也不受影响。在这种情况下，你必须尝试 loader 特定的可用选项。
+
+* 在使用 [`ExtractTextWebpackPlugin`](https://webpack.docschina.org/plugins/extract-text-webpack-plugin) 时，可以用 `[contenthash]` 来获取提取文件的 hash（既不是 `[hash]` 也不是 `[chunkhash]`）。
+
+
+
+#### 3.1.3 hashDigest
+
+* 在生成 hash 时使用的编码方式，默认为 `'hex'`。支持 Node.js [`hash.digest`](https://nodejs.org/api/crypto.html#crypto_hash_digest_encoding) 的所有编码。
+  * 对文件名使用 `'base64'`，可能会出现问题，因为 base64 字母表中具有 `/` 这个字符(character)。
+
+
+
+#### 3.1.4 hashFunction
+
+散列算法，默认为 `'md5'`。支持 Node.JS [`crypto.createHash`](https://nodejs.org/api/crypto.html#crypto_crypto_createhash_algorithm_options) 的所有功能。
+
+* 从 `4.0.0-alpha2` 开始，`hashFunction` 现在可以是一个返回自定义 hash 的构造函数。
+
+
+
+#### 3.1.5 hashSalt
+
+加盐值，通过 Node.JS [`hash.update`](https://nodejs.org/api/crypto.html#crypto_hash_update_data_inputencoding) 来更新哈希。
+
+
+
+#### 3.1.6 publicPath
+
+此选项指定在浏览器中所引用的「此输出目录对应的**公开 URL**」
+
+```js
+publicPath: 'https://cdn.example.com/assets/'
+```
+
+* 默认值是一个空字符串 `""`；
+* 该选项的值是以 runtime(运行时) 或 loader(载入时) 所创建的每个 URL 为前缀。因此，在多数情况下，**此选项的值都会以/结束**。
+
+
+
+### 3.2 resolve
+
+#### 3.2.1 extensions
+
+自动解析确定的扩展，能够使用户在引入模块时不带扩展。默认值为：
+
+```js
+module.exports = {
+  //...
+  resolve: {
+    extensions: ['.wasm', '.mjs', '.js', '.json']
+  }
+};
+```
+
+> 使用此选项，会**覆盖默认数组**，这就意味着 webpack 将不再尝试使用默认扩展来解析模块。对于使用其扩展导入的模块，例如，`import SomeFile from "./somefile.ext"`，要想正确的解析，一个包含“*”的字符串必须包含在数组中。
+
+#### 3.2.2 alias
+
+```js
+resolve: {
+  extensions: ['.js', '.vue', '.json'],
+  alias: {
+    '@': resolve('src')  // 别名，创建 import 或 require 的别名，来确保模块引入变得更简单。
+  }
+}
+```
+
+### 3.3 module
+
+#### 3.3.1 rules [#](https://webpack.docschina.org/configuration/module/#module-rules)
+
+创建模块时，匹配请求的[规则](https://webpack.docschina.org/configuration/module/#rule)数组。这些规则能够修改模块的创建方式。这些规则能够对模块(module)应用 loader，或者修改解析器(parser)。
+
+##### 3.3.1.1 Rule
+
+每个规则可以分为三部分 - 条件(condition)，结果(result)和嵌套规则(nested rule)
+
+###### 3.3.1.1.1 条件
+
+* 条件有两种输入值：
+  1. resource：请求文件的绝对路径。它已经根据 [`resolve` 规则](https://webpack.docschina.org/configuration/resolve)解析。
+  2. issuer: 被请求资源(requested the resource)的模块文件的绝对路径。是导入时的位置。
+
+**例如:** 从 `app.js` `导入 './style.css'`，resource 是 `/path/to/style.css`. issuer 是 `/path/to/app.js`。
+
+* 在规则中，属性 [`test`](https://webpack.docschina.org/configuration/module/#rule-test), [`include`](https://webpack.docschina.org/configuration/module/#rule-include), [`exclude`](https://webpack.docschina.org/configuration/module/#rule-exclude) 和 [`resource`](https://webpack.docschina.org/configuration/module/#rule-resource) 对 resource 匹配，并且属性 [`issuer`](https://webpack.docschina.org/configuration/module/#rule-issuer) 对 issuer 匹配。
+
+###### 3.3.1.1.2 结果 [#](https://webpack.docschina.org/configuration/module/#rule-结果)
+
+规则结果只在规则条件匹配时使用。
+
+###### 3.3.1.1.3 test
+
+`Rule.test` 是 `Rule.resource.test` 的简写。如果你提供了一个 `Rule.test` 选项，就不能再提供 `Rule.resource`。
+
+###### 3.3.1.1.4 loaders
+
+`Rule.loaders` 是 `Rule.use` 的别名。
+
+###### 3.3.1.1.5 loader
+
+`Rule.loader` 是 `Rule.use: [ { loader } ]` 的简写。
+
+###### 3.3.1.1.6 use
+
+传递字符串（如：`use: [ "style-loader" ]`）是 loader 属性的简写方式（如：`use: [ { loader: "style-loader "} ]`）。
+
+* 由于需要支持 `Rule.options` 和 `UseEntry.options`，`Rule.use`，`Rule.query` 已废弃。
+
+###### 3.3.1.1.7 options 
+
+字符串或对象。值可以传递到 loader 中，将其理解为 loader 选项。
+
+* 由于兼容性原因，也可能有 `query` 属性，它是 `options` 属性的别名。使用 `options` 属性替代。
+
+**注意**，webpack 需要生成资源和所有 loader 的独立模块标识，包括选项。它尝试对选项对象使用 `JSON.stringify`。 [#](https://webpack.docschina.org/configuration/module/#useentry) 
+
+
+
+
+
+
+
+## 4. 踩坑
 
 * webpack-dev-server 进行打包时，它默认打包到根目录下
 
-## 4. 方案
+## 5. 方案
 
-### 4.1 Vuejs中使用Awesome图标 - [✈](http://www.hangge.com/blog/cache/detail_2104.html)
+### 5.1 Vuejs中使用Awesome图标 - [✈](http://www.hangge.com/blog/cache/detail_2104.html)
 
 
 
-## 4. 疑点
+
+
+## 6. 插件
+
+### 6.1 [html-webpack-plugin](https://webpack.docschina.org/plugins/html-webpack-plugin/)
+
+[`HtmlWebpackPlugin`](https://github.com/jantimon/html-webpack-plugin)简化了HTML文件的创建，以便为你的webpack包提供服务。
+
+> 这对于在文件名中包含每次会随着编译而发生变化哈希的 webpack bundle 尤其有用。 你可以让插件为你生成一个HTML文件，使用[lodash模板](https://lodash.com/docs#template)提供你自己的模板，或使用你自己的[loader](https://webpack.docschina.org/loaders)。
+
+[官方文档](https://github.com/jantimon/html-webpack-plugin#options) 
+
+
+
+
+
+### 6.2 portfinder
+
+#### 6.2.1 使用
+
+方式一：
+
+```js
+var portfinder = require('portfinder');
+ 
+portfinder.getPort(function (err, port) {
+    //
+    // `port` is guaranteed to be a free port
+    // in this scope.
+    //
+});
+```
+
+方式二：
+
+```js
+  const portfinder = require('portfinder');
+ 
+  portfinder.getPortPromise()
+    .then((port) => {
+        //
+        // `port` is guaranteed to be a free port
+        // in this scope.
+        //
+    })
+    .catch((err) => {
+        //
+        // Could not get a free port, `err` contains the reason.
+        //
+    });
+```
+
+**注**：如果在不支持promise的nodejs版本中调用了`portfinder.getPortPromise()`函数，程序会抛出错误，除非对promise进行了扩展支持；
+
+#### 6.2.2 配置
+
+##### 6.2.2.1 portfinder.basePort
+
+端口查询其实端口号
+
+比如：如果设置`portfinder.basePort`＝8080，那么portfinder就会从8080端口开始检查端口是否被占用，知道找到一个闲置的端口，否则，抛出错误；
+
+
+
+
+
+## 7. 疑点
 
 * [高级进阶](https://webpack.docschina.org/concepts/output/#高级进阶)
 * ? 记住，只设置 `NODE_ENV` 时，不会自动设置 `mode`。
 * 插件目的在于解决 [loader](https://webpack.docschina.org/concepts/loaders) 无法实现的**其他事**
 
-## n优化
 
-### n.1 CommonJS
+
+
+
+## 8优化
+
+### 8.1 CommonJS
 
 * > commonJS用同步的方式加载模块。在服务端，模块文件都存在本地磁盘，读取非常快，所以这样做不会有问题。但是在浏览器端，限于网络原因，更合理的方案是使用异步加载
 
-### n.2 AMD
+### 8.2 AMD
 
 * > AMD规范采用异步方式加载模块，模块的加载不影响它后面语句的运行
 
-### n.3 CMD
+### 8.3 CMD
 
 * > CMD是另一种js模块化方案，它与AMD很类似，不同点在于：AMD 推崇依赖前置、提前执行，CMD推崇依赖就近、延迟执行。此规范其实是在sea.js推广过程中产生的
 
-### n.4 ES6引入
+### 8.4 ES6引入
 
 * > ES6的模块不是对象，`import`命令会被 JavaScript 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载，所以无法实现条件加载。也正因为这个，使得静态分析成为可能
 
@@ -226,15 +448,21 @@
 
 
 
-## n. 相关博客
+## 9. 相关博客
 
 * webpack主要配置介绍：http://web.jobbole.com/84847/
 
 
 
+## 10. 扩展
+
+### 10.1 自由变量
+
+查看[博客](https://blog.csdn.net/u010425776/article/details/52562456)
 
 
-## n. 跳过的步骤总是要还的
+
+## 11. 跳过的步骤总是要还的
 
 - [手动打包一个应用程序](https://www.youtube.com/watch?v=UNMkLHzofQI)
 - [实时编写一个简单的模块打包工具](https://www.youtube.com/watch?v=Gc9-7PBqOC8)
