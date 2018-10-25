@@ -32,6 +32,28 @@
 
 
 
+### 1.1 自动类型转换
+
+#### 1.1.1 基本类型
+
+##### 示例一
+
+**byte + byte = int**
+
+> [JLS 5.6.2](http://java.sun.com/docs/books/jls/third_edition/html/conversions.html#5.6.2) makes it clear：
+>
+> When an operator applies binary numeric promotion to a pair of operands, each of which must denote a value that is convertible to a numeric type, the following rules apply, in order, using widening conversion (§5.1.2) to convert operands as necessary: 
+>
+> * If any of the operands is of a reference type, unboxing conversion (§5.1.8) is performed. Then: 
+> * If either operand is of type double, the other is converted to double. 
+> * Otherwise, if either operand is of type float, the other is converted to float. 
+> * Otherwise, if either operand is of type long, the other is converted to long. 
+> * **Otherwise, both operands are converted to type int.**
+
+> It means that Java prefers to treat smaller data types as ints, since any modern processor has at least 32-bit words anyway.
+
+
+
 ## 2. 泛型
 
 ### 2.1 泛型类
@@ -63,3 +85,4 @@ public <T> T genericMethod(Class<T> tClass)throws InstantiationException ,
 ```
 
 **注**：没有声明\<T>的方法不是泛型方法；
+

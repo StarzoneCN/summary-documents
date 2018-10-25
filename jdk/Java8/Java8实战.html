@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Java8实战.html</title>
+<style>
+* {
+    overflow: visible !important;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    box-decoration-break: clone;
+}
+
+html, body {
+    background: #FFF;
+    font-family: "Segoe UI", Arial, freesans, sans-serif;
+    font-size: 10px;
+    line-height: 1.4;
+    color: #333;
+    word-wrap: break-word;
+	hyphens: auto;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 4px solid #EEE;
+}
+
+code {
+    padding: .1em .4em;
+    display: inline-block;
+    background-color: #f9f2f4;
+    color: #c7254e;
+    border-radius: 3px;
+    border: 0 none;
+    font: 9px Consolas, "Liberation Mono", Menlo, "Courier New", Courier, monospace;
+    hyphens: manual;
+}
+
+pre code {
+    padding: 15px;
+    display: block;
+    background-color: #F9F9F9;
+    color: #555;
+    font-size: 10px;
+    box-shadow: inset -1px -1px 0 rgba(0, 0, 0, .08);
+    word-wrap: normal;
+}
+
+/* replace light background for some hljs themes */
+code.github-css,
+code.github-gist-css,
+code.tomorrow-css,
+code.default-css,
+code.googlecode-css,
+code.ascetic-css,
+code.color-brewer-css,
+code.grayscale-css,
+code.idea-css,
+code.vs-css,
+code.xcode-css {
+    background-color: #F9F9F9 !important;
+}
+
+blockquote {
+    padding: 10px;
+    margin-left: 0;
+    color: #666;
+    border: 0 none;
+    border-left: 4px solid #EEE;
+}
+
+blockquote p:last-child,
+blockquote ul:last-child,
+blockquote ol:last-child {
+    margin-bottom: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #FFF;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #DDD;
+}
+
+table div {
+    page-break-inside: avoid;
+}
+
+th, td {
+    text-align: left;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td,
+table > tfoot > tr > td {
+    padding: 8px 14px;
+    vertical-align: top;
+    border-top: 1px solid #DDD;
+}
+
+table > caption + thead > tr:first-child > th,
+table > colgroup + thead > tr:first-child > th,
+table > thead:first-child > tr:first-child > th,
+table > caption + thead > tr:first-child > td,
+table > colgroup + thead > tr:first-child > td,
+table > thead:first-child > tr:first-child > td {
+    border-top: 0;
+}
+
+table > tbody + tbody {
+    border-top: 2px solid #DDD;
+}
+
+table table {
+    background-color: #FFF;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td,
+table > tfoot > tr > td {
+    border: 1px solid #DDD;
+}
+
+table > thead > tr > th,
+table > thead > tr > td {
+    border-bottom-width: 2px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 90%;
+}
+
+table > tbody > tr:nth-of-type(odd) {
+    background-color: #F9F9F9;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: inherit;
+    font-weight: normal;
+    line-height: 1.1;
+    color: #111;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0;
+    page-break-after: avoid;
+}
+
+h1, h2 {
+    border-bottom: 1px solid #EEE;
+    padding-bottom: 7px;
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: 22px;
+}
+
+h2 {
+    font-size: 17px;
+}
+
+h3 {
+    font-size: 15px;
+}
+
+h4 {
+    font-size: 11px;
+}
+
+h5, h6 {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+    position: relative;
+    bottom: 1px;
+}
+
+ul,
+ol {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+ul li,
+ol li {
+    margin-bottom: 2px;
+}
+
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 0;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #4078C0;
+}
+
+.new-page,
+.page-break,
+.next-page,
+.page-end {
+    page-break-before: always;
+}
+
+#pageHeader,
+#pageHeader a,
+#pageHeader a:visited {
+    color: #777;
+}
+
+#pageHeader span {
+    vertical-align: middle;
+}
+
+#pageFooter {
+    border-top: 1px solid #EEE;
+    padding-top: 5px;
+    color: #777;
+    font-size: 80%;
+}
+#pageFooter a,
+#pageFooter a:visited {
+    color: #777;
+}
+
+/**
+ * Your markdown-themeable-pdf custom styles
+ *
+ * The default file can be found in the folder ~/.atom/packages/markdown-themeable-pdf/templates
+ * The base css file can be found in the folder ~/.atom/packages/markdown-themeable-pdf/css
+ * The current highlight.js css file can be found in the folder ~/.atom/packages/markdown-themeable-pdf/node_modules/highlight.js/styles
+ */
+
+/*
+html, body {
+	color: red;
+}
+*/
+
+body {
+	color: #000000;
+	/*font-size: 23px;*/
+	padding: 0 20px 0 20px;
+}
+
+/*h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1.12em; }
+h5 { font-size: .83em; }
+h6 { font-size: .75em; }*/
+
+/**
+ * GitHub Gist Theme
+ * Author : Louis Barranqueiro - https://github.com/LouisBarranqueiro
+ */
+
+.hljs {
+  display: block;
+  background: white;
+  padding: 0.5em;
+  color: #333333;
+  overflow-x: auto;
+}
+
+.hljs-comment,
+.hljs-meta {
+  color: #969896;
+}
+
+.hljs-string,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-strong,
+.hljs-emphasis,
+.hljs-quote {
+  color: #df5000;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-type {
+  color: #a71d5d;
+}
+
+.hljs-literal,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-attribute {
+  color: #0086b3;
+}
+
+.hljs-section,
+.hljs-name {
+  color: #63a35c;
+}
+
+.hljs-tag {
+  color: #333333;
+}
+
+.hljs-title,
+.hljs-attr,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #795da3;
+}
+
+.hljs-addition {
+  color: #55a532;
+  background-color: #eaffea;
+}
+
+.hljs-deletion {
+  color: #bd2c00;
+  background-color: #ffecec;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+pre { white-space: pre-wrap !important; word-break: break-word !important; overflow: hidden !important;}
+</style>
+</head>
+<body>
+<div id="pageContent">
+<h1 id="java8"><div style="text-align:center;color:#FF9900">Java8实战</div></h1>
+<h2 id="1">1. 行为参数化</h2>
+<ul>
+<li>
+<p><strong>@FunctionalInterface</strong></p>
+<ul>
+<li>此注解会检查接口是不是函数式接口，如果不是，则会报错：”<em>Multiple non-overriding abstract methods found in interface Fo</em>o”</li>
+</ul>
+</li>
+<li>
+<p><strong>倒序</strong></p>
+<ul>
+<li>list.sort(comparing(Apple::getWeight).<code>reversed</code>());</li>
+</ul>
+</li>
+<li>
+<p><strong>比较器链</strong></p>
+<ul>
+<li>list.sort(comparing(Apple::getWeight) .<code>thenComparing</code>(Apple::getCountry));</li>
+</ul>
+</li>
+<li>
+<p><strong>谓语复合</strong></p>
+<ul>
+<li><code>Predicate</code>接口的<code>negate</code>、<code>and</code>和<code>or</code>方法
+<ul>
+<li>不是红苹果，eg: Predicate notRedApple = redApple.<code>negate</code>()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>函数复合</strong></p>
+<ul>
+<li>
+<p><code>andThen</code>和<code>compose</code>，<a href="http://www.importnew.com/17209.html">参考</a></p>
+<pre><code class="hljs github-gist-css java">Function&lt;Integer, Integer&gt; times2 = e -&gt; e * <span class="hljs-number">2</span>;
+Function&lt;Integer, Integer&gt; squared = e -&gt; e * e;
+
+times2.compose(squared).apply(<span class="hljs-number">4</span>);
+<span class="hljs-comment">// Returns 32</span>
+times2.andThen(squared).apply(<span class="hljs-number">4</span>);
+<span class="hljs-comment">// Returns 64</span>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2">2. 方法引用</h2>
+<ul>
+<li>
+<p><code>方法引用</code>就是<code>Lambda</code>表达式的快捷写法</p>
+<ul>
+<li>eg：(Apple a) -&gt; a.getWeight()  等效  Apple::getWeight()</li>
+</ul>
+</li>
+<li>
+<p>方法引用有三类</p>
+<ul>
+<li>
+<p><code>静态方法</code> ：<code>Integer</code>的<code>parseInt</code>方法，写作<code>Integer::parseInt</code></p>
+</li>
+<li>
+<p><code>参数类型的实例方法</code>：<code>(Apple a) -&gt; a.getWeight()</code> 可以换成<code>Apple::getWeight</code></p>
+</li>
+<li>
+<p><code>Lambda外的对象的实例方法</code>：</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">package</span> com.example.demo.multi.springBoot;
+
+<span class="hljs-keyword">import</span> com.example.demo.multi.springBoot.entity.User;
+<span class="hljs-keyword">import</span> org.junit.Test;
+<span class="hljs-keyword">import</span> java.util.function.Consumer;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EasyTester</span> </span>{
+
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>{
+        EasyTester easyTester = <span class="hljs-keyword">new</span> EasyTester();  <span class="hljs-comment">// Lambda外的对象easyTester</span>
+        apply(easyTester::printUserName);  <span class="hljs-comment">// 方法引用，引用easyTester对象的printUserName方法</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">apply</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> User&gt; function)</span></span>{
+        User user = <span class="hljs-keyword">new</span> User();
+        user.setName(<span class="hljs-string">"Tom"</span>);
+        user.setAge(<span class="hljs-number">10</span>);
+        function.accept(user);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printUserName</span><span class="hljs-params">(User user)</span> </span>{
+        System.out.println(<span class="hljs-string">"The user's name is "</span> + user.getName());
+    }
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>其他方法引用类型</p>
+<ul>
+<li>构造方法引用：<code>ClassName::new</code> ，与指向静态方法的引用类似</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-stream">3. Stream</h2>
+<ul>
+<li>
+<p><code>Guava</code>、<code>Apache</code>和<code>lambdaj</code>等库也都实现了类似的流功能</p>
+</li>
+<li>
+<p>流的源可以是<code>集合</code>、<code>数组</code>或<code>输入/输出资源</code> ，从有序集合生成流时会保留原有的顺序</p>
+</li>
+<li>
+<p>流的操作方法：<code>filter</code>、<code>map</code>、<code>reduce</code>、<code>find</code>、<code>match</code>、<code>sort</code> 、<code>flatMap</code></p>
+</li>
+<li>
+<p>关于<code>flatMap</code></p>
+<pre><code class="hljs github-gist-css java">List&lt;String&gt; uniqueCharacters = words.stream()
+ 	.map(w -&gt; w.split(<span class="hljs-string">""</span>))
+ 	.flatMap(Arrays::stream)
+ 	.distinct()
+ 	.collect(Collectors.toList());
+</code></pre>
+<p><code>flatMap</code>类似于降维；</p>
+</li>
+<li>
+<p><code>集合</code>讲的是数据，<code>流</code>讲的是计算</p>
+<ul>
+<li><em>流和集合的区别</em>就好比<code>DVD</code>和<code>流媒体</code>的区别：集合着急着创建数据，然后在处理；流则是边创建边使用；</li>
+</ul>
+</li>
+<li>
+<p>流只能被消费一次：</p>
+<pre><code class="hljs github-gist-css java">Stream&lt;String&gt; s = list.stream();
+s.forEach(System.out::println);
+s.forEach(System.out::println);  <span class="hljs-comment">// 这里会报错</span>
+</code></pre>
+</li>
+<li>
+<p>流是<code>内部迭代</code>，而集合是<code>外部迭代</code>；</p>
+</li>
+<li>
+<p>流的操作类型</p>
+<ul>
+<li>中间操作：filter、map、limit、reduce、match、sort、distinct、skip、flatMap（流的扁平化）等</li>
+<li>终端操作：collect、forEach、count、reduce</li>
+</ul>
+</li>
+<li>
+<p>流的查找与匹配</p>
+<ul>
+<li>allMatch、anyMatch、noneMatch、findFirst、findAny</li>
+</ul>
+</li>
+<li>
+<p><code>limit</code>操作与<code>短路</code>技巧、<code>匹配</code>操作与<code>短路</code></p>
+<blockquote>
+<p>有些操作不需要处理整个流就能得到结果。例如，假设你需要对一个用and连起来的大布 尔表达式求值。不管表达式有多长，你只需找到一个表达式为false，就可以推断整个表达式 将返回false，所以用不着计算整个表达式。这就是短路。</p>
+<p>对于流而言，某些操作（例如allMatch、anyMatch、noneMatch、findFirst和findAny） 不用处理整个流就能得到结果。只要找到一个元素，就可以有结果了。同样，limit也是一个 短路操作：它只需要创建一个给定大小的流，而用不着处理流中所有的元素。在碰到无限大小 的流的时候，这种操作就有用了：它们可以把无限流变成有限流。</p>
+</blockquote>
+</li>
+<li>
+<p><code>《Java8实战》</code><em>P105</em>页 - 一个优秀的求勾股数的实例，以及优化实例；</p>
+</li>
+<li></li>
+</ul>
+<h3 id="31-optional">3.1 Optional类</h3>
+<ul>
+<li>Optional类（java.util.Optional）是一个容器类，代表一个值存在或不存在。</li>
+<li>关键API
+<ul>
+<li>isPresent()</li>
+<li>ifPresent(Consumer block)</li>
+<li>T get()  - 值存在时返回值，否则抛出一个NoSuchElement异常</li>
+<li>T orElse(T other)  - 值存在时返回值，否则返回一个默认值</li>
+</ul>
+</li>
+</ul>
+<h3 id="32">3.2 归约</h3>
+<ul>
+<li>
+<p>reduce</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">int</span> sum = numbers.stream().reduce(<span class="hljs-number">0</span>, Integer::sum);
+<span class="hljs-comment">// 无初始值</span>
+Optional&lt;Integer&gt; sum = numbers.stream().reduce((a, b) -&gt; (a + b));  <span class="hljs-comment">// 因为，如果没有初始值，并且数组为空的话，不知道返回什么，所以，这里返回Optional类</span>
+</code></pre>
+<p><a href="https://blog.csdn.net/IO_Field/article/details/54971679">扩展</a></p>
+</li>
+<li>
+<p><strong>归约方法的优势与并行化</strong>、</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-comment">// 如果使用For-each实现并行，那简直就是折磨</span>
+<span class="hljs-comment">// 但要并行执行这段代码也要满足一定的条件：传递给reduce的Lambda不能更改状态（如实例变量），而且操作必须满足结合律才可以按任意顺序执行。</span>
+<span class="hljs-keyword">int</span> sum = numbers.parallelStream().reduce(<span class="hljs-number">0</span>, Integer::sum);
+</code></pre>
+</li>
+</ul>
+<h3 id="33">3.3 流的状态</h3>
+<ul>
+<li><code>sort</code>或<code>distinct</code>等操作，从流中排序和删除重复项时都需要知道<em>先前的历史</em> ，我们把这些操作叫作<strong>有状态操作</strong>；</li>
+</ul>
+<h3 id="34">3.4 有界和无界</h3>
+<ul>
+<li>无界
+<ul>
+<li>排序要求所有元素都放入缓冲区后才能给输出流加入一个项目，这一操作的存储要求是无界的；</li>
+</ul>
+</li>
+<li>有界
+<ul>
+<li>如reduce、sum、max等操作需要内部状态来累积结果。在我们的例子里就是一个int或double，而int只需要4个字节，double只需要8个字节；</li>
+</ul>
+</li>
+</ul>
+<h3 id="35">3.5 流操作总结</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">返回类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">filter</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">distinct</td>
+<td style="text-align:center">中间  (有状态-无界)</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">skip</td>
+<td style="text-align:center">中间 (有状态-有界)</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">limit</td>
+<td style="text-align:center">中间 (有状态-有界)</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">map</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">flatMap</td>
+<td style="text-align:center">中间</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">sorted</td>
+<td style="text-align:center">中间  (有状态-无界)</td>
+<td style="text-align:center">Stream&lt;T&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">anyMatch</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">noneMatch</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">allMatch</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">boolean</td>
+</tr>
+<tr>
+<td style="text-align:center">findAny</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">Optional</td>
+</tr>
+<tr>
+<td style="text-align:center">findFirst</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">Optional</td>
+</tr>
+<tr>
+<td style="text-align:center">forEach</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">void</td>
+</tr>
+<tr>
+<td style="text-align:center">collect</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">R</td>
+</tr>
+<tr>
+<td style="text-align:center">reduce</td>
+<td style="text-align:center">终端 (有状态-有界)</td>
+<td style="text-align:center">Optional</td>
+</tr>
+<tr>
+<td style="text-align:center">count</td>
+<td style="text-align:center">终端</td>
+<td style="text-align:center">long</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36">3.6 流中基本类型装箱问题</h3>
+<ul>
+<li>
+<p><code>IntStream</code>、<code>DoubleStream</code>和 <code>LongStream</code></p>
+<blockquote>
+<p>IntStream、DoubleStream和 LongStream，分别将流中的元素特化为int、long和double，从而避免了暗含的装箱成本。每 个接口都带来了进行常用数值归约的新方法，比如对数值流求和的sum，找到最大元素的max。 此外还有在必要时再把它们转换回对象流的方法 。</p>
+</blockquote>
+</li>
+<li>
+<p>将流转换为特化版本的常用方法是mapToInt、mapToDouble和mapToLong</p>
+</li>
+<li>
+<p>特化流转非特化流 - intStream.boxed()</p>
+</li>
+<li>
+<p><strong>特化流API</strong></p>
+<ul>
+<li>IntStream.range(1, 100)</li>
+<li>IntStream.rangeClosed(1, 100)</li>
+</ul>
+</li>
+</ul>
+<h3 id="37">3.7 流的创建</h3>
+<ul>
+<li>
+<p>Stream.of()</p>
+<pre><code class="hljs github-gist-css java">Stream&lt;String&gt; stream = Stream.of(<span class="hljs-string">"Java 8 "</span>, <span class="hljs-string">"Lambdas "</span>, <span class="hljs-string">"In "</span>, <span class="hljs-string">"Action"</span>);
+</code></pre>
+</li>
+<li>
+<p>创建空流</p>
+<pre><code class="hljs github-gist-css java">Stream&lt;String&gt; emptyStream = Stream.empty();
+</code></pre>
+</li>
+<li>
+<p>数组创建流</p>
+<pre><code class="hljs github-gist-css java">Arrays.stream(numbers)
+</code></pre>
+</li>
+<li>
+<p>由文件创建流</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-comment">// Files.lines得到一个流，其中的每个元素都是给定文件中的一行</span>
+Stream&lt;String&gt; lines = Files.lines(Paths.get(<span class="hljs-string">"data.txt"</span>), Charset.defaultCharset())
+</code></pre>
+</li>
+<li>
+<p><code>Stream.iterate</code>和<code>Stream.generate</code></p>
+<blockquote>
+<p>Stream API提供了两个静态方法来从函数生成流：Stream.iterate和Stream.generate。 这两个操作可以创建所谓的无限流：不像从固定集合创建的流那样有固定大小的流。由iterate 和generate产生的流会用给定的函数按需创建值，因此可以无穷无尽地计算下去！一般来说， 应该使用limit(n)来对这种流加以限制，以避免打印无穷多个值。</p>
+</blockquote>
+<pre><code class="hljs github-gist-css java"><span class="hljs-comment">// iterate</span>
+Stream.iterate(<span class="hljs-number">0</span>, n -&gt; n + <span class="hljs-number">2</span>)
+ 	.limit(<span class="hljs-number">10</span>)
+ 	.forEach(System.out::println);
+<span class="hljs-comment">// generate</span>
+Stream.generate(Math::random)
+ 	.limit(<span class="hljs-number">5</span>)
+	.forEach(System.out::println);
+</code></pre>
+<ul>
+<li>
+<p>《Java8实战》P109 - 副作用的例子    ——  <em>匿名类和Lambda的区别</em></p>
+<blockquote>
+<p>相比之下，使用iterate的方法则是纯粹不变的：它没有修改现有状态， 但在每次迭代时会创建新的元组。你将在第7章了解到，你应该始终采用不变的方法</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="38">3.8 终端方法</h3>
+<ul>
+<li>
+<p><code>collect</code></p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-comment">// 分组</span>
+Map&lt;Currency, List&lt;Transaction&gt;&gt; transactionsByCurrencies = transactions.stream().collect(groupingBy(Transaction::getCurrency));
+</code></pre>
+</li>
+<li>
+<p><code>groupingBy</code></p>
+<ul>
+<li>
+<p>一级分组</p>
+<pre><code class="hljs github-gist-css java">menu.stream().collect(groupingBy(Dish::getType));
+</code></pre>
+</li>
+<li>
+<p>二级分组</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-comment">// 结果是个两级Map</span>
+menu.stream().collect(groupingBy(Dish::getType,
+ 	groupingBy(dish -&gt; {
+ 		<span class="hljs-keyword">if</span> (dish.getCalories() &lt;= <span class="hljs-number">400</span>)
+ 			<span class="hljs-keyword">return</span> CaloricLevel.DIET;
+ 		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (dish.getCalories() &lt;= <span class="hljs-number">700</span>)
+ 			<span class="hljs-keyword">return</span> CaloricLevel.NORMAL;
+ 		<span class="hljs-keyword">else</span>
+ 			<span class="hljs-keyword">return</span> CaloricLevel.FAT;
+ 	})));
+</code></pre>
+<blockquote>
+<p>Collectors.groupingBy工厂方法创 建的收集器，它除了普通的分类函数之外，还可以接受collector类型的第二个参数；所以，双参数的groupingBy的第二个参数不一定要是groupingBy，也可以是Collectors.counting收集器，而结果就是 <em>{MEAT=3, FISH=2, OTHER=4}</em></p>
+</blockquote>
+<ul>
+<li>普通的单参数groupingBy(f)（其中f是分类函数）实际上是groupingBy(f, toList())的简便写法。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>partitioningBy</code> 是<code>groupingBy</code>的特殊情况</p>
+</li>
+<li>
+<p><code>Collectors.characteristics</code>方法决定是否可以使用并行方式处理流 - <em>《Java8实战》P133</em></p>
+</li>
+<li>
+<p>想策底明白终端操作，就必须明白<code>Collector</code> 接口中的5个方法；</p>
+</li>
+</ul>
+<h3 id="39">3.9 自定义收集器</h3>
+<p>以《Java8实战》中的举例为展示示例：位置-查看书籍的<code>6.5.1 理解Collector 接口声明的方法</code></p>
+<h4 id="391">3.9.1 实现类签名</h4>
+<p>public interface Collector &lt;T, A, R&gt;</p>
+<ul>
+<li>T - 流中元素的类型</li>
+<li>A - 用于累积部分结果的对象类型</li>
+<li>R - collect操作最终结果的类型</li>
+</ul>
+<p>例：<em>《Java8实战》- p137</em></p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PrimeNumbersCollector</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Collector</span>&lt;<span class="hljs-title">Integer</span>, <span class="hljs-title">Map</span>&lt;<span class="hljs-title">Boolean</span>, <span class="hljs-title">List</span>&lt;<span class="hljs-title">Integer</span>&gt;&gt;, <span class="hljs-title">Map</span>&lt;<span class="hljs-title">Boolean</span>, <span class="hljs-title">List</span>&lt;<span class="hljs-title">Integer</span>&gt;&gt;&gt; </span>{
+
+}
+</code></pre>
+<h4 id="392">3.9.2 实现归约</h4>
+<h5 id="3921-supplier">3.9.2.1 supplier方法</h5>
+<p>提供收集器对象：Supplier&lt;A&gt; supplier()</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">public</span> Supplier&lt;Map&lt;Boolean, List&lt;Integer&gt;&gt;&gt; supplier() {
+ <span class="hljs-keyword">return</span> () -&gt; <span class="hljs-keyword">new</span> HashMap&lt;Boolean, List&lt;Integer&gt;&gt;() {{ <span class="hljs-comment">// 这里的初始化也很有意思</span>
+     put(<span class="hljs-keyword">true</span>, <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;());
+     put(<span class="hljs-keyword">false</span>, <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;());
+ }};
+}
+</code></pre>
+<h5 id="3922-accumulator-">3.9.2.2 accumulator - 收集器</h5>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">public</span> BiConsumer&lt;Map&lt;Boolean, List&lt;Integer&gt;&gt;, Integer&gt; accumulator() {
+ <span class="hljs-keyword">return</span> (Map&lt;Boolean, List&lt;Integer&gt;&gt; acc, Integer candidate) -&gt; {
+ 	acc.get(isPrime(acc.get(<span class="hljs-keyword">true</span>), candidate))
+ 		.add(candidate);
+ };
+}
+
+<span class="hljs-comment">/* 判断是否是质数，注意此方法局限性：此方法是在求取连续0-n中质数列时使用到的； */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isPrime</span><span class="hljs-params">(List&lt;Integer&gt; primes, <span class="hljs-keyword">int</span> candidate)</span></span>{
+ <span class="hljs-keyword">int</span> candidateRoot = (<span class="hljs-keyword">int</span>) Math.sqrt((<span class="hljs-keyword">double</span>) candidate);
+ <span class="hljs-keyword">return</span> takeWhile(primes, i -&gt; i &lt;= candidateRoot)
+     .stream()
+     .noneMatch(p -&gt; candidate % p == <span class="hljs-number">0</span>);
+}
+</code></pre>
+<h4 id="393-combiner">3.9.3 多线程支持 - combiner</h4>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">public</span> BinaryOperator&lt;Map&lt;Boolean, List&lt;Integer&gt;&gt;&gt; combiner() {
+ 	<span class="hljs-keyword">return</span> (Map&lt;Boolean, List&lt;Integer&gt;&gt; map1, Map&lt;Boolean, List&lt;Integer&gt;&gt; map2) -&gt; {
+         map1.get(<span class="hljs-keyword">true</span>).addAll(map2.get(<span class="hljs-keyword">true</span>));
+         map1.get(<span class="hljs-keyword">false</span>).addAll(map2.get(<span class="hljs-keyword">false</span>));
+         <span class="hljs-keyword">return</span> map1;
+    };
+}
+</code></pre>
+<blockquote>
+<p>实际上这个收集器是不能并行使用的，因为该算法本身是顺序的。这意味着永远都不会调用combiner方法，你可以把它的实现留空（更好的做法是抛出一个UnsupportedOperationException异常）。为了让这个例子完整，我们还是决定实现它。</p>
+</blockquote>
+<h3 id="310">3.10 并行与顺序</h3>
+<h4 id="3101">3.10.1 并行方法</h4>
+<p><strong>parallel</strong> - 对流进行并行执行</p>
+<blockquote>
+<p>并行流内部使用了默认的ForkJoinPool(到分支/合并框架)，</p>
+</blockquote>
+<ul>
+<li>
+<p>并行线程数</p>
+<ul>
+<li>
+<p>默认的线程数量就是你的<strong>处理器数量</strong>，这个值是由 <code>Runtime.getRuntime().availableProcessors()</code>得到的</p>
+</li>
+<li>
+<p>可以通过系统属性 <code>java.util.concurrent.ForkJoinPool.common.parallelism</code>来改变线程池大小：</p>
+<blockquote>
+<p>System.setProperty(&quot;java.util.concurrent.ForkJoinPool.common.parallelism&quot;,&quot;12&quot;);<br>
+这是一个全局设置，因此它将影响代码中所有的并行流。反过来说，目前还无法专为某个<br>
+并行流指定这个值。一般而言，让ForkJoinPool的大小等于处理器数量是个不错的默认值，<br>
+除非你有很好的理由，否则我们强烈建议你不要修改它。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3102">3.10.2 顺序方法</h4>
+<p><strong>sequential</strong> - 对并行流调用sequential方法就可以把它变成顺序流</p>
+<h4 id="3103">3.10.3 并行/顺序的选择</h4>
+<p>重要的一点就是：要保证在内核中并行执行工作的时间比在内核之间传输数据的时间长；</p>
+<p><strong>反例1</strong>：</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">sideEffectSum</span><span class="hljs-params">(<span class="hljs-keyword">long</span> n)</span> </span>{
+     Accumulator accumulator = <span class="hljs-keyword">new</span> Accumulator();
+     LongStream.rangeClosed(<span class="hljs-number">1</span>, n).forEach(accumulator::add);
+     <span class="hljs-keyword">return</span> accumulator.total;
+}
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Accumulator</span> </span>{
+     <span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> total = <span class="hljs-number">0</span>;
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> </span>{ total += value; }
+}
+</code></pre>
+<blockquote>
+<p>那这种代码又有什么问题呢？不幸的是，它真的无可救药，因为它在本质上就是顺序的。每次访问total都会出现数据竞争</p>
+</blockquote>
+<p><strong>反例2</strong></p>
+<pre><code class="hljs github-gist-css java">public static long sideEffectParallelSum(long n) {
+     Accumulator accumulator = new Accumulator();
+     LongStream.rangeClosed(1, n).parallel().forEach(accumulator::add);
+     return accumulator.total;
+}
+
+System.out.println("SideEffect parallel sum done in: " +
+ measurePerf(ParallelStreams::sideEffectParallelSum, 10_000_000L) +"
+ msecs" );
+// 结果：
+//Result: 5959989000692
+//Result: 7425264100768
+//Result: 6827235020033
+//Result: 7192970417739
+//Result: 6714157975331
+//Result: 7497810541907
+//Result: 6435348440385
+//Result: 6999349840672
+//Result: 7435914379978
+//Result: 7715125932481
+//SideEffect parallel sum done in: 49 msecs
+</code></pre>
+<blockquote>
+<p>此示例的问题是每次执行都会返回不同的结果，都离正确值50000005000000差很远。这是由于多个线程在同时访问累加器，执行total += value，而这一句虽然看似简单，却不是一个原子操作。问题的根源在于，forEach中调用的方法有副作用，它会改变多个线程共享的对象的可变状态</p>
+</blockquote>
+<p><strong>注</strong>：记住要避免共享可变状态</p>
+<h5 id="31031">3.10.3.1 <strong>选择原则</strong></h5>
+<ul>
+<li>
+<p><strong>测试</strong> - 手动测试，哪种方式运行性能好；</p>
+</li>
+<li>
+<p><strong>留意装箱</strong>  - 自动装箱和拆箱操作会大大降低性能</p>
+</li>
+<li>
+<p><strong>有些操作本身在并行流上的性能就比顺序流差</strong></p>
+<blockquote>
+<p>limit和findFirst等依赖于元素顺序的操作，它们在并行流上执行的代价非常大。例如，findAny会比findFirst性能好，因为它不一定要按顺序来执行。你总是可以调用unordered方法来把有序流变成无序流。那么，如果你需要流中的n个元素而不是专门要前n个的话，对无序并行流调用limit可能会比单个有序流（比如数据源是一个List）更高效。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>总计算成本</strong></p>
+<blockquote>
+<p>设N是要处理的元素的总数，Q是一个元素通过流水线的大致处理成本，则N*Q就是这个对成本的一个粗略的定性估计。Q值较高就意味着使用并行流时性能好的可能性比较大。</p>
+</blockquote>
+<p>个人理解：应该是N*Q的值越大，意味着使用并行时性能越好；</p>
+</li>
+<li>
+<p><strong>较小的数据量应避免使用并行</strong></p>
+<p>因为并行化也是有代价的，进程构建和进程间通信会有性能开销；</p>
+</li>
+<li>
+<p><strong>数据结构是否易于分解</strong></p>
+<p>如，ArrayList的拆分效率比LinkedList高得多，因为前者用不着遍历就可以平均拆分，而后者则必须遍历。另外，用range工厂方法创建的原始类型流也可以快速分解；</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">源</th>
+<th style="text-align:center">分解性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ArrayList</td>
+<td style="text-align:center">极佳</td>
+</tr>
+<tr>
+<td style="text-align:center">LinkedList</td>
+<td style="text-align:center">差</td>
+</tr>
+<tr>
+<td style="text-align:center">IntStream.range</td>
+<td style="text-align:center">极佳</td>
+</tr>
+<tr>
+<td style="text-align:center">Stream.iterate</td>
+<td style="text-align:center">差</td>
+</tr>
+<tr>
+<td style="text-align:center">HashSet</td>
+<td style="text-align:center">好</td>
+</tr>
+<tr>
+<td style="text-align:center">TreeSet</td>
+<td style="text-align:center">好</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>流自身的特点</strong></p>
+<p>流水线中的中间操作修改流的方式，也可能会改变分解过程的性能；</p>
+</li>
+<li>
+<p><strong>合并步骤的代价</strong></p>
+</li>
+</ul>
+<h3 id="311">3.11 有序变无序</h3>
+<p><code>unordered</code>方法</p>
+<h3 id="312">3.12 并行拆分策略</h3>
+<p>接口：Spliterator - <em>查看</em>**《Java8实战》** - P<small>157</small></p>
+<h3 id="313-peek">3.13 peek</h3>
+<p>peek的设计初衷就是在流的每个元素恢复运行之前，插入执行一个动作。</p>
+<pre><code class="hljs github-gist-css java">List&lt;Integer&gt; result =
+ 	numbers.stream()
+     .peek(x -&gt; System.out.println(<span class="hljs-string">"from stream: "</span> + x))
+     .map(x -&gt; x + <span class="hljs-number">17</span>)
+     .peek(x -&gt; System.out.println(<span class="hljs-string">"after map: "</span> + x))
+     .filter(x -&gt; x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)
+     .peek(x -&gt; System.out.println(<span class="hljs-string">"after filter: "</span> + x))
+     .limit(<span class="hljs-number">3</span>)
+     .peek(x -&gt; System.out.println(<span class="hljs-string">"after limit: "</span> + x))
+     .collect(toList());
+</code></pre>
+<h2 id="4-forkjoin">4. Fork/Join框架</h2>
+<h3 id="40">4.0 原理</h3>
+<blockquote>
+<p><strong>ForkJoinPool</strong>由ForkJoinTask数组和ForkJoinWorkerThread数组组成，ForkJoinTask数组负责存放程序提交给ForkJoinPool的任务，而ForkJoinWorkerThread数组负责执行这些任务。</p>
+</blockquote>
+<h4 id="401-forkjointaskfork">4.0.1 ForkJoinTask的fork方法实现原理</h4>
+<blockquote>
+<p>当我们调用ForkJoinTask的<strong>fork</strong>方法时，程序会调用ForkJoinWorkerThread的<strong>pushTask</strong>方法异步的执行这个任务，然后立即返回结果。</p>
+<p>pushTask方法把当前任务存放在ForkJoinTask 数组queue里，然后再调用ForkJoinPool的signalWork()方法唤醒或创建一个工作线程来执行任务。</p>
+</blockquote>
+<h4 id="402-forkjointaskjoin">4.0.2 ForkJoinTask的join方法实现原理</h4>
+<blockquote>
+<p>Join方法的主要作用是阻塞当前线程并等待获取结果。</p>
+</blockquote>
+<h3 id="41-executorservice">4.1 ExecutorService接口</h3>
+<h3 id="42-recursivetask">4.2 RecursiveTask</h3>
+<blockquote>
+<p>要把任务提交到这个池（ForkJoinPool），必须创建RecursiveTask的一个子类，其中R是并行化任务（以<br>
+及所有子任务）产生的结果类型，或者如果任务不返回结果，则是RecursiveAction类型（当<br>
+然它可能会更新其他非局部机构）。</p>
+</blockquote>
+<h4 id="421">4.2.1 主要方法</h4>
+<ul>
+<li>
+<p>protected abstract R compute();</p>
+<p>这个方法同时定义了将任务拆分成子任务的逻辑，以及无法再拆分或不方便再拆分时，生成<br>
+单个子任务结果的逻辑</p>
+</li>
+<li>
+<p><strong>异常处理</strong></p>
+<blockquote>
+<p>ForkJoinTask在执行的时候可能会抛出异常，但是我们没办法在主线程里直接捕获异常，所以ForkJoinTask提供了isCompletedAbnormally()方法来检查任务是否已经抛出异常或已经被取消了，并且可以通过ForkJoinTask的getException方法获取异常。</p>
+<p>getException方法返回Throwable对象，如果任务被取消了则返回CancellationException。如果任务没有完成或者没有抛出异常则返回null。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="43">4.3 工作窃取</h3>
+<p>参考<a href="http://www.infoq.com/cn/articles/fork-join-introduction" title="搜索'工作窃取算法'">博客</a></p>
+<h4 id="431">4.3.1 主要特性终结</h4>
+<ul>
+<li>一个线程一个队列；</li>
+<li>队列是双向的，方便窃取线程从尾端窃取任务；</li>
+</ul>
+<h4 id="432">4.3.2 疑问</h4>
+<ul>
+<li>是否存在多个线程窃取统一个线程的队列中的任务？</li>
+<li>如果总任务数量是n，单线程最大任务数为s，那么，整个计算过程中创建的线程总数是多少？</li>
+</ul>
+<h3 id="44">4.4 使用注意</h3>
+<ul>
+<li>对一个任务调用join方法会阻塞调用方，直到该任务做出结果。因此，有必要在两个子任务的计算都开始之后再调用它。否则，你得到的版本会比原始的顺序算法更慢更复杂，因为每个子任务都必须等待另一个子任务完成才能启动；</li>
+<li>不应该在RecursiveTask内部使用ForkJoinPool的invoke方法。相反，你应该始终直接调用compute或fork方法，只有顺序代码才应该用invoke来启动并行计算；</li>
+<li>调试使用分支/合并框架的并行计算可能有点棘手。特别是你平常都在你喜欢的IDE里面看栈跟踪（stack trace）来找问题，但放在分支合并计算上就不行了，因为调用compute的线程并不是概念上的调用方，后者是调用fork的那个；</li>
+<li>就像任何其他Java代码一样，分支/合并框架需要“预热”或者说要执行几遍才会被JIT编译器优化；这就是为什么在测量性能之前跑几遍程序很重要；</li>
+</ul>
+<h2 id="5">5. 重构</h2>
+<h3 id="51-lambda">5.1  匿名类和Lambda</h3>
+<h4 id="511-this-super">5.1.1 this 和 super</h4>
+<ul>
+<li>
+<p><strong>this</strong></p>
+<ul>
+<li>匿名类中 -  this代表的是类自身；</li>
+<li>Lambda中 - this代表的是包含类；</li>
+</ul>
+</li>
+<li>
+<p>变量<strong>作用域</strong></p>
+<p>匿名类可以屏蔽包含类的变量，而Lambda表达式不能（它们会导致编译错误）：</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+Runnable r1 = () -&gt; {
+     <span class="hljs-keyword">int</span> a = <span class="hljs-number">2</span>;  <span class="hljs-comment">// 编译错误</span>
+     System.out.println(a);
+};
+</code></pre>
+</li>
+<li>
+<p><strong>类型</strong></p>
+<p>匿名类的类型是在初始化时确定的，而Lambda的类型取决于它的上下文，例：</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Task</span></span>{
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">()</span></span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doSomething</span><span class="hljs-params">(Runnable r)</span></span>{ r.run(); }
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doSomething</span><span class="hljs-params">(Task a)</span></span>{ a.execute(); }
+
+<span class="hljs-comment">// 当调用doSomething时，难以区分参数类型是Runnable还是Task</span>
+doSomething(() -&gt; System.out.println(<span class="hljs-string">"Danger danger!!"</span>));
+
+<span class="hljs-comment">// 可以尝试使用显式的类型转换来解决这种模棱两可的情况</span>
+doSomething((Task)() -&gt; System.out.println(<span class="hljs-string">"Danger danger!!"</span>));
+</code></pre>
+</li>
+</ul>
+<h3 id="52">5.2 方法引用</h3>
+<pre><code class="hljs github-gist-css java">inventory.sort((Apple a1, Apple a2) -&gt; a1.getWeight().compareTo(a2.getWeight()));
+<span class="hljs-comment">//  使用方法引用</span>
+inventory.sort(comparing(Apple::getWeight));
+</code></pre>
+<h2 id="6-java8">6. Java8与设计模式</h2>
+<p><strong>设计模式</strong> -  对设计经验的归纳总结被称为设计模式；</p>
+<h3 id="61-java8p171">6.1 策略模式 - 《Java8实战》P<small>171</small></h3>
+<p>定义：策略模式代表了解决一类算法的通用解决方案，你可以在运行时选择使用哪种策略方；</p>
+<h4 id="611">6.1.1 模式结构</h4>
+<p>策略模式包含三部分内容：</p>
+<ul>
+<li>一个代表某个算法的接口；</li>
+<li>一个或多个该接口的具体实现，它们代表了算法的多种实现，表示不同的策略；</li>
+</ul>
+<h3 id="62-java8p172">6.2 模板方法 - 《Java8实战》P<small>172</small></h3>
+<p>通俗解释：模板方法模式在你“希望使用这个算法，但是需要对其中的某些行进行改进，才能达到希望的效果”时是非常有用的；</p>
+<p>个人理解：先提供一个通用的模板类，模板类中实现了通用的方法逻辑，之后，每个不同的业务对象只要继承模板类，修改自己业务对应的方法逻辑，剩下的方法继承父类的实现；</p>
+<h3 id="63-java8-p173">6.3 观察者模式 - 《Java8实战》 P<small>173</small></h3>
+<p>观察者模式是一种比较常见的方案，某些事件发生时（比如状态转变），如果一个对象（通常我们称之为主题）需要自动地通知其他多个对象（称为观察者），就会采用该方案；</p>
+<h3 id="64-java8-p175">6.4 责任链模式 - 《Java8实战》 P<small>175</small></h3>
+<p>一个处理对象可能需要在完成一些工作之后，将结果传递给另一个对象，这个对象接着做一些工作，再转交给下一个处理对象，以此类推；</p>
+<ul>
+<li>在Java8中，可以使用<strong>Function</strong>#<strong>andThen</strong>函数代替；</li>
+</ul>
+<h3 id="64-java8-p177">6.4 工厂模式 - 《Java8实战》 P<small>177</small></h3>
+<h2 id="7-java8">7. Java8接口默认方法</h2>
+<h3 id="71">7.1 接口的扩展</h3>
+<ul>
+<li>Java 8允许在接口内声明静态方法；</li>
+<li>默认方法；</li>
+</ul>
+<h3 id="72-jdk8">7.2 jdk8中的接口和抽象类的区别：</h3>
+<p><i>《Java 8 实战》 P<small>191</small></i></p>
+<ol>
+<li>一个类只能继承一个抽象类，但是一个类可以实现多个接口。</li>
+<li>一个抽象类可以通过实例变量（字段）保存一个通用状态，而接口是不能有实例变量的。</li>
+</ol>
+<h3 id="73">7.3 可选方法</h3>
+<p>用户实现接口的时候可能有些方法不想实现，jdk8之前，用户会在实现类中提供一个空的方法，而在jdk8中，如果接口中提供了默认方法，用户在不想实现某些方法时，就可以省略方法的实现；</p>
+<h3 id="74-">7.4 多继承 - 新模式</h3>
+<p><i>《Java 8 实战》 P<small>192</small></i></p>
+<h3 id="75">7.5 菱形继承问题</h3>
+<p><i>《Java 8 实战》 P<small>200</small></i></p>
+<h2 id="8-optional">8. Optional</h2>
+<h3 id="81-flatmap">8.1 flatMap</h3>
+<p>flatMap方法，类似流的扁平化，此处是将嵌套Optional处理成一层Optional；</p>
+<h3 id="82-optional">8.2 Optional与序列化</h3>
+<blockquote>
+<p>由于Optional类设计时就没特别考虑将其作为类的字段使用，所以它也并未实现Serializable接口。由于这个原因，如果你的应用使用了某些要求序列化的库或者框架，在域模型中使用Optional，有可能引发应用程序故障</p>
+</blockquote>
+<h3 id="83">8.3 旧代码改造</h3>
+<h4 id="831-optional">8.3.1 异常与 Optional 的对比</h4>
+<p><i>《Java 8 实战》 P<small>217 - 10.4.2 异常与 Optional 的对比</small></i></p>
+<p>OptionalUtility</p>
+<h3 id="84-optional">8.4 基础类型的Optional</h3>
+<p>比如：OptionalInt、OptionalLong以及OptionalDouble；</p>
+<blockquote>
+<p>不推荐大家使用基础类型的Optional，因为基础类型的Optional不支持map、flatMap以及filter方法，而这些却是Optional类最有用的方法。</p>
+</blockquote>
+<h2 id="9">9. 组合式异步编程</h2>
+<h3 id="91-future">9.1 Future</h3>
+<h4 id="911">9.1.1 注意点</h4>
+<ul>
+<li>比起<code>future.get()</code>，其实更推荐使用<code>get (long timeout, TimeUnit unit)</code> 方法，设置了超时时间可以防止程序无限制的等待future的结果。</li>
+</ul>
+<h3 id="92-completablefuture">9.2 CompletableFuture</h3>
+<p><i><a href="https://colobu.com/2016/02/29/Java-CompletableFuture/">博客</a></i> 中描述的很详细了，就暂时不再赘述了；</p>
+<p>CompletableFuture能够将回调放到与任务不同的线程中执行，也能将回调作为继续执行的同步函数，在与任务相同的线程中执行。它避免了传统回调最大的问题，那就是能够将控制流分离到不同的事件处理器中。</p>
+<blockquote>
+<p>CompletableFuture弥补了Future模式的缺点。在异步的任务完成后，需要用其结果继续操作时，无需等待。可以直接通过thenAccept、thenApply、thenCompose等方式将前面异步处理的结果交给另外一个异步事件处理线程来处理。</p>
+</blockquote>
+<h2 id="10">10. 优化进阶</h2>
+<h3 id="101">10.1 声明式编程</h3>
+<p><i>《Java 8 实战》 P<small>265</small></i></p>
+<h3 id="102">10.2 函数式编程</h3>
+<blockquote>
+<p>当谈论“函数式”时，我们想说的其实是“像数学函数那样——没有副作用”。</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>纯粹的函数式编程</strong>与<strong>函数式编程</strong> - <i>《Java 8 实战》 P<small>266</small></i></p>
+</li>
+<li>
+<p>要被称为函数式，函数或者方法不应该抛出任何异常  - <i>《Java 8 实战》 P<small>267</small></i></p>
+<blockquote>
+<p>从实际操作的角度出发，你可以选择在本地局部地使用异常，避免通过接口将结果暴露给其他方法，这种方式既取得了函数式的优点，又不会过度膨胀代码。</p>
+</blockquote>
+<blockquote>
+<p>作为函数式的程序，你的函数或方法调用的库函数如果有副作用，你必须设法隐藏它们的非函数式行为，否则就不能调用这些方法（换句话说，你需要确保它们对数据结构的任何修改对于调用者都是不可见的，你可以通过首次复制，或者捕获任何可能抛出的异常实现这一目的）</p>
+</blockquote>
+</li>
+<li>
+<p><strong>引用透明性</strong> -  <i>《Java 8 实战》 P<small>268</small></i></p>
+<blockquote>
+<p>如果一个函数只要传递同样的参数值，总是返回同样的结果，那这个函数就是引用透明的。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>尾调</strong>/<strong>尾递</strong> - <i>《Java 8 实战》 P<small>272</small></i></p>
+<blockquote>
+<p>尾调用（Tail Call）是指在调用函数时直接将被调函数的返回值作为调用函数的返回值返回。如果这个调用是调用了调用函数本身（递归调用），这叫做尾递归（Tail Recursive）。使用尾调用的一个优点在于它不消耗额外的调用栈空间，它可以替换当前的栈帧。因此，使用尾调用来替换标准的调用被称作尾调用消除（Tail Call Elimination），或者尾调用优化（Tail Call Optimization）。</p>
+</blockquote>
+<p>尾调定义 - <small><a href="https://zh.wikipedia.org/wiki/%E5%B0%BE%E8%B0%83%E7%94%A8">维基百科</a></small>：</p>
+<blockquote>
+<p><strong>尾调用</strong>是指一个函数里的最后一个动作是返回一个<a href="https://zh.wikipedia.org/wiki/%E5%AD%90%E7%A8%8B%E5%BA%8F">函数</a>的调用结果的情形，即最后一步新调用的返回值直接被当前函数的返回结果。[<a href="https://zh.wikipedia.org/wiki/%E5%B0%BE%E8%B0%83%E7%94%A8#cite_note-N.C.Zakas_p61-64-1">1]</a>此时，该尾部调用位置被称为<strong>尾位置</strong>。尾调用中有一种重要而特殊的情形叫做<strong>尾递归</strong>。经过适当处理，尾递归形式的函数的运行效率可以被极大地优化。[<a href="https://zh.wikipedia.org/wiki/%E5%B0%BE%E8%B0%83%E7%94%A8#cite_note-N.C.Zakas_p61-64-1">1]</a>尾调用原则上都可以通过简化函数<a href="https://zh.wikipedia.org/wiki/%E8%B0%83%E7%94%A8%E6%A0%88">调用栈</a>的结构而获得性能优化（称为“尾调用消除”），但是优化尾调用是否方便可行取决于运行环境对此类优化的支持程度如何。</p>
+</blockquote>
+<p><strong>注</strong>：Java是不支持尾调/尾递的；</p>
+</li>
+</ul>
+<h2 id="">扩展</h2>
+<ul>
+<li>
+<p><strong>Spliterator</strong></p>
+</li>
+<li>
+<p><em>Jdk8</em>中时间相关类<code>LocalDateTime</code>和<code>DateTimeFormatter</code>；</p>
+<ul>
+<li><code>Joda-Time</code> — 优秀的时间lib；<a href="https://www.jianshu.com/p/efdeda608780">参考</a></li>
+</ul>
+</li>
+<li>
+<p><strong>synchronized 降低性能的原因</strong></p>
+<ul>
+<li>多核CPU的每个处理器内核都有独立的高速缓存。加锁需要这些高速缓存同步运行，然而这又需要在内核间进行较慢的缓存一致性协议通信</li>
+</ul>
+</li>
+<li>
+<p><strong>变量</strong></p>
+<ul>
+<li>
+<p>思考下面例子的输出结果</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MeaningOfThis</span> </span>{
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> value = <span class="hljs-number">4</span>;   <span class="hljs-comment">// value</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doIt</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">int</span> value = <span class="hljs-number">6</span>;   <span class="hljs-comment">// value</span>
+        Runnable r = <span class="hljs-keyword">new</span> Runnable() {
+            <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> value = <span class="hljs-number">5</span>;   <span class="hljs-comment">// value</span>
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">int</span> value = <span class="hljs-number">10</span>;   <span class="hljs-comment">// value</span>
+                System.out.println(<span class="hljs-keyword">this</span>.value);
+            }
+        };
+        r.run();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String... args)</span> </span>{
+        MeaningOfThis m = <span class="hljs-keyword">new</span> MeaningOfThis();
+        m.doIt();
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><code>实例变量</code>都存储在<code>堆</code>中，而<code>局部变量</code>则保存在<code>栈</code>上</p>
+</li>
+<li>
+<p>下面的代码会报错</p>
+<pre><code class="hljs github-gist-css java"><span class="hljs-keyword">int</span> portNumber = <span class="hljs-number">1337</span>;
+Runnable r = () -&gt; System.out.println(portNumber);  <span class="hljs-comment">// Variable used in lambda expression should be final or effectively final</span>
+portNumber = <span class="hljs-number">31337</span>;
+</code></pre>
+<ul>
+<li>第一，实例变量和局部变量背后的实现有一 个关键不同。<em>实例变量都存储在堆中，而局部变量则保存在栈上</em>。如果Lambda可以直接访问局部变量，而且Lambda是在一个线程中使用的，则使用Lambda的线程，可能会在分配该变量的线 程将这个变量收回之后，去访问该变量。因此，Java在访问自由局部变量时，实际上是在访问它 的副本，而不是访问原始变量。如果局部变量仅仅赋值一次那就没有什么区别了——因此就有了 这个限制。</li>
+<li>第二，这一限制不鼓励你使用改变外部变量的典型命令式编程模式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>类结构的变更</strong>的影响的方面主要有（《Java 8 实战》 P<small>190</small>）：</p>
+<ol>
+<li>二进制 - 现有的二进制执行文件能无缝持续链接（包括验证、准备和解析）和运行</li>
+<li>源代码 - 引入变化之后，现有的程序依然能成功编译通过</li>
+<li>函数行为 - 变更发生之后，程序接受同样的输入能得到同样的结果</li>
+</ol>
+</li>
+<li>
+<p>Java8新语法 - <strong>super</strong></p>
+<p>格式： X.super.m(…)</p>
+<p>意义：X是你希望调用的m方法所在的父接口（不是父类，亲测过，父类不行）</p>
+<p>限制：</p>
+<ul>
+<li>X只能是接口；</li>
+<li>此语法必须存在于重写方法内；</li>
+<li>只能取到直接父接口中的m方法；</li>
+</ul>
+</li>
+</ul>
+<h2 id="questions">Questions</h2>
+<ul>
+<li>《Java8实战》- P<small>168</small> ： 对“有条件的延迟执行”小节不能理解；</li>
+</ul>
+
+</div></body>
+</html>

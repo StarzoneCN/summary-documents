@@ -60,13 +60,23 @@
 ## 7. 避免使用终结方法
 
 * 从一个对象变得`不可到达`开始，到它的`终结方法`执行，所花费的时间是任意长的；所以，类似在终结方法中关闭文件的做法的错误的；
-* 何时执行终结方法也是`垃圾回收算法`的一个功能，而垃圾回收算法在不同的`jvm实现`中会大相径庭，如果依赖`finallizer`，那么不同`jvm`中实现会截然不同；
-* 有时候`finallizer`是否执行都不能保证：程序终止，而`finallizer`方法却没执行；
+
+* 何时执行终结方法也是`垃圾回收算法`的一个功能，而垃圾回收算法在不同的`jvm实现`中会大相径庭，如果依赖`finalizer`，那么不同`jvm`中实现会截然不同；
+
+* 有时候`finalizer`是否执行都不能保证：程序终止，而`finalizer`方法却没执行；
+
 * 不要被`System.runFinalizersOnExit()`和`Runtime.runFinalizersOnExit()`诱惑，它们都有致命缺陷（多线程情况）；
-* `Finallizer`中的异常不会被打印，容易被忽略；
-* `Finallizer`增加性能损耗；
+
+* `Finalizer`中的异常不会被打印，容易被忽略；
+
+* `Finalizer`增加性能损耗；
+
 * 建议使用`try...finally`；
-* 子类如果重写了终结方法（`finallizer`），则必须再调用超类的终结方法；终结方法守卫者可以防止粗心大意而没有执行`super.finallizer`:
+
+* 子类如果重写了终结方法（`finalizer`），则必须再调用超类的终结方法；终结方法守卫者可以防止粗心大意而没有执行`super.finalizer`:
+
+  > 终结方法链不会自动执行，如果类有终结方法，并且子类覆盖了终结方法，则子类的终结方法必须手工调用超类的终结方法。如果子类实现者覆盖了超类的终结方法，但是忘了调用超类的终结方法，那么超类的终结方法永远不会调用。你应该在try块中终结子类，并在相应的finally块中调用超类的终结方法。
+
   ```java
   public class Parent {
     public static void main(final String[] args) throws Exception {
@@ -74,35 +84,31 @@
       System.gc();
       Thread.sleep(2000);
     }
-
+  
     private static void doSth() {
       Child c = new Child();
       System.out.println(c);
     }
-
+  
     @SuppressWarnings("unused")
     private final Object guardian = new Object() {
       @Override
       protected void finalize() {
         System.out.println("父类中匿名内部类--终结方法守卫者 重写的finalize()执行了");
-        // 在这里调用Parent重写的finalize即可在清理子类时调用父类自己的清理方法
+        // 可以在这里实现外围类（Parent）的终结逻辑，比如parentlFinalize()
         parentlFinalize();
         // 注
         // Parent.this.finalize(); 这样写不对，会执行Child重写的finalize()方法
       }
     };
-
+  
     private void parentlFinalize() {
       System.out.println("父类自身的终结方法执行了");
       // 一些逻辑..
     }
-
-    @Override
-    protected void finalize() {
-      parentlFinalize();
-    }
   }
   class Child extends Parent {
+      
     @Override
     protected void finalize() {
       System.out.println("子类finalize方法执行了，注意，子类并没有调用super.finalize()");
@@ -114,7 +120,7 @@
   ```
   ```
   输出：
-
+  
   Child@131b92e6
   子类finalize方法执行了，注意，子类并没有调用super.finalize()
   父类中匿名内部类--终结方法守卫者 重写的finalize()执行了
@@ -125,19 +131,20 @@
 
 ## 8. 覆盖`equals`方法的通用约定
 
-* 类的每个实例实质上都是唯一的；
-* 不关心类是否提供`逻辑相等`的测试功能；
-* 超类的`equals`方法也适合子类；
-* 不明白：  
-[![image.png](https://s31.postimg.cc/lfz4em3or/image.png)](https://postimg.cc/image/67970ua07/)  
+* 不建议覆盖equals方法的情况：
+  * 类的每个实例实质上都是唯一的；
+  * 不关心类是否提供`逻辑相等`的测试功能；
+  * 超类的`equals`方法也适合子类；
+  * 不明白： 
+    [![image.png](https://s31.postimg.cc/lfz4em3or/image.png)](https://postimg.cc/image/67970ua07/)  
 * 什么时候需要覆盖`equals`方法：
-[![image.png](https://s31.postimg.cc/hjlsir0qj/image.png)](https://postimg.cc/image/k0xjq0kmv/)  
-对于枚举类，逻辑相等和对象相等时一个意思，所以没必要覆盖`equals`；
+  [![image.png](https://s31.postimg.cc/hjlsir0qj/image.png)](https://postimg.cc/image/k0xjq0kmv/)  
+  对于枚举类，逻辑相等和对象相等时一个意思，所以没必要覆盖`equals`；
 * 覆盖`equals`需要遵守几个特性：`自反性`、`对称性`、`传递性`、`一致性`、以及`null`；
-* `氏替换原则`简单粗暴的理解：任何基类可以出现的地方，子类一定可以出现；
-* `Timestamp`类（`Date`的子类，增加了`nanoseconds`域）和`Date`类不要混合使用，混合情况下回违反`equals`的`自反性`;
+* `里氏替换原则`简单粗暴的理解：任何基类可以出现的地方，子类一定可以出现；
+* `Timestamp`类（`Date`的子类，增加了`nanoseconds`域）和`Date`类不要混合使用，混合情况下会违反`equals`的`自反性`;
 * `Equals`优化：
-  - 使用`==`检查对象引用;
+  - 使用`==`检查对象引用（对象地址）;
   - 使用`instanceof`检查类型；
   - 把参数转化成正确的类型（如：`date`转成`long`）；
   - 调整域的比较顺序：  
@@ -145,7 +152,7 @@
 * 重写`equals`的时候也要重写`hashcode`；
 * 不要将`equals(Object obj)`中的`Object`替换为其他类型（如：`MyClass`），这样就不是重写了，而是重载；添加`@Override`可以避免；
 * 尴尬：  
-[![image.png](https://s31.postimg.cc/7q4l5stff/image.png)](https://postimg.cc/image/4w1fscr93/)  
+  [![image.png](https://s31.postimg.cc/7q4l5stff/image.png)](https://postimg.cc/image/4w1fscr93/)  
 
 ## 9. 重写`equals`的时候也要重写`hashcode`
 
@@ -168,7 +175,22 @@
 ## 12. 考虑实现Comparable接口
 
 * 如果创建的类是一个值类，具有明显的内排序，就应该坚定地实现`Comparable`接口；
+
 * `compareTo`和`equals`不需要必须等效，比如：`BigDecimal(“1.0”)`和`BigDecimal(“1.00”);`但是如果使用`treeSet`之类的集合，则只算一个元素；
+
+  **扩展**：
+
+  ```java
+  System.out.println(new BigDecimal("1.2").equals(new BigDecimal("1.20")));  //输出false
+  System.out.println(new BigDecimal("1.2").compareTo(new BigDecimal("1.20")) == 0); //输出true
+          
+  System.out.println(new BigDecimal(1.2).equals(new BigDecimal("1.20"))); //输出是?
+  System.out.println(new BigDecimal(1.2).compareTo(new BigDecimal("1.20")) == 0); //输出是?
+     
+  System.out.println(new BigDecimal(1.2).equals(new BigDecimal(1.20))); //输出是?
+  System.out.println(new BigDecimal(1.2).compareTo(new BigDecimal(1.20)) == 0);//输出是?
+  ```
+
 
 # 第三章 类和接口
 
@@ -349,8 +371,10 @@
 ## 25. 列表优先于数组
 
 * 数组是`协变的`（`convariant`）
+
   - 如果Sub是Super的子类，那么Sub[]也是Super[]的子类；
 * 泛型是`不可变`的（`invariant`）
+
   - 对于不同类型Type1和Type2，`List<Type1>`既不是`List<Type2>`的子类，也不是的父类；
 * 相较于列表（list），数组（array）是有缺陷的：
   ```java
@@ -482,12 +506,15 @@
   ```
   这2种模式，在编译的时候即使运用错误，也难以察觉；
 * 关于**getDeclaringClass**方法
+
   >Two enum constants e1 and e2 are of the same `enum type` if and only if e1.getDeclaringClass() == e2.getDeclaringClass(), is `enum type`.
 * `Enum`在编译的时候会进行类型检查；
 * `Enum`方便扩展，可以添加任意多的方法；
+
   - 如此，在程序中，`Enum`就可以通过扩展，从简单的常量集合，渐渐完善成为功能齐全的抽象；
 * `Enum`是先了`Comparable`和`Serializable`接口；
 * `Enum`有一个静态方法：values()
+
   - 返回所有枚举实例；
 * 坏代码改进：
   ```java
@@ -579,6 +606,7 @@
   }
   ```
 * `Enum`在装载和初始化时会有些许性能消耗；
+
   - 除了手机、烤面包机等微型设备之外，其他设备可以忽略；
 
 ## 31. 用实例域代替序数
@@ -751,6 +779,7 @@
   - 不过，此时保护性拷贝可以使用`clone`方法，因为，`clone`是改变不到内部属性对象的；
 * 任何用户提供的对象进入到`内部数据结构`中时，都有必要考虑进行保护性拷贝；
 * 长度非零的数组总是可变的
+
   - 在返回数组到客户端之前，应该总是进行`保护性拷贝`或者为客户端提供一个不可变的`数组视图`；
 
 ## 40. 谨慎设计方法签名
@@ -808,6 +837,7 @@
 ## 42. 慎用可变参数
 
 * 可变参数举例：
+
   - `method(Integer ... id)`
 * 可变参数是在`1.5`版本中为`printf`而设计的；`printf`和`反射机制`从中极大地受益；
 * 可变参数在每次调用的时候都有数组分配和初始化，会有性能消耗；
@@ -844,6 +874,7 @@
 ## 45. 局部变量的作用域和最小化
 
 * **与C语言区别**
+
   - `C语言`要求变量必须再一个代码块的开始进行声明；`Java`却比较自由；
 * 在第一次使用的地方进行声明；
 * 当不能对变量进行有意义的初始化时，应该推迟变量的声明，直到初始化；
@@ -1155,7 +1186,6 @@
 
 - [Java.util.concurrent包研究](http://www.null.null "待补充")  
 
-  
 
 ## 唠唠其他，开小差
 
