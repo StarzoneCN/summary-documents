@@ -19,3 +19,21 @@
   - spring.cloud.config.server.git.uri
   - 一些加密/解密信息
 - application.yml 可以用来定义`应用级别`的，如果搭配 spring-cloud-config 使用 application.yml 里面定义的文件可以实现动态替换
+
+
+
+
+
+
+
+
+
+## 扩展
+
+### 1. Resource-通配符
+
+```java
+ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//将加载多个模式匹配的Resource  
+Resource[] resources = resolver.getResources("classpath*:META-INF/*.LIST"); 
+```

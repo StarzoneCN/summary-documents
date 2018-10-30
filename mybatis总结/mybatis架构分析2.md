@@ -555,7 +555,8 @@ public Object intercept(Invocation invocation) throws Throwable {
      // 只重写需要分页的sql语句。通过MappedStatement的ID匹配，默认重写以Page结尾的  
      //  MappedStatement的sql  
      if (mappedStatement.getId().matches(pageSqlId)) {  
-         BoundSql boundSql = (BoundSql) metaStatementHandler.getValue("delegate.boundSql");  
+         BoundSql boundSql = (BoundSql) metaStatementHandler
+             .getValue("delegate.boundSql");  
          Object parameterObject = boundSql.getParameterObject();  
          if (parameterObject == null) {  
              throw new NullPointerException("parameterObject is null!");  
@@ -570,7 +571,8 @@ public Object intercept(Invocation invocation) throws Throwable {
              // 采用物理分页后，就不需要mybatis的内存分页了，所以重置下面的两个参数  
              metaStatementHandler.setValue("delegate.rowBounds.offset",   
              RowBounds.NO_ROW_OFFSET);  
-             metaStatementHandler.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT);  
+             metaStatementHandler.setValue("delegate.rowBounds.limit",
+                                           RowBounds.NO_ROW_LIMIT);  
              Connection connection = (Connection) invocation.getArgs()[0];  
              // 重设分页参数里的总页数等  
              setPageParameter(sql, connection, mappedStatement, boundSql, page);  
