@@ -18,11 +18,12 @@
 
 ## 知识点
 * **`WebSecurityConfiguration`**类的文档说明详细地表明了`Spring-security`的定制化配置是如何导入的；
+
 * 只继承`AbstractSecurityWebApplicationInitializer`类，便可以继承`spring-security`（前提是使用了`spring-mvc`框架）  
 
     ```java
     import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;  
-
+    
     // 不用任何注解,然后SecurityConfig就会被自动注入到应用中，SecurityConfig需要注解
     public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
     
@@ -45,17 +46,18 @@
         }
     }
     ```
-    
+
 * `security`的配置方式可以有2种（都需要`@EnableWebSecurity`注解)：  
     ```
     // spring doc
-        Customizations can be made to WebSecurity by extending WebSecurityConfigurerAdapter and exposing it as a   
-    Configuration or implementing WebSecurityConfigurer and exposing it as a Configuration. This configuration is 
+        Customizations can be made to WebSecurity by extending WebSecurityConfigurerAdapter and exposing it as a Configuration or implementing WebSecurityConfigurer and exposing it as a Configuration. This configuration is 
     imported when using EnableWebSecurity.
-  ```
-  * 继承`WebSecurityConfigurerAdapter`类
-  * 继承`WebSecurityConfigurer`类  
-  
+    ```
+
+    * 继承`WebSecurityConfigurerAdapter`类
+    * 继承`WebSecurityConfigurer`类  
+
+
 * **过滤器链** 
   * `@EnableWebSecurity`注解中引入了`WebSecurityConfiguration`类（`@Import`），`WebSecurityConfiguration.springSecurityFilterChain()`方法生成过滤器链；
   * `WebSecurityConfiguration`创建`WebSecurity`，然后，`WebSecurity`的`build()`方法创建`FilterChainProxy`(是`Filter`的子类)
@@ -67,7 +69,7 @@
   * `SecurityConfigurer`（`WebSecurityConfigurerAdapter`的父接口）被加载后，会先执行`init(securityBuilder)`方法，然后调用`configure(SecurityBuilder)`方法；  
      * `WebSecurityConfigurerAdapter`中的2个方法（`configure(AuthenticationManagerBuilder)`和`configure(HttpSecurity)`）就是在`init(securityBuilder)`中执行的
      * `configure(SecurityBuilder)`是在`builder.doBuild()`调用时执行的；(`doBuild()`方法时在`@EnableWebSecurity`→`WebSecurityConfiguration.springSecurityFilterChain()`中执行)
-     
+  
 * **`Builder`和`Configurer`**  
   * `SecurityBuilder`需要用到`SecurityConfigurer`来生成过滤器链；
   * `http.formLogin()`、`http.httpBasic()`等，其实返回的就是`SecurityConfigurer`
@@ -104,7 +106,7 @@
 * 触发注销操作的url，默认是`/logout`。如果开启了`CSRF`保护(默认开启),那么请求必须是`POST`方式。
 * 在`Restful`模式下，`HttpStatusReturningLogoutSuccessHandler`可以实现非重定向，返回一个纯文本的状态码；
 * 获取当前用户  
-    ```
+  ```
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
      
     if (principal instanceof UserDetails) {
@@ -112,8 +114,9 @@
     } else {
     String username = principal.toString();
     }
-    ```
+  ```
 * `spring-security`关于`crsf`的解决方案  [传送门](https://blog.csdn.net/u012373815/article/details/55047285)
+
   * [应用中解决方法](https://www.jianshu.com/p/9a7b8b441b24)
 * cookie中保存的`RememberMe`的值是`PersistentRememberMeToken`类中的属性进行base64计算(`Base64(series + ":" + tokenValue)（去掉末尾的等号)`)
 

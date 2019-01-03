@@ -10,6 +10,8 @@
 
 ## 1. Instant
 
+### 1.0 扩展
+
 > Java API defines its own time-scale, the <i>Java Time-Scale</i>.
 >
 > The Java Time-Scale divides each calendar day into exactly 86400 subdivisions, known as seconds.  These seconds may differ from the SI second.  It closely matches the de facto international civil time scale, the definition of which changes from time to time.
@@ -21,7 +23,24 @@ Java时间标准与国际通用时间标准（the international civil time scale
 * Java时间标准与国际通用时间标准之间有精确的定义关系
 * Java时间标准与**UTC-SLS**（[UTC with Smoothed Leap Seconds](https://www.cl.cam.ac.uk/~mgk25/time/utc-sls/)）等价
 
-**Java Time-Scale**应用于所有的时间类中；
+#### 1.0.1 Java Time-Scale；
+
+##### 1.0.1.1  Java Time-Scale特点
+
+> - the Java Time-Scale shall closely match the underlying international civil time scale;
+> - the Java Time-Scale shall exactly match the international civil time scale at noon each day;
+> - the Java Time-Scale shall have a precisely-defined relationship to the international civil time scale.
+
+#### 1.0.2 关于UTC-SLS
+
+> - During the last 1000 seconds of a UTC day with inserted leap second, a UTC-SLS clock slows down to by 0.1% to 0.999 times its normal rate, such that the last 1000 UTC seconds (including the inserted leap second) span exactly the same time as the corresponding 999 "slow seconds" on the UTC-SLS clock.
+> - During the last 1000 seconds of a day with deleted leap second, a UTC-SLS clock accelerates by 0.1% to 1.001 times its normal rate, such that the last 1000 UTC seconds (excluding the deleted leap second) span exactly the same time as the corresponding 1001 “fast seconds” on the UTC-SLS clock.
+> - At each full hour (and half hour), UTC and UTC-SLS are identical, even right after a leap second.
+
+#### 1.0.3 UT1与UTC
+
+* UT1（类似的其他UT）是观测遥远的星体（星/类星体）而得出的太阳日；
+* UTC是根据原子钟进行计时；
 
 ### 1.1 机制
 
@@ -152,8 +171,6 @@ zdt = zdt.withLaterOffsetAtOverlap();
 
 
 
-
-
 ## 6. LocalDate
 
 `LocalDate`是不可变类型，每次操作都会产生一个新的实例，而原有实例不收任何影响；
@@ -190,7 +207,7 @@ date = date.with(nextOrSame(WEDNESDAY));
 
 ## 8. Chronology
 
-**Chronology**接口，是其他历法的主要入口点，它允许通过所属的语言环境查找对应的历法系统;
+**Chronology**接口，是其他历法的主要入口点，它允许通过所属的语言环境查找对应的历法系统; 
 
 * Java 8支持额外的4个历法系统：泰国佛教历，中华民国历(**MinguoDate**)，日本历（沿袭中国古代帝位纪年），伊斯兰历；如有需要，应用程序也可以实现自己的历法系统；
 
@@ -233,7 +250,7 @@ LocalTime lt = localDateTime.toLocalTime();
 
 
 
-## 11. ZoneId
+## 11. ZoneIdl
 
 在**java.time**之前，我们用**TimeZone**表示时区，而现在，用**ZoneId**。区别：
 

@@ -4,27 +4,25 @@
 
 ### 1.1 起步
 
-```xml
 <!--lombok - 代码去冗余工具-->
 <dependency>
-	<groupId>org.projectlombok</groupId>
-	<artifactId>lombok</artifactId>
-	<optional>true</optional>
+​	<groupId>org.projectlombok</groupId>
+​	<artifactId>lombok</artifactId>
+​	<optional>true</optional>
 </dependency>
 
 <!--mysql支持-->
 <dependency>
-	<groupId>mysql</groupId>
-	<artifactId>mysql-connector-java</artifactId>
-	<version>8.0.13</version>
+​	<groupId>mysql</groupId>
+​	<artifactId>mysql-connector-java</artifactId>
+​	<version>8.0.13</version>
 </dependency>
 
 <dependency>
-	<groupId>com.baomidou</groupId>
-	<artifactId>mybatis-plus-boot-starter</artifactId>
-	<version>3.0.1</version>
+​	<groupId>com.baomidou</groupId>
+​	<artifactId>mybatis-plus-boot-starter</artifactId>
+​	<version>3.0.1</version>
 </dependency>
-```
 
 spring-boot配置文件：
 
@@ -234,6 +232,126 @@ mybatis-plus:
 
 
 
+### 1.4 复杂[配置](https://mp.baomidou.com/config/)
+
+#### 1.4.1 添加xml配置文件 [#](https://mp.baomidou.com/config/#configlocation)
+
+```yaml
+mybatis-plus:
+  config-location: classpath:mybatis-config.xml
+```
+
+#### 1.4.2 Mapper.xml文件配置 [#](https://mp.baomidou.com/config/#mapperlocations)
+
+```yaml
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/*.xml
+```
+
+#### 1.4.3 别名父类 [#](https://mp.baomidou.com/config/#typealiasessupertype)
+
+该配置请和 [typeAliasesPackage](https://mp.baomidou.com/config/#typealiasespackage) 一起使用，如果配置了该属性，则仅仅会扫描路径下以该类作为父类的域对象 。
+
+#### 1.4.4 typeHandlersPackage [#](https://mp.baomidou.com/config/#typehandlerspackage)
+
+#### 1.4.5 typeEnumsPackage [#](https://mp.baomidou.com/config/#typeenumspackage)
+
+ 枚举类 扫描路径，如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性，具体使用请结合 [枚举注入](https://mp.baomidou.com/guide/enum.html) 查看。
+
+#### 1.4.6 checkConfigLocation [#](https://mp.baomidou.com/config/#checkconfiglocation)
+
+启动时是否检查 MyBatis XML 文件的存在，默认不检查。
+
+```yaml
+mybatis-plus:
+  check-config-location: false
+```
+
+#### 1.4.7 设置执行器 [#](https://mp.baomidou.com/config/#executortype)
+
+通过该属性可指定 MyBatis 的执行器，MyBatis 的执行器总共有三种：
+
+- ExecutorType.SIMPLE：该执行器类型不做特殊的事情，为每个语句的执行创建一个新的预处理语句（PreparedStatement）
+- ExecutorType.REUSE：该执行器类型会复用预处理语句（PreparedStatement）
+- ExecutorType.BATCH：该执行器类型会批量执行所有的更新语句
+
+```yaml
+mybatis-plus:
+  executor-type: simple
+```
+
+#### 1.4.8  mybatis.properties配置
+
+```yaml
+mybatis-plus:
+  configuration-properties: classpath:mybatis/config.properties
+```
+
+#### 1.4.9 原生配置
+
+[configuration](https://mp.baomidou.com/config/#%E8%BF%9B%E9%98%B6%E9%85%8D%E7%BD%AE)
+
+#### 1.4.10 全局策略（[globalConfig](https://mp.baomidou.com/config/#%E5%85%A8%E5%B1%80%E7%AD%96%E7%95%A5%E9%85%8D%E7%BD%AE)）
+
+#### 1.4.11 懒加载
+
+aggressiveLazyLoading [#](https://mp.baomidou.com/config/#aggressivelazyloading)
+
+```yaml
+mybatis-plus:
+  configuration:
+    aggressive-lazy-loading: true
+```
+
+当设置为 true 的时候，懒加载的对象可能被任何懒属性全部加载，否则，每个属性都按需加载。需要和 [lazyLoadingEnabled](https://mp.baomidou.com/config/) 一起使用。
+
+#### 1.4.12 结果集映射 [#](https://mp.baomidou.com/config/#automappingbehavior)
+
+MyBatis 自动映射策略，通过该配置可指定 MyBatis 是否并且如何来自动映射数据表字段与对象的属性，总共有 3 种可选值：
+
+- AutoMappingBehavior.NONE：不启用自动映射
+- AutoMappingBehavior.PARTIAL：只对非嵌套的 resultMap 进行自动映射
+- AutoMappingBehavior.FULL：对所有的 resultMap 都进行自动映射
+
+```yaml
+mybatis-plus:
+  configuration:
+    auto-mapping-behavior: partial
+```
+
+#### 1.4.13 未知列和属性映射策略 [#](https://mp.baomidou.com/config/#automappingunknowncolumnbehavior)
+
+- AutoMappingUnknownColumnBehavior.NONE：不做任何处理 (默认值)
+- AutoMappingUnknownColumnBehavior.WARNING：以日志的形式打印相关警告信息
+- AutoMappingUnknownColumnBehavior.FAILING：当作映射失败处理，并抛出异常和详细信息
+
+```yaml
+mybatis-plus:
+  configuration:
+    auto-mapping-unknown-column-behavior: none
+```
+
+#### 1.4.14 缓存全局开关 [#](https://mp.baomidou.com/config/#cacheenabled)
+
+全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存，默认为 true
+
+```yaml
+mybatis-plus:
+  configuration:
+    cache-enabled: true
+```
+
+#### 1.4.15 数据库类型配置
+
+```yaml
+mybatis-plus:
+  global-config:
+    db-config:
+      db-type: mysql
+```
+
+
+
 
 
 ## 2. 代码生成器  [#](http://mp.baomidou.com/guide/generator.html#代码生成器)
@@ -322,6 +440,36 @@ public IPage<User> selectUserPage(Page<User> page, Integer state) {
     return userMapper.selectPageVo(page, state));
 }
 ```
+
+## 6. 缓存
+
+### 6.1 缓存与序列化
+
+如果开启了缓存，但查询结果（实体类）没有实现序列化接口，会报错（NotSerializableException）；
+
+## 7. 热加载配置
+
+* 方式一：
+
+  创建MybatisMapperRefresh对象，并丢给spring容器管理；
+
+* 方式二：
+
+  直接使用refresh配置 [#](https://mp.baomidou.com/config/#refresh)
+
+  ```yaml
+  mybatis-plus:
+    global-config:
+      refresh: true
+  ```
+
+  简单粗暴
+
+
+
+
+
+
 
 ## 扩展
 

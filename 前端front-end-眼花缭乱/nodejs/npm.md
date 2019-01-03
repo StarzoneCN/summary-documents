@@ -4,7 +4,7 @@
 
 * npm link
 
-  * 在全局环境下，生成一个符号链接文件，该文件的名字就是package.json文件中指定的模块名
+  * 在全局环境下，生成一个符号链接文件，该文件的名字就是package.json文件（package.json详细[配置](http://javascript.ruanyifeng.com/nodejs/packagejson.html)）中指定的模块名
   * npm unlink pkg-name  - 取消link
 
 * npm adduser

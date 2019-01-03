@@ -15,6 +15,7 @@
   * `Predicate`接口的`negate`、`and`和`or`方法
     * 不是红苹果，eg: Predicate notRedApple = redApple.`negate`()
 * **函数复合**
+
   * `andThen`和`compose`，[参考][composeAndThen]
 
     ```java
@@ -22,9 +23,9 @@
     Function<Integer, Integer> squared = e -> e * e;
 
     times2.compose(squared).apply(4);
-    // Returns 32
+    // Returns 32   先compose中的函数，再执行times2
     times2.andThen(squared).apply(4);
-    // Returns 64
+    // Returns 64   先执行times2，再执行compose中的函数
     ```
 
 
@@ -98,7 +99,7 @@
 
 * `集合`讲的是数据，`流`讲的是计算
 
-  * *流和集合的区别*就好比`DVD`和`流媒体`的区别：集合着急着创建数据，然后在处理；流则是边创建边使用；
+  * *流和集合的区别*就好比`DVD`和`流媒体`的区别：集合着急着创建数据，然后再处理；流则是边创建边使用；
 
 * 流只能被消费一次：
 
@@ -126,8 +127,6 @@
   > 对于流而言，某些操作（例如allMatch、anyMatch、noneMatch、findFirst和findAny） 不用处理整个流就能得到结果。只要找到一个元素，就可以有结果了。同样，limit也是一个 短路操作：它只需要创建一个给定大小的流，而用不着处理流中所有的元素。在碰到无限大小 的流的时候，这种操作就有用了：它们可以把无限流变成有限流。
 
 * `《Java8实战》`*P105*页 - 一个优秀的求勾股数的实例，以及优化实例；
-
-*
 
 ### 3.1 Optional类
 
@@ -164,9 +163,16 @@
 ### 3.4 有界和无界
 
 * 无界
+
   * 排序要求所有元素都放入缓冲区后才能给输出流加入一个项目，这一操作的存储要求是无界的；
+
 * 有界
+
   * 如reduce、sum、max等操作需要内部状态来累积结果。在我们的例子里就是一个int或double，而int只需要4个字节，double只需要8个字节；
+
+* 有界无界 - 帮助理解：
+
+  > 如果一个操作为了能够获取结果需要添加内部状态来进行记录，那么这个操作就是有状态的，比如求和操作，需要一个内部状态来进行累加，而像filter，map等操作是完全不需要额外内部状态的，因此他们是无状态的。如果一个操作是有状态的，且这个操作需要访问的流的长度是可确定的，比如max，min等，访问长度为1，那么这个操作又是有界的，如果需要访问的流的长度不能确定(随着流的长度变化而变化)，比如distinct，sort等操作，这有可能需要访问所有流元素后，才能得出结果，比如一个质数流倒序，这将是不能完成的，所以这类操作是无界的。对于无状态操作来说，并行是十分容易的，对于有状态有界的操作来说，精心设计小心使用也是可以在并行的情况下工作良好的，但是对于有状态且无界的操作来说，并行将变得比较困难且不可控。
 
 ### 3.5 流操作总结
 
@@ -229,6 +235,9 @@
   ```java
   // Files.lines得到一个流，其中的每个元素都是给定文件中的一行
   Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
+      
+  // 读取classpath下的文件内容
+  Files.lines(Paths.get(ClassLoader.getSystemResource("banner.txt").toURI())).forEach(line -> System.out.println(line));
   ```
 
 * `Stream.iterate`和`Stream.generate`
@@ -703,6 +712,27 @@ inventory.sort(comparing(Apple::getWeight));
 
 <i>《Java 8 实战》 P<small>192</small></i>
 
+```java
+public interface A {
+     void hello() {
+         System.out.println("Hello from A");
+     }
+}
+public interface B {
+     void hello() {
+         System.out.println("Hello from B");
+     }
+}
+public class C implements B, A { } 
+public class C implements B, A {
+     void hello(){
+     	B.super.hello();
+     }
+} 
+```
+
+
+
 ### 7.5 菱形继承问题
 
 <i>《Java 8 实战》 P<small>200</small></i>
@@ -846,7 +876,7 @@ CompletableFuture能够将回调放到与任务不同的线程中执行，也能
     portNumber = 31337;
     ```
 
-    * 第一，实例变量和局部变量背后的实现有一 个关键不同。*实例变量都存储在堆中，而局部变量则保存在栈上*。如果Lambda可以直接访问局部变量，而且Lambda是在一个线程中使用的，则使用Lambda的线程，可能会在分配该变量的线 程将这个变量收回之后，去访问该变量。因此，Java在访问自由局部变量时，实际上是在访问它 的副本，而不是访问原始变量。如果局部变量仅仅赋值一次那就没有什么区别了——因此就有了 这个限制。
+    * 第一，实例变量和局部变量背后的实现有一 个关键不同。*实例变量都存储在堆中，而局部变量则保存在栈上*。如果Lambda可以直接访问局部变量，而且Lambda是在一个线程中使用的，则使用Lambda的线程，可能会在分配该变量的线程将这个变量收回之后，去访问该变量。因此，Java在访问自由局部变量时，实际上是在访问它 的副本，而不是访问原始变量。如果局部变量仅仅赋值一次那就没有什么区别了——因此就有了 这个限制。
     * 第二，这一限制不鼓励你使用改变外部变量的典型命令式编程模式
 
 * **类结构的变更**的影响的方面主要有（《Java 8 实战》 P<small>190</small>）：
