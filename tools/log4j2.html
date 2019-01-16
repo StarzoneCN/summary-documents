@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>log4j2.html</title>
+<style>
+* {
+    overflow: visible !important;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    box-decoration-break: clone;
+}
+
+html, body {
+    background: #FFF;
+    font-family: "Segoe UI", Arial, freesans, sans-serif;
+    font-size: 10px;
+    line-height: 1.4;
+    color: #333;
+    word-wrap: break-word;
+	hyphens: auto;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 4px solid #EEE;
+}
+
+code {
+    padding: .1em .4em;
+    display: inline-block;
+    background-color: #f9f2f4;
+    color: #c7254e;
+    border-radius: 3px;
+    border: 0 none;
+    font: 9px Consolas, "Liberation Mono", Menlo, "Courier New", Courier, monospace;
+    hyphens: manual;
+}
+
+pre code {
+    padding: 15px;
+    display: block;
+    background-color: #F9F9F9;
+    color: #555;
+    font-size: 10px;
+    box-shadow: inset -1px -1px 0 rgba(0, 0, 0, .08);
+    word-wrap: normal;
+}
+
+/* replace light background for some hljs themes */
+code.github-css,
+code.github-gist-css,
+code.tomorrow-css,
+code.default-css,
+code.googlecode-css,
+code.ascetic-css,
+code.color-brewer-css,
+code.grayscale-css,
+code.idea-css,
+code.vs-css,
+code.xcode-css {
+    background-color: #F9F9F9 !important;
+}
+
+blockquote {
+    padding: 10px;
+    margin-left: 0;
+    color: #666;
+    border: 0 none;
+    border-left: 4px solid #EEE;
+}
+
+blockquote p:last-child,
+blockquote ul:last-child,
+blockquote ol:last-child {
+    margin-bottom: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #FFF;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #DDD;
+}
+
+table div {
+    page-break-inside: avoid;
+}
+
+th, td {
+    text-align: left;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td,
+table > tfoot > tr > td {
+    padding: 8px 14px;
+    vertical-align: top;
+    border-top: 1px solid #DDD;
+}
+
+table > caption + thead > tr:first-child > th,
+table > colgroup + thead > tr:first-child > th,
+table > thead:first-child > tr:first-child > th,
+table > caption + thead > tr:first-child > td,
+table > colgroup + thead > tr:first-child > td,
+table > thead:first-child > tr:first-child > td {
+    border-top: 0;
+}
+
+table > tbody + tbody {
+    border-top: 2px solid #DDD;
+}
+
+table table {
+    background-color: #FFF;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td,
+table > tfoot > tr > td {
+    border: 1px solid #DDD;
+}
+
+table > thead > tr > th,
+table > thead > tr > td {
+    border-bottom-width: 2px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 90%;
+}
+
+table > tbody > tr:nth-of-type(odd) {
+    background-color: #F9F9F9;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: inherit;
+    font-weight: normal;
+    line-height: 1.1;
+    color: #111;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0;
+    page-break-after: avoid;
+}
+
+h1, h2 {
+    border-bottom: 1px solid #EEE;
+    padding-bottom: 7px;
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: 22px;
+}
+
+h2 {
+    font-size: 17px;
+}
+
+h3 {
+    font-size: 15px;
+}
+
+h4 {
+    font-size: 11px;
+}
+
+h5, h6 {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+    position: relative;
+    bottom: 1px;
+}
+
+ul,
+ol {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+ul li,
+ol li {
+    margin-bottom: 2px;
+}
+
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 0;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #4078C0;
+}
+
+.new-page,
+.page-break,
+.next-page,
+.page-end {
+    page-break-before: always;
+}
+
+#pageHeader,
+#pageHeader a,
+#pageHeader a:visited {
+    color: #777;
+}
+
+#pageHeader span {
+    vertical-align: middle;
+}
+
+#pageFooter {
+    border-top: 1px solid #EEE;
+    padding-top: 5px;
+    color: #777;
+    font-size: 80%;
+}
+#pageFooter a,
+#pageFooter a:visited {
+    color: #777;
+}
+
+/**
+ * Your markdown-themeable-pdf custom styles
+ *
+ * The default file can be found in the folder ~/.atom/packages/markdown-themeable-pdf/templates
+ * The base css file can be found in the folder ~/.atom/packages/markdown-themeable-pdf/css
+ * The current highlight.js css file can be found in the folder ~/.atom/packages/markdown-themeable-pdf/node_modules/highlight.js/styles
+ */
+
+/*
+html, body {
+	color: red;
+}
+*/
+
+body {
+	color: #000000;
+	/*font-size: 23px;*/
+	padding: 0 20px 0 20px;
+}
+
+/*h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1.12em; }
+h5 { font-size: .83em; }
+h6 { font-size: .75em; }*/
+
+/**
+ * GitHub Gist Theme
+ * Author : Louis Barranqueiro - https://github.com/LouisBarranqueiro
+ */
+
+.hljs {
+  display: block;
+  background: white;
+  padding: 0.5em;
+  color: #333333;
+  overflow-x: auto;
+}
+
+.hljs-comment,
+.hljs-meta {
+  color: #969896;
+}
+
+.hljs-string,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-strong,
+.hljs-emphasis,
+.hljs-quote {
+  color: #df5000;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-type {
+  color: #a71d5d;
+}
+
+.hljs-literal,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-attribute {
+  color: #0086b3;
+}
+
+.hljs-section,
+.hljs-name {
+  color: #63a35c;
+}
+
+.hljs-tag {
+  color: #333333;
+}
+
+.hljs-title,
+.hljs-attr,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #795da3;
+}
+
+.hljs-addition {
+  color: #55a532;
+  background-color: #eaffea;
+}
+
+.hljs-deletion {
+  color: #bd2c00;
+  background-color: #ffecec;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+pre { white-space: pre-wrap !important; word-break: break-word !important; overflow: hidden !important;}
+</style>
+</head>
+<body>
+<div id="pageContent">
+<h1 id="log4j2"><div style="text-align:center;color:#FF9900">log4j2</div></h1>
+<h2 id="1">1. 介绍</h2>
+<p>log4j2除了支持properties和xml形式的配置外，还添加了对json和yaml的支持：</p>
+<blockquote>
+<p>Log4J 2 introduces configuration support through JSON and YAML in addition to properties file and XML.</p>
+</blockquote>
+<h2 id="2">2. 实战</h2>
+<h3 id="21-springboot">2.1 SpringBoot</h3>
+<h4 id="211-properties">2.1.1 properties文件</h4>
+<blockquote>
+<p>classes路径下添加<code>log4j2.properties</code>即可自动识别；</p>
+</blockquote>
+<p>内容示例：</p>
+<pre><code class="hljs github-gist-css properties">status = info
+name = PropertiesConfig
+
+filters = threshold
+
+filter.threshold.type = ThresholdFilter
+filter.threshold.level = debug
+
+appenders = console
+
+appender.console.type = Console
+appender.console.name = STDOUT
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n
+
+rootLogger.level = error
+rootLogger.appenderRefs = console
+rootLogger.appenderRef.stdout.ref = STDOUT
+</code></pre>
+<h5 id="2111-maven"><a id="2.1.1.1_maven依赖">2.1.1.1 maven依赖</a></h5>
+<pre><code class="hljs github-gist-css xml">!-- 忽略自带的日志框架. --&gt;
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+           <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-logging<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>     
+<span class="hljs-comment">&lt;!-- log4j2 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span> 
+   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-log4j2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<h4 id="212-json">2.1.2 json配置</h4>
+<ol>
+<li>
+<p>在classpath路径下添加json文件，如：</p>
+<pre><code class="hljs github-gist-css json">{
+  <span class="hljs-attr">"configuration"</span>: {
+    <span class="hljs-attr">"status"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"JSONConfigDemo"</span>,
+    <span class="hljs-attr">"packages"</span>: <span class="hljs-string">"com.howtodoinjava"</span>,
+    <span class="hljs-attr">"ThresholdFilter"</span>: {
+      <span class="hljs-attr">"level"</span>: <span class="hljs-string">"debug"</span>
+    },
+    <span class="hljs-attr">"appenders"</span>: {
+      <span class="hljs-attr">"Console"</span>: {
+        <span class="hljs-attr">"name"</span>: <span class="hljs-string">"STDOUT"</span>,
+        <span class="hljs-attr">"PatternLayout"</span>: {
+          <span class="hljs-attr">"pattern"</span>: <span class="hljs-string">"%d [%t] %-5p %c - %m%n"</span>
+        }
+      }
+    },
+    <span class="hljs-attr">"loggers"</span>: {
+      <span class="hljs-attr">"root"</span>: {
+        <span class="hljs-attr">"level"</span>: <span class="hljs-string">"error"</span>,
+        <span class="hljs-attr">"AppenderRef"</span>: {
+          <span class="hljs-attr">"ref"</span>: <span class="hljs-string">"STDOUT"</span>
+        }
+      }
+    }
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>在application.properties或application.yml中指定log4j2配置文件位置，如：</p>
+<pre><code class="hljs github-gist-css yaml"><span class="hljs-attr">logging:</span>
+<span class="hljs-attr">  config:</span> <span class="hljs-attr">classpath:log4j2.json</span>
+</code></pre>
+</li>
+</ol>
+<h5 id="2121-maven">2.1.2.1 maven依赖</h5>
+<p>同<a href="#2.1.1.1_maven%E4%BE%9D%E8%B5%96">2.1.1.1 maven依赖</a>相同；</p>
+<h2 id="">其他</h2>
+<h3 id="-2">参考博客</h3>
+<p><a href="https://howtodoinjava.com/log4j2/">log4j2介绍及示例</a> - <small>推荐</small></p>
+
+</div></body>
+</html>
