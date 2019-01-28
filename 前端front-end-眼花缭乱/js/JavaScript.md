@@ -2,13 +2,13 @@
 
 ## 生僻知识点
 
-#### 变量
+### 变量
 
 * 变量提升
 * “use strict”
 * 
 
-#### isNAN
+### isNAN
 
 [参考博客][isNaN]
 
@@ -37,7 +37,7 @@ isNaN("blabla")   // true: "blabla"不能转换成数值
                   // 转换成数值失败， 返回NaN
 ```
 
-#### 异步/同步
+### 异步/同步
 
 参考代码：
 
@@ -86,9 +86,15 @@ end ---------->
 跑完啦。。。
 ```
 
+### 柯里化
 
+[多个连续的箭头函数与柯里化](https://zhuanlan.zhihu.com/p/26794822)
 
+### json
 
+json是js的严格子集；
+
+[json5](https://wxnacy.com/2018/02/18/json5/)是json的扩展；
 
 
 

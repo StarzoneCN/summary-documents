@@ -360,3 +360,13 @@
   ```js
   ()=>import('login/index') 
   ```
+
+* 建议[项目结构](https://vuex.vuejs.org/zh/guide/structure.html)
+
+* [内置 Logger 插件](https://vuex.vuejs.org/zh/guide/plugins.html#内置-logger-插件)
+
+* [严格模式](https://vuex.vuejs.org/zh/guide/strict.html#严格模式)
+
+* [热加载](https://vuex.vuejs.org/zh/guide/hot-reload.html#热重载)
+
+* 

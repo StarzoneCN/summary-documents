@@ -1,6 +1,6 @@
-# lettuce 学习记录
+# <div style="text-align:center;color:#FF9900">lettuce 学习记录</div>
 
-> Advanced Redis client for thread-safe sync, async, and reactive usage. Supports Cluster, Sentinel, Pipelining , and codecs. 
+> Advanced Redis client for thread-safe sync, async, and reactive usage. Supports Cluster, Sentinel, Pipelining , and codecs.
 
 ### 简单知识点集合
 * `Redis`的连接是`长连接`并`线程安全`的；
@@ -10,7 +10,7 @@
 * 所有异常父类——`RedisException`
 * `同步`状态下，如果Redis返回错误，框架会抛出异常`RedisCommandExecutionException`，但是`异步`状态下，不会抛出异常；
 
-### **`Redis URI`**支持的格式：
+### **`Redis URI`** 支持的格式：
 
   * `redis://[password@]host[:port][/databaseNumber]`   一般形式
   * `rediss://[password@]host[:port][/databaseNumber]`  SSL形式(3.1开始支持单例模式，4.2开始支持集群模式)
@@ -23,7 +23,7 @@
 * 使用SSL获取连接之前会有一个握手（`handshake`），如果握手发生错误，会抛出`RedisConnectionExceptions`；
 * 可以使用`redisClient.setOptions`对client进行设置，但是当`connection`创建完成之后，`ClientOption`就不可再变；即使修改Option也不会影响client
   * 还可使用其他2种方式：
-      > lettuce uses Java defaults for the `trust store` that is usually `cacerts` in your `jre/lib/security` directory and comes with customizable SSL options via `Client options`.  
+      > lettuce uses Java defaults for the `trust store` that is usually `cacerts` in your `jre/lib/security` directory and comes with customizable SSL options via `Client options`.
         ① If you need to add your own root certificate, so you can configure `SslOptions`, import it either to `cacerts` or ② you provide an own trust store and set the necessary system properties.
 * 默认不支持`TLS`，可以通过`redisUri.setStartTls(true)`打开；<br> <br> <br>
 
@@ -74,7 +74,7 @@
         ```java
         // Future的使用示例
         final CompletableFuture<String> future = new CompletableFuture<>();
-      
+
         future.thenRun(new Runnable() {
             @Override
             public void run() {
@@ -83,10 +83,10 @@
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-      
+
             }
         });
-      
+
         System.out.println("Current state: " + future.isDone()); // false
         future.complete("my value");
         System.out.println("Current state: " + future.isDone()) // true
@@ -102,7 +102,7 @@
 * 主要通过实现`RedisPubSubListener`接口来实现发布/订阅功能；
 * `lettuce`提供了一个`RedisPubSubListener`的简单实现：`RedisPubSubAdapter `;
 * 订阅示例：
-    * **Synchronous subscription**  
+    * **Synchronous subscription**
 
         ```java
         // 集群的话使用:StatefulRedisClusterConnection <String, String> connection = redisClusterClient.connectPubSub()
@@ -116,7 +116,7 @@
       ```java
         StatefulRedisPubSubConnection<String, String> connection = client.connectPubSub()
         connection.addListener(new RedisPubSubListener<String, String>() { ... })
-      
+
         RedisPubSubAsyncCommands<String, String> async = connection.async();
         RedisFuture<Void> future = async.subscribe("channel");
       ```
@@ -139,20 +139,20 @@
                     System.out.println(event);
                 }
             });
-    
+
             ...
             client.shutdown();
            ```
   * 几种事件的具体解释可以查看[官方文档][connectionEvent]
         * `First Response Latency`: 从`命令开始发送`开始 到 `接收到第一个返回字节`结束
         * `Completion Latency`: 从`命令开始发送`开始 到 `所有返回字节都已接收到并将字节处理完成`
-        * `Cluster events`不是立马响应，因为拓扑视图是客户端从`集群`拉取得到的；  
+        * `Cluster events`不是立马响应，因为拓扑视图是客户端从`集群`拉取得到的；
 
 ### [Transactions][Transactions]
 * 同步的时候，如果命令在一个事务中执行，那么将返回一个`null`；
 * 如果是`异步`，在命令被处理的时刻，`Future`会收到`Response`；
   * 异步的结果可以获取2次：既可以在每个命令的`Future`中获取，也可以在`exe()`的`Future`中获取；因为异步时候，它的命令是单独执行的；
-* 如果是事件模式`Reactive`，在命令被处理的时刻，监视器会触发`onNext`/`onCompleted `事件；  
+* 如果是事件模式`Reactive`，在命令被处理的时刻，监视器会触发`onNext`/`onCompleted `事件；
 
 ### [CDI][CDI]
 * 去了解什么是[<u>CDI</u>][CDI]吧！

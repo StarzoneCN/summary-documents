@@ -70,3 +70,10 @@ public class HelloController {
 
 
 *先记录方法，每一项解释需要好好了解一系 // todo*
+
+## 扩展
+
+[http://www.garinzhang.com/tag/proxy/](http://www.garinzhang.com/tag/proxy/)
+
+
+

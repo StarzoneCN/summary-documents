@@ -24,7 +24,7 @@
 
 ## 时区问题
 
-关于新版驱动`com.mysql.cj.jdbc.Driver`，如果没配置服务器时间，会包异常：
+关于新版驱动`com.mysql.cj.jdbc.Driver`，如果没配置服务器时间，会报异常：
 
 ```
 java.sql.SQLException: The server time zone value 'ÃÃÂ¹ÃºÂ±ÃªÃÂ¼ÃÂ±Â¼Ã¤' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.

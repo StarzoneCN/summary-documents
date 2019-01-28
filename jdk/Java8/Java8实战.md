@@ -383,7 +383,7 @@ public BinaryOperator<Map<Boolean, List<Integer>>> combiner() {
 
 **parallel** - 对流进行并行执行
 
-> 并行流内部使用了默认的ForkJoinPool(到分支/合并框架)，
+> 并行流内部使用了默认的ForkJoinPool(分支/合并框架)，
 
 * 并行线程数
 
@@ -503,7 +503,7 @@ System.out.println("SideEffect parallel sum done in: " +
 
 ### 3.12 并行拆分策略
 
-接口：Spliterator - *查看***《Java8实战》** - P<small>157</small>
+接口：Spliterator - 查看**《Java8实战》** - P<small>157</small>
 
 
 

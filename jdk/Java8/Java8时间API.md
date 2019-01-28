@@ -292,6 +292,12 @@ ZoneId zoneId = TimeZone.getDefault().toZoneId();
   LocalDateTime timeFromInstant = LocalDateTime.ofInstant(instant, romeZone);
   ```
 
+### 11.3 所有时区标志
+
+```java
+Set<String> zoneIdStrs = ZoneId.getAvailableZoneIds()
+```
+
 
 
 
@@ -318,6 +324,16 @@ OffsetDateTime dateTimeInNewYork = OffsetDateTime.of(dateTime, newYorkOffset);
 JDK便利：
 
 > 作为一个开发者，如果不用去处理时区和它带来的复杂性，将会是非常棒的。**java.time**开发包尽最大努力的帮助你那样做。只要有可能，尽量使用**LocalDate**，**LocalTime**，**LocalDate**和**Instant**。当你不能回避时区时，**ZonedDateTime**可以满足你的需求。
+
+### 13.1 时区转换
+
+```java
+ZonedDateTime zonedDateTime = ZonedDateTime
+                .of(2018, 10, 10, 8, 8, 8, 8, ZoneId.systemDefault());
+System.out.println(ZonedDateTime.ofInstant(zonedDateTime.toInstant(),
+                ZoneId.of("America/Marigot")));
+// 输出：2018-10-09T20:08:08.000000008-04:00[America/Marigot]
+```
 
 
 
