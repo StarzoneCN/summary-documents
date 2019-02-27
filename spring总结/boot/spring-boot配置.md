@@ -1,4 +1,4 @@
-# spring-boot配置篇
+# <div style="text-align:center;color:#FF9900">SpringBoot配置篇</div>
 
 ## bootstrap与application
 
@@ -10,7 +10,7 @@
 ----
 
 * bootstrap.yml 用于应用程序上下文的引导阶段
-* bootstrap.yml 由父Spring ApplicationContext加载 
+* bootstrap.yml 由父Spring ApplicationContext加载
 
 ### 约定
 
@@ -28,12 +28,24 @@
 
 
 
+
+
+
 ## 扩展
 
 ### 1. Resource-通配符
 
 ```java
 ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-//将加载多个模式匹配的Resource  
-Resource[] resources = resolver.getResources("classpath*:META-INF/*.LIST"); 
+//将加载多个模式匹配的Resource
+Resource[] resources = resolver.getResources("classpath*:META-INF/*.LIST");
+```
+
+### 2. 随机变量
+```Java
+my.secret=${random.value}
+my.number=${random.int}
+my.bignumber=${random.long}
+my.number.less.than.ten=${random.int(10)}
+my.number.in.range=${random.int[1024,65536]}
 ```

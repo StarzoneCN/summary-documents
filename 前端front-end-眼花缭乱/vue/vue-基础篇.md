@@ -65,10 +65,10 @@ v-xxx:参数=“var”
   ```html
   <!-- 即使 ctrl+Alt 或 ctrl+Shift 被一同按下时也会触发 -->
   <button @click.ctrl="onClick">A</button>
-  
+
   <!-- 有且只有 Ctrl 被按下的时候才触发 -->
   <button @click.ctrl.exact="onCtrlClick">A</button>
-  
+
   <!-- 没有任何系统修饰符被按下的时候才触发 -->
   <button @click.exact="onClick">A</button>
   ```
@@ -107,15 +107,15 @@ v-xxx:参数=“var”
   <li v-for="todo in todos">
         {{ todo.text }}
   </li>
-  
+
   <!-- 结果：1 2 3 4 5 6 7 8 9 10 -->
   <span v-for="n in 10">{{ n }} </span>
-  
+
   <!-- 也可获取元素的索引，从0开始 -->
   <li v-for="(item, index) in ['name', 'age', 'sex']">
        {{ item }} - {{ index }}
   </li>
-  
+
   <!-- 迭代对象（object）的属性 -->
   <li v-for="value in object">
       {{ value }}
@@ -136,9 +136,9 @@ v-xxx:参数=“var”
 
   建议尽可能在使用 `v-for` 时提供 `key`
 
-* 
+*
 
-* `v-on:click` 
+* `v-on:click`
 
   * 缩写:`@click`
 
@@ -229,7 +229,7 @@ v-xxx:参数=“var”
 
   * [`.trim`](https://cn.vuejs.org/v2/guide/forms.html#trim)  - 自动去除首尾空白符
 
-  * 
+  *
 
 * v-once  -  绑定一次
 
@@ -258,7 +258,7 @@ v-xxx:参数=“var”
 
 * **v-cloak**
 
-* 
+*
 
 ## 2. 方法与概念
 
@@ -498,12 +498,12 @@ onEnlargeText: function (enlargeAmount) {
   <header>
     <slot name="header"></slot>
   </header>
-    
+
   <!-- 默认slot -->
   <main>
     <slot></slot>
   </main>
-    
+
   <footer>
     <slot name="footer"></slot>
   </footer>
@@ -535,7 +535,7 @@ onEnlargeText: function (enlargeAmount) {
   ```js
   var o = {p: 42, q: true};
   var {p, q} = o;
-  
+
   console.log(p); // 42
   console.log(q); // true
   ```
@@ -588,6 +588,10 @@ onEnlargeText: function (enlargeAmount) {
 #### 3.2.8 其他
 
 > 在 2.3.0 之前的版本中，如果一个函数式组件想要接受 props，则 `props` 选项是必须的。在 2.3.0 或以上的版本中，你可以省略 `props` 选项，所有组件上的属性都会被自动解析为 props。
+
+##### 3.2.3.1 `.sync`修饰符
+
+[参考](https://www.jianshu.com/p/6b062af8cf01)
 
 ## 4. 动画
 
@@ -778,13 +782,13 @@ Vue.config.optionMergeStrategies.myOption = function (toVal, fromVal, vm) {
 ```
 
 ## 6. 自定义指令
-
+更详细的教程，请[参考](https://juejin.im/post/5a3933756fb9a045167d52b1)
 ### 6.1 全局
 
 ```js
 // 注册一个全局自定义指令 `v-focus`
 Vue.directive('focus', {
-  // 当被绑定的元素插入到 DOM 中时……
+  // inserted是钩子函数，表示当被绑定的元素插入到 DOM 中时……
   inserted: function (el) {
     // 聚焦元素
     el.focus()
@@ -1005,20 +1009,20 @@ var myFilter = Vue.filter('my-filter')
   ```js
   // 我们的数据对象
       var data = { a: 1 }
-      
+
       // 该对象被加入到一个 Vue 实例中
       var vm = new Vue({
         data: data
       })
-      
+
       // 获得这个实例上的属性
       // 返回源数据中对应的字段
       vm.a == data.a // => true
-      
+
       // 设置属性也会影响到原始数据
       vm.a = 2
       data.a // => 2
-      
+
       // ……反之亦然
       data.a = 3
       vm.a // => 3
@@ -1031,12 +1035,12 @@ var myFilter = Vue.filter('my-filter')
 
   ```js
   var dataObj = {message: 'Hello Vue!'}
-  
+
   Object.freeze(dataObj)
   // 此时，app.message和dataObj.message变为只读，
   // 但是尝试修改app.message时，会报错（因为它是只读），
   // 尝试修改dataObj.message虽然不会报错，但是dataObj.message的值并没变化；
-  
+
   // 此时还可通过app.otherProp = value 来对app进行操作，并能获取到app.otherProp的值，
   // 但是，对于dataObj，虽然可以进行dataObj.otherProp = value赋值操作，虽不报错，但实际上却是赋值失败；
   var app = new Vue({
@@ -1174,11 +1178,11 @@ var myFilter = Vue.filter('my-filter')
 
 * [Vue.nextTick()](https://segmentfault.com/a/1190000008570874)
 
-  > Vue是异步执行dom更新的，一旦观察到数据变化，Vue就会开启一个队列，然后把在同一个事件循环 (event loop) 当中观察到数据变化的 watcher 推送进这个队列。如果这个watcher被触发多次，只会被推送到队列一次。这种缓冲行为可以有效的去掉重复数据造成的不必要的计算和DOm操作。而在下一个事件循环时，Vue会清空队列，并进行必要的DOM更新。 
+  > Vue是异步执行dom更新的，一旦观察到数据变化，Vue就会开启一个队列，然后把在同一个事件循环 (event loop) 当中观察到数据变化的 watcher 推送进这个队列。如果这个watcher被触发多次，只会被推送到队列一次。这种缓冲行为可以有效的去掉重复数据造成的不必要的计算和DOm操作。而在下一个事件循环时，Vue会清空队列，并进行必要的DOM更新。
   >
   > 当你设置 vm.someData = 'new value'，DOM 并不会马上更新，而是在异步队列被清除，也就是下一个事件循环开始时执行更新时才会进行必要的DOM更新。如果此时你想要根据更新的 DOM 状态去做某些事情，就会出现问题。。为了在数据变化之后等待 Vue 完成更新 DOM ，可以在数据变化之后立即使用 Vue.nextTick(callback) 。这样回调函数在 DOM 更新完成后就会调用。
 
-* ### [Vue.set( target, key, value )](https://cn.vuejs.org/v2/api/#Vue-set) 
+* ### [Vue.set( target, key, value )](https://cn.vuejs.org/v2/api/#Vue-set)
 
   此函数添加新属性是**响应式**的
 
@@ -1198,7 +1202,7 @@ var myFilter = Vue.filter('my-filter')
 
   ```js
   // 数组语法，略
-  
+
   // 对象语法，提供校验
   Vue.component('props-demo-advanced', {
     props: {
@@ -1226,7 +1230,7 @@ var myFilter = Vue.filter('my-filter')
     props: ['msg'],
     template: '<div>{{ msg }}</div>'
   })
-  
+
   var vm = new Comp({
     propsData: {
       msg: 'hello'
@@ -1342,7 +1346,7 @@ var myFilter = Vue.filter('my-filter')
 
 * [vm.$forceUpdate()](https://cn.vuejs.org/v2/api/#vm-forceUpdate) - 强制刷新组件
 
-* 
+*
 
 
 

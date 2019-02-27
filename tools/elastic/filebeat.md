@@ -1,5 +1,4 @@
 # <div style="text-align:center;color:#FF9900">Filebeat</div>
-
 ## 1. 介绍、原理
 
 Filebeat是Beat成员之一，基于Go语言; Filebeat基于`libbeat`框架；
@@ -22,14 +21,14 @@ Filebeat是Beat成员之一，基于Go语言; Filebeat基于`libbeat`框架；
 
   > This has the side effect that the space on your disk is reserved until the harvester closes.
   >
-  > 这会产生副作用，即在收割机关闭之前，磁盘上的空间是保留的
+  > 这会产生副作用，即在`harvester`关闭之前，磁盘上的空间是保留的
   >
-  > By default, Filebeat keeps the file open until [`close_inactive`](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#filebeat-input-log-close-inactive) is reached.
+  > By default, Filebeat keeps the file open until [close_inactive](#close_inactive) is reached.
   >
   > [Closing a harvester has the following consequences（影响/后果）](https://www.elastic.co/guide/en/beats/filebeat/current/how-filebeat-works.html#harvester):
   >
   > - The file handler is closed, freeing up the underlying resources if the file was deleted while the harvester was still reading the file.
-  > - The harvesting of the file will only be started again after [`scan_frequency`](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#filebeat-input-log-scan-frequency) has elapsed.
+  > - The harvesting of the file will only be started again after [`scan_frequency`](#scan_frequency) has elapsed.
   > - If the file is moved or removed while the harvester is closed, harvesting of the file will not continue.
   >
   > To control when a harvester is closed, use the [`close_*`](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#filebeat-input-log-close-options) configuration options.
@@ -44,7 +43,7 @@ Filebeat是Beat成员之一，基于Go语言; Filebeat基于`libbeat`框架；
 >
 > New lines are only picked up if the size of the file has changed since the harvester was closed.
 
-* **input_type**支持多种[类型](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-filebeat-options.html#filebeat-input-types)，每种类型可配置多次；
+* **input_type**支持多种[类型](#input_type)，每种类型可配置多次；
 
 * 如果output不可到达，filebeat会一直记录最后一行的send事件，直到output连通再继续发送文件；
 
@@ -141,11 +140,11 @@ outputs支持[类型](https://www.elastic.co/guide/en/beats/filebeat/current/con
 output.elasticsearch:
   hosts: ["myEShost:9200"]
   username: "filebeat_internal"
-  password: "YOUR_PASSWORD" 
+  password: "YOUR_PASSWORD"
 setup.kibana:
   host: "mykibanahost:5601"
   # 如果这里没有指定用户名和命名，kibana将使用output.elasticsearch中指定的密码
-  username: "my_kibana_user"  
+  username: "my_kibana_user"
   password: "YOUR_PASSWORD"
 ```
 
@@ -219,6 +218,34 @@ output.logstash:
 
 #### 2.3.1 [load-dashboards-logstash](https://www.elastic.co/guide/en/beats/filebeat/current/load-kibana-dashboards.html#load-dashboards-logstash)
 
+### 2.4 inputs子配置项
+#### 2.4.1 [<span id="scan_frequency">scan_frequency</span>](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#filebeat-input-log-scan-frequenc)
+`harvester`扫描（文件中）新行的频率；默认10s, 一般不建议设置太小，最好不要小于1s；
+> 如果您需要近乎实时发送日志行，请不要使用非常低的`scan_frequency`，可以调整[close_inactive](#close_inactive)以使文件处理程序保持打开状态并不断轮询您的文件。
+
+#### 2.4.2 [<span id="close_inactive">close_inactive</span>](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#filebeat-input-log-close-inactive)
+表示最近一次`harvester`扫描到行开始，一段时间（close_inactive）内，如果`harvester`没有扫描到新行，就说明文件为`inactive`的，就会关闭这个文件对应的`harvester`，关闭了`harvester`，就表示关闭了`file handler`；
+* 不建议将此项的值设置的太小，因为太小会导致频繁地关闭文件；
+* `5m` - 表示5分钟；|  `2h` - 表示2小时；
+
+#### 2.4.3 <span id="input_type">type</span>
+`type`支持多种[类型](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-filebeat-options.html#filebeat-input-types)
+
+#### 2.4.4 路径符号`**`与`recursive_glob.enabled`
+表示多级目录，最多扩展到8级子目录；详情请参考[官方文档](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#recursive_glob)
+
+#### 2.4.5 [encoding](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#_literal_encoding_literal)
+日志文件编码格式设置，常用格式有：
+> plain, latin1, utf-8, utf-16be-bom, utf-16be, utf-16le, big5, gb18030, gbk, hz-gb-2312, euc-kr, euc-jp, iso-2022-jp, shift-jis, and so on
+
+#### 2.4.6 [harvester_buffer_size](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#_literal_harvester_buffer_size_literal)
+`harvester`抓取文件的缓存大小，默认16k
+
+#### 2.4.7 [max_bytes](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#_literal_max_bytes_literal)
+单独一条`message`的最大字节数，超过部分会被抛弃，不发送到elasticsearch，默认10M;
+
+#### 2.4.8 [json](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-log.html#filebeat-input-log-config-json)
+
 
 
 
@@ -254,13 +281,13 @@ nohup ./bin/kibana serve -e <elasticSearch-uri> > kibana-runtime.log 2>&1 &
        port => 5044
      }
    }
-   
+
    # The filter part of this file is commented out to indicate that it
    # is optional.
    # filter {
    #
    # }
-   
+
    output {
      elasticsearch {
        hosts => "localhost:9200"
@@ -301,7 +328,7 @@ nohup ./bin/kibana serve -e <elasticSearch-uri> > kibana-runtime.log 2>&1 &
 3. 启动命令：
 
    ```shell
-   nohup ./filebeat > filebeat-runtime.log 2>&1 &
+   nohup ./filebeat > runtime.log 2>&1 &
    ```
 
 ## 4. 使用
@@ -331,7 +358,7 @@ nohup ./bin/kibana serve -e <elasticSearch-uri> > kibana-runtime.log 2>&1 &
   闭区间
 
   ```
-  responsetime: [10 TO *]  
+  responsetime: [10 TO *]
   ```
 
   开区间：
@@ -350,7 +377,7 @@ nohup ./bin/kibana serve -e <elasticSearch-uri> > kibana-runtime.log 2>&1 &
   (method: INSERT OR method: UPDATE) AND responsetime: [30 TO *]
   ```
 
-  
+
 
 ## More
 
@@ -361,4 +388,3 @@ nohup ./bin/kibana serve -e <elasticSearch-uri> > kibana-runtime.log 2>&1 &
 [设置index(索引)模板](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-template.html#load-template-manually)
 
 [所有modules](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-modules.html)
-

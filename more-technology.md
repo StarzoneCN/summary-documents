@@ -179,6 +179,8 @@
 * lock4j - 分布式锁
 * Java Excel  —— POI的替代品
 * [stunnel]
+* [optaplanner]
+* `Ambari` - hadoop管理工具
 
 #### 待处理任务
 
@@ -193,3 +195,4 @@
 [DomeOS]:http://gitbook.domeos.org/
 [javadoc]:http://www.runoob.com/java/java-documentation.html
 [stunnel]:https://github.com/StarzoneCN/summary-documents/blob/master/%E7%BD%91%E7%BB%9C/stunnel-SSL%E5%B7%A5%E5%85%B7.md
+[optaplanner]:https://www.optaplanner.org/ "轻量级、可嵌入的规划调度引擎"

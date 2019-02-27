@@ -1,6 +1,7 @@
 # <div style="text-align:center;color:#FF9900">lettuce 学习记录</div>
 
 > Advanced Redis client for thread-safe sync, async, and reactive usage. Supports Cluster, Sentinel, Pipelining , and codecs.
+> 详细教程，请看[Reference Guide]
 
 ### 简单知识点集合
 * `Redis`的连接是`长连接`并`线程安全`的；
@@ -148,16 +149,16 @@
         * `Completion Latency`: 从`命令开始发送`开始 到 `所有返回字节都已接收到并将字节处理完成`
         * `Cluster events`不是立马响应，因为拓扑视图是客户端从`集群`拉取得到的；
 
-### [Transactions][Transactions]
+### [Transactions]
 * 同步的时候，如果命令在一个事务中执行，那么将返回一个`null`；
 * 如果是`异步`，在命令被处理的时刻，`Future`会收到`Response`；
   * 异步的结果可以获取2次：既可以在每个命令的`Future`中获取，也可以在`exe()`的`Future`中获取；因为异步时候，它的命令是单独执行的；
 * 如果是事件模式`Reactive`，在命令被处理的时刻，监视器会触发`onNext`/`onCompleted `事件；
 
-### [CDI][CDI]
+### [CDI]
 * 去了解什么是[<u>CDI</u>][CDI]吧！
 
-### [Spring Support][]
+### [Spring Support]
 * `Spring Data Redis`使用了`lettuce`作为连接`Redis`的工具；
 
 ### 其他
@@ -182,3 +183,4 @@
 [UDS]:https://blog.csdn.net/z2066411585/article/details/78966434/ "Unix进程间通信"
 [SSL]:https://github.com/lettuce-io/lettuce-core/wiki/SSL-Connections
 [stunnel]:https://github.com/StarzoneCN/summary-documents/blob/master/%E7%BD%91%E7%BB%9C/stunnel-SSL%E5%B7%A5%E5%85%B7.md
+[Reference Guide]:https://lettuce.io/core/release/reference/index.html
