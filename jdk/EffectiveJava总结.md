@@ -5,9 +5,9 @@
 * **优点**
   - 与`构造器`相比，有`名称`；
   - 与`构造器`相比，不必每次都创建新对象；
-  - 与`构造器`相比，可以返回原返回类型的任何子类型；（如：`java集合框架`的`Collections`类）  
-   [![image.png](https://s31.postimg.cc/fewu3tu9n/image.png)](https://postimg.cc/image/b5s41nr07/)  
-  - 与构造器相比，创建参数化类型实例时，代码更加简洁——这一点好像在jdk8中，并没有区别；  
+  - 与`构造器`相比，可以返回原返回类型的任何子类型；（如：`java集合框架`的`Collections`类）
+   [![image.png](https://s31.postimg.cc/fewu3tu9n/image.png)](https://postimg.cc/image/b5s41nr07/)
+  - 与构造器相比，创建参数化类型实例时，代码更加简洁——这一点好像在jdk8中，并没有区别；
   书中**举例**：使用`Map<String, List<String>> map = HashMap.newInstance()`代替`Map<String, List<String>> map = new HashMap<String, List<String>>()`，理由是静态工厂方法可以进行类型推导（值得推荐）；
 * **缺点**
   - 类如果不包含公有的或受保护的构造器，就不能被子类化；
@@ -44,14 +44,74 @@
 * 单例模式中，如果类是可序列化的（实现`Serializable`接口），必须重写`readResolve`方法，不然，每次反序列化都会产生一个实例；
 * `单元素的枚举类`是最好的实现单例模式的方法——既可防止反射攻击，也可防止反序列化产生多实例;
 
+### 3.1 写法
+#### 3.1.1 一般形式
+```java
+public enum Singleton {
+    INSTANCE;
+    // 这里隐藏了一个空的私有构造方法
+    private Singleton () {}
+}
+```
+
+#### 3.2.2 更优雅形式
+```java
+// 定义单例模式中需要完成的代码逻辑
+public interface MySingleton {
+    void doSomething();
+}
+
+// enum设置为包级私有
+enum Singleton implements MySingleton {
+    INSTANCE {
+        @Override
+        public void doSomething() {
+            System.out.println("complete singleton");
+        }
+    };
+
+    public static MySingleton getInstance() {
+        return Singleton.INSTANCE;
+    }
+}
+
+public class SingletonUtils{
+    private SingletonUtils(){}
+
+    // 静态工厂方法
+    public static MySingleton mySingleton(){
+        return (MySingleton)Singleton.INSTANCE;
+    }
+}
+```
+
+### 3.2 其他单例模式写法
+#### 3.2.1 静态内部类
+```java
+public class Singleton {
+    public static class SingletonHolder {
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    private Singleton() {}
+
+    public static final Singleton getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+}
+```
+> 由于静态内部类SingletonHolder只有在getInstance()方法第一次被调用时，才会被加载，而且构造函数为private，因此该种方式实现了懒汉式的单例模式。不仅如此，根据JVM本身机制，静态内部类的加载已经实现了线程安全。
+
+
+
 ## 4. 使用私有构造器强化不可实例化能力
 
 ## 5. 避免创建不必要的对象
 
 * `String a = new String(“string”);`此句创建了2次实例：参数`string`就是一个实例；
 * 优先使用`基本类型`，而不是`封装类型`；
-* 有时候`重用对象`会导致代码很乱，逻辑糟糕，比重建对象的代价更大：  
-[![image.png](https://s7.postimg.cc/p1zl7nle3/image.png)](https://postimg.cc/image/wuq8zmrd3/)  
+* 有时候`重用对象`会导致代码很乱，逻辑糟糕，比重建对象的代价更大：
+[![image.png](https://s7.postimg.cc/p1zl7nle3/image.png)](https://postimg.cc/image/wuq8zmrd3/)
 
 ## 6. 及时清除过期引用
 
@@ -84,12 +144,12 @@
       System.gc();
       Thread.sleep(2000);
     }
-  
+
     private static void doSth() {
       Child c = new Child();
       System.out.println(c);
     }
-  
+
     @SuppressWarnings("unused")
     private final Object guardian = new Object() {
       @Override
@@ -101,14 +161,14 @@
         // Parent.this.finalize(); 这样写不对，会执行Child重写的finalize()方法
       }
     };
-  
+
     private void parentlFinalize() {
       System.out.println("父类自身的终结方法执行了");
       // 一些逻辑..
     }
   }
   class Child extends Parent {
-      
+
     @Override
     protected void finalize() {
       System.out.println("子类finalize方法执行了，注意，子类并没有调用super.finalize()");
@@ -120,12 +180,14 @@
   ```
   ```
   输出：
-  
+
   Child@131b92e6
   子类finalize方法执行了，注意，子类并没有调用super.finalize()
   父类中匿名内部类--终结方法守卫者 重写的finalize()执行了
   父类自身的终结方法执行了
   ```
+### 7.1 终结守卫者-详解
+参考[博客](https://blog.csdn.net/samxie0816/article/details/49186191)
 
 # 第二章 对于所有对象都通用的方法
 
@@ -135,10 +197,10 @@
   * 类的每个实例实质上都是唯一的；
   * 不关心类是否提供`逻辑相等`的测试功能；
   * 超类的`equals`方法也适合子类；
-  * 不明白： 
-    [![image.png](https://s31.postimg.cc/lfz4em3or/image.png)](https://postimg.cc/image/67970ua07/)  
+  * 不明白：
+    [![image.png](https://s31.postimg.cc/lfz4em3or/image.png)](https://postimg.cc/image/67970ua07/)
 * 什么时候需要覆盖`equals`方法：
-  [![image.png](https://s31.postimg.cc/hjlsir0qj/image.png)](https://postimg.cc/image/k0xjq0kmv/)  
+  [![image.png](https://s31.postimg.cc/hjlsir0qj/image.png)](https://postimg.cc/image/k0xjq0kmv/)
   对于枚举类，逻辑相等和对象相等时一个意思，所以没必要覆盖`equals`；
 * 覆盖`equals`需要遵守几个特性：`自反性`、`对称性`、`传递性`、`一致性`、以及`null`；
 * `里氏替换原则`简单粗暴的理解：任何基类可以出现的地方，子类一定可以出现；
@@ -147,12 +209,12 @@
   - 使用`==`检查对象引用（对象地址）;
   - 使用`instanceof`检查类型；
   - 把参数转化成正确的类型（如：`date`转成`long`）；
-  - 调整域的比较顺序：  
-   [![image.png](https://s31.postimg.cc/avp6w7u3v/image.png)](https://postimg.cc/image/cni5r4dgn/)  
-* 重写`equals`的时候也要重写`hashcode`；
+  - 调整域的比较顺序：
+   [![image.png](https://s31.postimg.cc/avp6w7u3v/image.png)](https://postimg.cc/image/cni5r4dgn/)
+* 重写`equals`的时候也要重写`hashcode`([hashcode主要和集合框架有关](https://www.cnblogs.com/Qian123/p/5703507.html))；
 * 不要将`equals(Object obj)`中的`Object`替换为其他类型（如：`MyClass`），这样就不是重写了，而是重载；添加`@Override`可以避免；
-* 尴尬：  
-  [![image.png](https://s31.postimg.cc/7q4l5stff/image.png)](https://postimg.cc/image/4w1fscr93/)  
+* 尴尬：
+  [![image.png](https://s31.postimg.cc/7q4l5stff/image.png)](https://postimg.cc/image/4w1fscr93/)
 
 ## 9. 重写`equals`的时候也要重写`hashcode`
 
@@ -183,13 +245,14 @@
   ```java
   System.out.println(new BigDecimal("1.2").equals(new BigDecimal("1.20")));  //输出false
   System.out.println(new BigDecimal("1.2").compareTo(new BigDecimal("1.20")) == 0); //输出true
-          
+
   System.out.println(new BigDecimal(1.2).equals(new BigDecimal("1.20"))); //输出是?
   System.out.println(new BigDecimal(1.2).compareTo(new BigDecimal("1.20")) == 0); //输出是?
-     
+
   System.out.println(new BigDecimal(1.2).equals(new BigDecimal(1.20))); //输出是?
   System.out.println(new BigDecimal(1.2).compareTo(new BigDecimal(1.20)) == 0);//输出是?
   ```
+  > 注意： `BigDecimal(double value)`此构造器会有精度问题，因为double本身是浮点数，并不能精确表示一个数字，可以考虑用`BigDecimal(String value)`构造器；
 
 
 # 第三章 类和接口
@@ -200,8 +263,8 @@
 * 好处：解耦（开发、理解、测试、维护都比较容易）；
 * 实例的域决不能是公有的；
 * Final域应当只包含基本类型的值或不可变对象的引用；
-* final修饰的数组几乎总是错误的，解决这种矛盾的方法有2种：  
-   [![image.png](https://s31.postimg.cc/xzhdzzgi3/image.png)](https://postimg.cc/image/47kbkston/)  
+* final修饰的数组几乎总是错误的，解决这种矛盾的方法有2种：
+   [![image.png](https://s31.postimg.cc/xzhdzzgi3/image.png)](https://postimg.cc/image/47kbkston/)
 
 ## 14. 避免直接访问域
 
@@ -219,8 +282,8 @@
   - 避免引用可变组件（如其他可变类引用）；
 * 对于不可变类，本质上就没有拷贝的必要，所以是实现`clone`是不必要的，`String`就是反面教材（jdk8中String#clone已经被移除）；
 * 不可变类会造成性能的浪费（MutableBigInteger就是BigInteger的性能优化版）;
-* 另外：  
-[![image.png](https://s31.postimg.cc/evo2jrtez/image.png)](https://postimg.cc/image/evo2jrtev/)  
+* 另外：
+[![image.png](https://s31.postimg.cc/evo2jrtez/image.png)](https://postimg.cc/image/evo2jrtev/)
 
 ## 16. 复合（`composition`）优先于继承
 
@@ -229,16 +292,16 @@
 ## 17. 要么为继承而设计，并提供文档说明，要么禁止继承
 
 * 关于文档：好的`api文档`应该描述一个给定的方法做了什么，而不是如何做的；
-* 构造器决不能调用可被重写的方法：  
-[![image.png](https://s31.postimg.cc/vku3t37kr/image.png)](https://postimg.cc/image/e7jte8c9j/)  
+* 构造器决不能调用可被重写的方法：
+[![image.png](https://s31.postimg.cc/vku3t37kr/image.png)](https://postimg.cc/image/e7jte8c9j/)
 * 为继承而设计的类，应该慎重考虑实现`Cloneable`和`Serializable`接口；
 
 ## 18. 接口优于抽象类
 
 * 现有类易被更新，以实现新的接口；比如`jdk`添加`Comparable`接口的时候；
 * 接口是定义`mixin`（`混合类型`）的理想选择；
-* 接口定义类型，抽象类（一般命名AbstractXXX，如AbstractList）搭建骨架：  
-[![image.png](https://s7.postimg.cc/dkfk54lkr/image.png)](https://postimg.cc/image/6tz2voyev/)  
+* 接口定义类型，抽象类（一般命名AbstractXXX，如AbstractList）搭建骨架：
+[![image.png](https://s7.postimg.cc/dkfk54lkr/image.png)](https://postimg.cc/image/6tz2voyev/)
 * 公有接口的设计一定要谨慎，一旦公开发行，并被广泛实现，再想修改接口，几乎是不可能的（不过`jdk8`中，接口可以有默认实现）；
 * 接口实现起来比抽象类灵活，但设计了接口，最好定义一个骨架（抽象类）；
 
@@ -332,22 +395,22 @@
 
 ## 21. 用函数对象表示策略
 
-* 函数对象：  
-[![image.png](https://s31.postimg.cc/omzmxx54r/image.png)](https://postimg.cc/image/4sdlbspx3/)  
+* 函数对象：
+[![image.png](https://s31.postimg.cc/omzmxx54r/image.png)](https://postimg.cc/image/4sdlbspx3/)
 
 ## 22. 优先考虑静态成员类
 
-* **名词解释**  
+* **名词解释**
   - 定义在代码块、方法体内的类叫`局部内部类`；
   - `函数对象`做了这么一件事，我们可以定义一个只有方法而没有数据的类，然后把这个类的对象传递给别的方法，这时传递的这个对象就是一个函数对象。jdk8的
-* **访问控制修饰符**  
+* **访问控制修饰符**
   - `default` (即缺省，什么也不写）: 在同一包内可见，不使用任何修饰符。使用对象：类、接口、变量、方法；
   - `private` : 在同一类内可见。使用对象：变量、方法。 注意：`不能修饰类（外部类）`；
   - `public` : 对所有类可见。使用对象：类、接口、变量、方法；
   - `protected` : 对同一包内的类和所有子类可见。使用对象：变量、方法。 注意：`不能修饰类（外部类）`；
-* 一个静态内部类的使用例子：  
-  [![image.png](https://s15.postimg.cc/lf1p7a8wb/image.png)](https://postimg.cc/image/a2p3pi07b/)  
-  [![image.png](https://s15.postimg.cc/ismn9rocr/image.png)](https://postimg.cc/image/6dzv9fwuf/)  
+* 一个静态内部类的使用例子：
+  [![image.png](https://s15.postimg.cc/lf1p7a8wb/image.png)](https://postimg.cc/image/a2p3pi07b/)
+  [![image.png](https://s15.postimg.cc/ismn9rocr/image.png)](https://postimg.cc/image/6dzv9fwuf/)
 * 如果成员类不要求访问外围实例，就要始终添加`static`修饰符，因为非静态内部类总会保存一个外围实例的引用，保存这份引用会额外消耗时间和空间，并可能导致外围实例符合垃圾回收时却任然被保留。
 * 当且仅当**匿名内部类**出现在`非静态环境`中时才包含外围实例的引用；（`局部类`也是如此）
 * 即使**匿名内部类**在`静态环境`中，也不可能拥有任何静态成员；（`局部类`也是如此）
@@ -361,8 +424,8 @@
 ## 23. 请不要在新代码中使用原生态类型
 
 * 比如：`List<E>`对应的原生态类型是`List`；
-* 泛型有子类型化规则：`List<String>`是`List`的子类，但不是`List<Object>`的子类；  
-[![image.png](https://s15.postimg.cc/cyvlcm5rv/image.png)](https://postimg.cc/image/4gm589z93/)  
+* 泛型有子类型化规则：`List<String>`是`List`的子类，但不是`List<Object>`的子类；
+[![image.png](https://s15.postimg.cc/cyvlcm5rv/image.png)](https://postimg.cc/image/4gm589z93/)
 
 ## 24. 消除非受检警告
 
@@ -381,8 +444,8 @@
     Object[] objcetArray = new Long[1];
     objcetArray[0] = "I don't fit in"; // 抛出ArrayStoreException
   ```
-* 为什么创建泛型数组是非法的？(如：new ArrayList<String>[10])  
-  [![image.png](https://s15.postimg.cc/5muqktknf/image.png)](https://postimg.cc/image/7rf3lwm9z/)  
+* 为什么创建泛型数组是非法的？(如：new ArrayList<String>[10])
+  [![image.png](https://s15.postimg.cc/5muqktknf/image.png)](https://postimg.cc/image/7rf3lwm9z/)
   但是无限制通配符类型和数组可以同用，比如：List<?>、Map<?,?> ；
 
 ## 26. 优先考虑泛型
@@ -410,13 +473,13 @@
     ... // no changes in isEmpty or ensureCapacity
   }
   ```
-  上面的例子中`elements = new E[DEFAULT_INITIAL_CAPACITY];`会报错误或警告，是因为不能创建泛型数组（见“列表优先于数组”）；  
+  上面的例子中`elements = new E[DEFAULT_INITIAL_CAPACITY];`会报错误或警告，是因为不能创建泛型数组（见“列表优先于数组”）；
   解决`方案一`：
   ```java
   @SuppressWarnings("unchecked")  // 此处确定是安全的，可以抑制掉非受检警告
   elements = (E[])new Object[DEFAULT_INITIAL_CAPACITY];
   ```
-  解决`方案二`：  
+  解决`方案二`：
   ```java
   // 定义elements为Object数组
   private Object[] elements;
@@ -464,11 +527,11 @@
   ```java
   public class Favorites {
     private Map<Class<?>, Object> favorites = new HashMap<>();
-  
+
     public <T> void putFavorite(Class<T> type, T instance) {
       favorites.put(Objects.requireNonNull(type), instance);
     }
-  
+
     public <T> T getFavorite(Class<T> type) {
       // java.lang.Class<T>#cast
       return type.cast(favorites.get(type));
@@ -476,10 +539,10 @@
   }
   ```
   书中提到`Favorites`有2个`局限性`：
-    - 类型安全容易被破坏  
-      [![image.png](https://s33.postimg.cc/b0ab6d9vj/image.png)](https://postimg.cc/image/hdze9merf/)   
-    - 局限二没有很好的解决方案   
-        [![image.png](https://s33.postimg.cc/kxlbzkudr/image.png)](https://postimg.cc/image/e74uq577v/)  
+    - 类型安全容易被破坏
+      [![image.png](https://s33.postimg.cc/b0ab6d9vj/image.png)](https://postimg.cc/image/hdze9merf/)
+    - 局限二没有很好的解决方案
+        [![image.png](https://s33.postimg.cc/kxlbzkudr/image.png)](https://postimg.cc/image/e74uq577v/)
 
 # 第五章 枚举和注解
 
@@ -535,9 +598,9 @@
   上面的代码很脆弱，当添加新的枚举常量，如果忘记修改`switch`语句，就可能抛出异常；改善方案：
   ```java
   public enum Operation {
-    PLUS {public double apply(double x, double y){return x + y;}},   
-    MINUS {public double apply(double x, double y){return x - y;}},    
-    TIMES {public double apply(double x, double y){return x * y;}},   DIVIDE{public double apply(double x, double y){return x / y;}};  
+    PLUS {public double apply(double x, double y){return x + y;}},
+    MINUS {public double apply(double x, double y){return x - y;}},
+    TIMES {public double apply(double x, double y){return x * y;}},   DIVIDE{public double apply(double x, double y){return x / y;}};
 
     public abstract double apply(double x, double y);
   }
@@ -550,7 +613,7 @@
 
   // 此处工资计算暂且用double，实际应该使用BigDecimal
   enum PayrollDay {
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;  
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
     private static final int MINS_PER_SHIFT = 8 * 60;
 
@@ -706,7 +769,7 @@
 ## 37. 用标记接口定义类型
 
 * 比如：`Serializable`、spring中的`Aware`接口；
-* `Set`就是一个`有限制的标记接口`  
+* `Set`就是一个`有限制的标记接口`
   - `Set`继承了`Collection`接口，但是没有添加任何其他方法，只是修改了方法的内部实现；
   - `Set`相当于一个标记接口，实现/继承`Set`的类/接口会被限制在特定的功能范围内（set的特性）而区别于其他集合类型；
 * `标记接口`相对`标记注解`的优点
@@ -755,7 +818,7 @@
     ... // Remainder omitted
   }
   ```
-  貌似不可变，但实际上，`Date类`是可变的，因此并不能达到预期的效果；  
+  貌似不可变，但实际上，`Date类`是可变的，因此并不能达到预期的效果；
   ```java
     Date start = ...;
     Date end = ...;
@@ -832,7 +895,7 @@
     //   Unknown Collection
     //   	->Values
   ```
-  解决方法就是：用于也不要编写参数数量一样的重载方法；
+  解决方法就是：永远也不要编写参数数量一样的重载方法；
 
 ## 42. 慎用可变参数
 
@@ -1128,7 +1191,7 @@
   ```java
   public class StopThread {
   	private static boolean stopRequested;
-      
+
       public static void main(String[] args) throws InterruptedException {
           Thread backgroundThread = new Thread(() -> {
               int i = 0;
@@ -1147,17 +1210,17 @@
   ```java
   public class StopThread {
       private static boolean stopRequested;
-      
+
       // 添加同步
       private static synchronized void requestStop() {
       	stopRequested = true;
       }
-      
+
       // 读写都要添加同步，仅仅添加写同步也是无效
       private static synchronized boolean stopRequested() {
       	return stopRequested;
       }
-      
+
       public static void main(String[] args) throws InterruptedException {
           Thread backgroundThread = new Thread(() -> {
               int i = 0;
@@ -1184,12 +1247,12 @@
 ----
 ##  延伸
 
-- [Java.util.concurrent包研究](http://www.null.null "待补充")  
+- [Java.util.concurrent包研究](http://www.null.null "待补充")
 
 
 ## 唠唠其他，开小差
 
-* 永远不要让客户去做任何类库能够替客户完成的事  
+* 永远不要让客户去做任何类库能够替客户完成的事
 
 
 

@@ -1,4 +1,5 @@
-# Spring-Cloud [<font size="3" color="green">programmer-DD</font>][programmer-DD]
+# <div style="text-align:center;color:#FF9900">SpringCloud</div>
+_[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
 ## [Spring Cloud Eureka](http://blog.didispace.com/spring-cloud-starter-dalston-1/)
 
@@ -8,7 +9,7 @@
 
 解决如下警告：
 
-> EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE. 
+> EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
 
 
 
@@ -78,11 +79,11 @@
    User findByUsername(final String userName, @RequestParam("address") final String address);
    ```
 
-   > 原因是当userName没有被@RequestParam注解修饰时，会自动被当做request body来处理。只要有body，就会被feign认为是post请求，所以整个服务是被当作带有request parameter和body的post请求发送出去的 
+   > 原因是当userName没有被@RequestParam注解修饰时，会自动被当做request body来处理。只要有body，就会被feign认为是post请求，所以整个服务是被当作带有request parameter和body的post请求发送出去的
 
 ### Feign的扩展
 
-> 由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能，也可以通过Ribbon的IRule进行策略扩展。另外，Feign还整合的Hystrix来实现服务的容错保护，在Dalston版本中，Feign的Hystrix默认是关闭的。 
+> 由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能，也可以通过Ribbon的IRule进行策略扩展。另外，Feign还整合的Hystrix来实现服务的容错保护，在Dalston版本中，Feign的Hystrix默认是关闭的。
 
 
 
@@ -94,14 +95,14 @@
 
 ### [加密/解密](http://blog.didispace.com/spring-cloud-starter-dalston-3-2/)
 
-- 需要注意：`不限长度的JCE版本` 
+- 需要注意：`不限长度的JCE版本`
 
 #### 有效访问地址
 
 - `/encrypt/status`：查看加密功能状态的端点
 - `/key`：查看密钥的端点
-- `/encrypt`：对请求的body内容进行加密的端点，POST请求 
-- `/decrypt`：对请求的body内容进行解密的端点，POST请求 
+- `/encrypt`：对请求的body内容进行加密的端点，POST请求
+- `/decrypt`：对请求的body内容进行解密的端点，POST请求
 
 #### 对称加密
 
@@ -170,9 +171,9 @@
 
 #### 原理
 
-> “舱壁模式”对于熟悉Docker的读者一定不陌生，Docker通过“舱壁模式”实现进程的隔离，使得容器与容器之间不会互相影响。而Hystrix则使用该模式实现线程池的隔离，它会为每一个Hystrix命令创建一个独立的线程池，这样就算某个在Hystrix命令包装下的依赖服务出现延迟过高的情况，也只是对该依赖服务的调用产生影响，而不会拖慢其他的服务。 
+> “舱壁模式”对于熟悉Docker的读者一定不陌生，Docker通过“舱壁模式”实现进程的隔离，使得容器与容器之间不会互相影响。而Hystrix则使用该模式实现线程池的隔离，它会为每一个Hystrix命令创建一个独立的线程池，这样就算某个在Hystrix命令包装下的依赖服务出现延迟过高的情况，也只是对该依赖服务的调用产生影响，而不会拖慢其他的服务。
 
-> 执行依赖代码的线程与请求线程(比如Tomcat线程)分离，请求线程可以自由控制离开的时间，这也是我们通常说的异步编程，Hystrix是结合`RxJava`来实现的异步编程。通过设置线程池大小来控制并发访问量，当线程饱和的时候可以拒绝服务，防止依赖问题扩散。 
+> 执行依赖代码的线程与请求线程(比如Tomcat线程)分离，请求线程可以自由控制离开的时间，这也是我们通常说的异步编程，Hystrix是结合`RxJava`来实现的异步编程。通过设置线程池大小来控制并发访问量，当线程饱和的时候可以拒绝服务，防止依赖问题扩散。
 
 [博客](http://blog.didispace.com/spring-cloud-starter-dalston-4-2/)中也对**打消Hystrix线程池隔离技术对性能影响的顾虑**进行了解释；也有关于`信号量`的介绍；
 
@@ -180,14 +181,14 @@
 
 * 信号量方式下`业务请求线程`和`执行依赖服务的线程`是同一个线程
 
-  > 如果通过信号量来控制系统负载，将不再允许设置超时和异步化，这就表示在服务提供者出现高延迟，其调用线程将会被阻塞，直至服务提供者的网络请求超时，如果对服务提供者有足够的信心，可以通过信号量来控制系统的负载。 
+  > 如果通过信号量来控制系统负载，将不再允许设置超时和异步化，这就表示在服务提供者出现高延迟，其调用线程将会被阻塞，直至服务提供者的网络请求超时，如果对服务提供者有足够的信心，可以通过信号量来控制系统的负载。
 
-  打开`信号量模式`的方式：将属性execution.isolation.strategy设置为SEMAPHORE 
+  打开`信号量模式`的方式：将属性execution.isolation.strategy设置为SEMAPHORE
 
 #### 线程隔离的缺点:
 
-* 线程池的主要缺点就是它增加了计算的开销 
-  * 对于不依赖网络访问的服务，比如只依赖内存缓存这种情况下，就不适合用线程池隔离技术 
+* 线程池的主要缺点就是它增加了计算的开销
+  * 对于不依赖网络访问的服务，比如只依赖内存缓存这种情况下，就不适合用线程池隔离技术
 
 ### [Hystrix断路器](http://blog.didispace.com/spring-cloud-starter-dalston-4-3/)
 
@@ -199,11 +200,11 @@
 
 #### 那么当断路器打开之后会发生什么呢？
 
-> 我们先来说说断路器未打开之前，对于之前那个示例的情况就是每个请求都会在当hystrix超时之后返回`fallback`，每个请求时间延迟就是近似hystrix的超时时间，如果设置为5秒，那么每个请求就都要延迟5秒才会返回。当熔断器在10秒内发现请求总数超过20，并且错误百分比超过50%（*这些请求情况的指标信息都是HystrixCommand和HystrixObservableCommand实例在执行过程中记录的* ），这个时候熔断器打开。打开之后，再有请求调用的时候，将不会调用主逻辑，而是直接调用降级逻辑，这个时候就不会等待5秒之后才返回fallback。通过断路器，实现了自动地发现错误并将降级逻辑切换为主逻辑，减少响应延迟的效果。 
+> 我们先来说说断路器未打开之前，对于之前那个示例的情况就是每个请求都会在当hystrix超时之后返回`fallback`，每个请求时间延迟就是近似hystrix的超时时间，如果设置为5秒，那么每个请求就都要延迟5秒才会返回。当熔断器在10秒内发现请求总数超过20，并且错误百分比超过50%（*这些请求情况的指标信息都是HystrixCommand和HystrixObservableCommand实例在执行过程中记录的* ），这个时候熔断器打开。打开之后，再有请求调用的时候，将不会调用主逻辑，而是直接调用降级逻辑，这个时候就不会等待5秒之后才返回fallback。通过断路器，实现了自动地发现错误并将降级逻辑切换为主逻辑，减少响应延迟的效果。
 
 #### 断路后，主逻辑要如何恢复？
 
-> 对于这一问题，hystrix也为我们实现了自动恢复功能。当断路器打开，对主逻辑进行熔断之后，hystrix会启动一个休眠时间窗，在这个时间窗内，降级逻辑是临时的成为主逻辑，当休眠时间窗到期，断路器将进入半开状态，释放一次请求到原来的主逻辑上，如果此次请求正常返回，那么断路器将继续闭合，主逻辑恢复，如果这次请求依然有问题，断路器继续进入打开状态，休眠时间窗重新计时 
+> 对于这一问题，hystrix也为我们实现了自动恢复功能。当断路器打开，对主逻辑进行熔断之后，hystrix会启动一个休眠时间窗，在这个时间窗内，降级逻辑是临时的成为主逻辑，当休眠时间窗到期，断路器将进入半开状态，释放一次请求到原来的主逻辑上，如果此次请求正常返回，那么断路器将继续闭合，主逻辑恢复，如果这次请求依然有问题，断路器继续进入打开状态，休眠时间窗重新计时
 
 ### [Hystrix Dashboard ](http://blog.didispace.com/spring-cloud-starter-dalston-5-1/)
 

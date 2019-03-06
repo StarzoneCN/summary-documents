@@ -8,7 +8,7 @@
 // 生成固定大小的线程池
 public static ExecutorService newFixedThreadPool(int nThreads) {
     return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
-}  
+}
 
 // corePoolSize —— 最小线程数；如果allowCoreThreadTimeOut设置为true，线程池最后会减少到0；
 public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
@@ -17,7 +17,7 @@ public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveT
 }
 ```
 对于`allowCoreThreadTimeOut`
-> If false (default), `core threads` stay alive even when idle. 
+> If false (default), `core threads` stay alive even when idle.
 > If true, `core threads` use keepAliveTime to time out waiting for work.
 
 * **corePoolSize：**
@@ -45,7 +45,7 @@ public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveT
                 es.submit(runnable);
                 Thread.sleep(4000);
             }
-        
+
             @Test
             public void testLinked() throws InterruptedException {
                 ExecutorService es = new ThreadPoolExecutor(1, 2, 60L,
@@ -54,18 +54,25 @@ public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveT
                 es.submit(runnable);
                 Thread.sleep(4000);
             }
-        
+
             private Runnable runnable = () -> {
                 System.out.println("开始线程" + Thread.currentThread().getId());
                 try {
                     Thread.sleep(3000);
-                    System.out.println("执行线程" + 
+                    System.out.println("执行线程" +
                                        Thread.currentThread().getId());
                 } catch (InterruptedException e) {
                 }
                 System.out.println("完成线程" + Thread.currentThread().getId());
             };
         ```
+根据上面代码`testLinked`方法总结(c-`corePoolSize`, m-`maximumPoolSize`, B-`BlockingQueue`, actual-`实际task(runnable)数量`)：
+|四者关系|运行结果|
+| :--: | :--: |
+| actual < B  | 直接创建c个线程，多线程执行queue中任务  |
+| B < actual <= B+c  | 直接创建c个线程，多线程执行queue中任务  |
+| B+c < actual <= B+m   | 直接创建`actual-B`个线程，多线程执行queue中任务 |
+| actual > B+m | 报错  |
 
 
 ### 1.2 CachedThreadPool
@@ -74,7 +81,7 @@ newCachedThreadPool()`生成一个初始大小为0，空闲时间为60s，没有
 
 ```java
 public static ExecutorService newCachedThreadPool() {
-	return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, 
+	return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
                                   new SynchronousQueue<Runnable>());
 }
 ```
@@ -105,14 +112,17 @@ public static ExecutorService newCachedThreadPool() {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) fixed;
         executor.setCorePoolSize(4);  // newFixedThreadPool(1)可以再设置大小
     ```
-* **单线程 + 定时/延迟** 
+* **单线程 + 定时/延迟**
   `newSingleThreadScheduledExecutor`
-### 1.5 newWorkStealingPool
+### 1.5 newWorkStealingPool()
 
   作用：貌似是尽可能地利用所有处理器，生成一个线程池；
 
+#### 1.5.1 newWorkStealingPool(int parallelism)
+作用：最大线程数为`parallelism`，即使`parallelism`大于/小于处理器核心数量；
+
 ## 2. 原理与概念
 
-* > 在刚刚创建ThreadPoolExecutor的时候，线程并不会立即启动，而是要等到有任务提交时才会启动，除非调用了prestartCoreThread/prestartAllCoreThreads事先启动核心线程
+* > 在刚刚创建ThreadPoolExecutor的时候，线程并不会立即启动，而是要等到有任务提交时才会启动，除非调用了`prestartCoreThread-启动一个coreThread`/`prestartAllCoreThreads-启动所有coreThread`事先启动核心线程
 
 * `largestPoolSize` - 该变量记录了线程池在整个生命周期中`曾经`出现的最大线程个数

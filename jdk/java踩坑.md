@@ -5,13 +5,14 @@
 int[] arr = new int[]{1,2,3};
 System.out.println(Arrays.asList(arr).contains(1));
 ```
-在猜猜这个结果：
+再猜猜这个结果：
 ```Java
 Integer[] arr = new Integer[]{1,2,3};
 System.out.println(Arrays.asList(arr).contains(1));
 ```
 提示：
-> 主要问题出在可变长参数上，`Arrays.asList`的参数定义就是可变长参数`asList(T... a)`
+> 主要问题出在可变长参数上，`Arrays.asList`的参数定义就是可变长参数`asList(T... a)`；
+> `int[]`是没有办法直接转型成`Object[]`的，基本类型与Object也是无法匹配上的，因此，退而求其次，`int[]`被当作一个单纯的数组对象ArrayObject，包装结果为`Object[]{ArrayObject}`，因此数组长度为1。
 
 [参考](https://suigara.iteye.com/blog/1623427 '编号2')
 

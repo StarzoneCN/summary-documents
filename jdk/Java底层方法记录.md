@@ -10,7 +10,7 @@
 
  	1. `0`/`负整数` - 返回Reflection.class
  	2. `正整数` - 层层向上查找调用类
-
+补充（2019-03-05）：发现`jdk.internal.reflect.Reflection`类已经修改，并且不能被直接引入（import）；
 
 
 ### 1.2 返回修饰符
@@ -115,7 +115,7 @@ System.out.println("returnValue = " + returnValue);
 
 ### 1.8 泛型  <font size=2>[link](https://www.jianshu.com/p/2315dda64ad2)</font>
 
-说明：当你声明一个类或者接口的时候你可以指明这个类或接口可以被参数化， java.util.List 接口就是典型的例子。你可以运用泛型机制创建一个标明存储的是 String 类型 list，这样比你创建一个 Object 的l ist 要更好。
+说明：当你声明一个类或者接口的时候你可以指明这个类或接口可以被参数化， java.util.List 接口就是典型的例子。你可以运用泛型机制创建一个标明存储的是 String 类型 list，这样比你创建一个 Object 的list 要更好。
  当你想在运行期参数化类型本身，比如你想检查 java.util.List 类的参数化类型，你是没有办法能知道他具体的参数化类型是什么。这样一来这个类型就可以是一个应用中所有的类型。
 
 示例：
@@ -155,7 +155,7 @@ public class MyClass {
     this.stringList = list;
   }
 }
-method = Myclass.class.getMethod("setStringList", List.class);
+Method method = Myclass.class.getMethod("setStringList", List.class);
 
 Type[] genericParameterTypes = method.getGenericParameterTypes();
 
@@ -215,4 +215,3 @@ Url url = ClassLoader.getSystemClassLoader().getResources("application.yml");
 // 获取资源properties
 Properties properties = PropertiesLoaderUtils.loadProperties(new UrlResource(url));
 ```
-
