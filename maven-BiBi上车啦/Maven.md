@@ -22,11 +22,11 @@ Maven有个[IRC](https://zh.wikipedia.org/wiki/IRC)交流频道`#maven`
 
 例如：在4核8线程的CPU上（i7-8850u）
 
-`-T 0.5C` 
+`-T 0.5C`
 
 > Using the MultiThreadedBuilder implementation with a thread count of 4
 
-`-T 1.5C` 
+`-T 1.5C`
 
 > Using the MultiThreadedBuilder implementation with a thread count of 12
 
@@ -40,7 +40,7 @@ Maven有个[IRC](https://zh.wikipedia.org/wiki/IRC)交流频道`#maven`
 
 表示：从构建（模块）列表中的某个模块开始顺序构建，前面的就不再执行构建
 
-例如：[参考](https://juvenshun.iteye.com/blog/565240 "页面内搜索'resume-from'") 
+例如：[参考](https://juvenshun.iteye.com/blog/565240 "页面内搜索'resume-from'")
 
 ### 1.6  -q,--quiet
 
@@ -87,7 +87,7 @@ Maven有个[IRC](https://zh.wikipedia.org/wiki/IRC)交流频道`#maven`
 设置日志级别为error，打印的信息更加详细
 
 ```
-Caused by: org.codehaus.plexus.util.xml.pull.XmlPullParserException: Unrecognised tag: 'groupIdsa' (position: START_TAG seen ...<plugin>\r\n\t\t\t\t<groupIdsa>... @49:16) 
+Caused by: org.codehaus.plexus.util.xml.pull.XmlPullParserException: Unrecognised tag: 'groupIdsa' (position: START_TAG seen ...<plugin>\r\n\t\t\t\t<groupIdsa>... @49:16)
     at org.apache.maven.model.io.xpp3.MavenXpp3ReaderEx.checkUnknownElement (MavenXpp3ReaderEx.java:180)
     at org.apache.maven.model.io.xpp3.MavenXpp3ReaderEx.parsePlugin (MavenXpp3ReaderEx.java:3141)
     at org.apache.maven.model.io.xpp3.MavenXpp3ReaderEx.parseBuild (MavenXpp3ReaderEx.java:1025)
@@ -151,6 +151,23 @@ debug模式，此模式下，控制台会打印更加详细的日志，比如配
 * `mvn help:effective-pom` - 打印有效的pom，包括父pom；
 * `mvn help:active-profiles` - 显示当前激活的profiles；
 
+### 2.3 maven-compiler-plugin
+> since 3.0 ,maven`javax.tools.JavaCompiler`进行代码编译；如果想强制使用`javac`进行编译，可以设置`forceJavacCompilerUse`属性
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.7.0</version>
+    <configuration>
+        <verbose>true</verbose>
+        <fork>true</fork>
+        <executable><!-- 关键-设置javac命令路径：path-to-javac --></executable>
+        <compilerVersion>1.3</compilerVersion>
+        <forceJavacCompilerUse>true</forceJavacCompilerUse>
+    </configuration>
+</plugin>
+```
+
 
 
 
@@ -163,7 +180,7 @@ debug模式，此模式下，控制台会打印更加详细的日志，比如配
 
 #### 3.1.1 maven默认方式
 
->  By default, Maven will make a guess at the plugin-prefix to be used, by removing any instances of "maven" or "plugin" surrounded by hyphens in the plugin's artifact ID. 
+>  By default, Maven will make a guess at the plugin-prefix to be used, by removing any instances of "maven" or "plugin" surrounded by hyphens in the plugin's artifact ID.
 
 maven默认是去除所有连字符包围的`maven`和`plugin`单词，但是有些要求：
 
@@ -195,16 +212,26 @@ maven默认是去除所有连字符包围的`maven`和`plugin`单词，但是有
   </build>
 </project>
 ```
+#### 3.1.3 匹配插件前缀
+匹配分为3个步骤：
+1. 从所有的远端仓库下载`maven-metadata.xml`文件，并以`maven-metadata-${repoId}.xml`的形式保存在本地仓库`${groupId}`目录下；
+   > Download maven-metadata.xml from each remote repository into the local repository, and name it maven-metadata-\${repoId}.xml within the path of \${groupId}.
+2. 合并本地仓库`${groupId}`目录下的matedata-files(包括`maven-metadata-local.xml`如果存在)；
+   > Load these metadata files, along with maven-metadata-local.xml (if it exists), within the path of ${groupId}. Merge them.
+3. 查找所有matedata-files中的plugin-prefix，与pom中的`<artifactId>`配对，如果匹配成功，就顺利定位到了plugin，否则，继续匹配的matedata-files中下一个groupId。
+   > Lookup the plugin prefix in the merged metadata. If it's mapped, it should refer to a concrete groupId-artifactId pair. Otherwise, go on to #1 for the next groupId in the user's plugin-groups.
 
-#### 3.1.3  配置
+#### 3.1.4 全局配置
 
 最后要在settings.xml中添加配置：
-
 ```xml
 <pluginGroups>
   <pluginGroup>sample.plugin</pluginGroup>
 </pluginGroups>
 ```
+maven会在查询完`sample.plugin`groupId之后，再去查询一下groups：
+* org.apache.maven.plugins
+* org.codehaus.mojo
 
 ### 3.2 插件属性
 
@@ -231,7 +258,7 @@ public class GreetingMojo extends AbstractMojo {
     /* defaultValue是String类型，但是maven会自动转换类型 */
     @Parameter(property = "printPc.printTip", defaultValue = "true")
     private boolean printTip;
-    @Parameter(property = "printPc.projectVersion", 
+    @Parameter(property = "printPc.projectVersion",
                defaultValue = "${project.version}")
     private String projectVersion;
 

@@ -104,20 +104,20 @@
 
 ### 3. 参数传递
 
-* url中key=value形式
+#### 3.1 url中key=value形式
 
-  * ```
-    "ws:localhost:82/chat/123?username=ydh";
-    ```
+```
+"ws:localhost:82/chat/123?username=ydh";
+```
 
   * 获取方式
 
     * session.getQueryString()；
     * session.getRequestURI().toString()；
 
-* 路径参数
+#### 3.2 路径参数
 
-  * ```java
+```java
     // 类注解
     @ServerEndpoint("/chat/{param}")
 
@@ -127,7 +127,7 @@
         System.out.println("用户"+param+" 登录");
 
     }
-    ```
+```
 
   * 获取方式
 

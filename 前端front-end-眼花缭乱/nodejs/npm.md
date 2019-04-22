@@ -82,3 +82,28 @@
 * scope包和非scope包，可以相互依赖
 * **npm client** 可以逆向兼容非scope包（同时支持scope包）
 
+## 4. 常用模块
+### 4.1 org
+实现node.js命令行环境的loading效果，和显示各种状态的图标
+
+
+### 4.2 rimraf
+The UNIX command `rm -rf` for node.
+
+### 4.3 [child_process][]
+
+
+### 4.4 semver
+版本处理/比较工具；
+
+
+### 4.5 chalk
+控制台日志样式工具；
+
+### 4.5 shelljs
+> ShellJS is a portable (Windows/Linux/OS X) implementation of Unix shell commands on top of the Node.js API. 
+
+
+
+
+[child_process]: https://nodejs.org/api/child_process.html#child_process_child_process

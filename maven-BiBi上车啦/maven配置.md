@@ -10,6 +10,20 @@
 <maven.compiler.source>1.8</maven.compiler.source>
 <maven.compiler.target>1.8</maven.compiler.target>
 ```
+> `maven.compiler.source`和`maven.compiler.target`并不是一定有效的，如果要强制使用某个版本的jdk，可以使用`executable`设置方式：
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.7.0</version>
+  <configuration>
+	<verbose>true</verbose>
+	<fork>true</fork>
+	<executable><!-- 关键-设置javac命令路径：path-to-javac --></executable>
+	<compilerVersion>1.3</compilerVersion>
+  </configuration>
+</plugin>
+```
 
 #### 方式二
 
@@ -38,7 +52,7 @@
    <configuration>
        <!-- 添加javac参数 -->
       <compilerArgument>-Xlint:unchecked</compilerArgument>
-       
+
       <source>${java.version}</source>
       <target>${java.version}</target>
       <showWarnings>true</showWarnings>
@@ -67,9 +81,9 @@
 #### 3.3 defaultGoal
 
 ```xml
-<build>  
-    <defaultGoal>clean</defaultGoal> 
-</build>    
+<build>
+    <defaultGoal>clean</defaultGoal>
+</build>
 ```
 
 执行 mvn 命令时，如果没有指定目标，指定使用的默认目标。 如上配置：如果执行mvn命令，则相当于执行mvn clean
@@ -167,7 +181,7 @@ public class MyQueryMojo extends AbstractMojo {
     private String url;
  	private int timeout;
     private String[] options;
- 
+
     public void execute() throws MojoExecutionException {
         ...
     }
@@ -238,18 +252,18 @@ public class MyQueryMojo extends AbstractMojo {
 指定activeByDefault为true的时候就表示当没有指定其他profile为激活状态时，该profile就默认会被激活
 
 ```xml
-<profiles>  
-        <profile>  
-             <id>profileTest1</id>  
-             <properties>  
-                 <hello>world</hello>  
-             </properties>  
-             <activation>  
+<profiles>
+        <profile>
+             <id>profileTest1</id>
+             <properties>
+                 <hello>world</hello>
+             </properties>
+             <activation>
                  <!-- 默认激活 -->
-                 <activeByDefault>true</activeByDefault>  
-             </activation>  
-        </profile>  
- </profiles> 
+                 <activeByDefault>true</activeByDefault>
+             </activation>
+        </profile>
+ </profiles>
 ```
 
 ##### 4.1.2 命令行
@@ -261,17 +275,17 @@ mvn package -P profileA
 `-P`参数也可以抑制已经激活的profile
 
 ```shell
-mvn package -P !profileTest1  
+mvn package -P !profileTest1
 ```
 
 ##### 4.1.3 settings.xml中指定
 
 ```xml
-<activeProfiles>  
+<activeProfiles>
     <!-- profileA可以在settings.xml中，也可以在pom.xml中 -->
-    <activeProfile>profileTest1</activeProfile>  
-    <activeProfile>profileTest2</activeProfile>  
-</activeProfiles> 
+    <activeProfile>profileTest1</activeProfile>
+    <activeProfile>profileTest2</activeProfile>
+</activeProfiles>
 ```
 
 如果profile中有冲突的属性，maven会按照定义顺序，后面的profile覆盖前面的；
@@ -281,73 +295,73 @@ mvn package -P !profileTest1
 在jdk为1.5版本系列的时候激活profileTest1
 
 ```xml
-<profiles>  
-    <profile> 
-        <id>profileTest1</id>  
-        <jdk>1.5</jdk>  
-    </profile>  
-<profiles>  
+<profiles>
+    <profile>
+        <id>profileTest1</id>
+        <jdk>1.5</jdk>
+    </profile>
+<profiles>
 ```
 
 在jdk为1.4、1.5和1.6的时候激活profileTest1
 
 ```xml
-<profiles>  
-    <profile>  
-        <id>profileTest1</id>  
-        <jdk>[1.4,1.7)</jdk>  
-    </profile>  
-<profiles>  
+<profiles>
+    <profile>
+        <id>profileTest1</id>
+        <jdk>[1.4,1.7)</jdk>
+    </profile>
+<profiles>
 ```
 
 根据操作系统来激活profile
 
 ```xml
-<profiles>  
-    <profile>  
+<profiles>
+    <profile>
         <id>profileTest1</id>
-        <activation>  
-            <os>  
-                <name>Windows XP</name>  
-                <family>Windows</family>  
-                <arch>x86</arch>  
+        <activation>
+            <os>
+                <name>Windows XP</name>
+                <family>Windows</family>
+                <arch>x86</arch>
                 <version>5.1.2600</version>
-            </os> 
-        </activation>  
-    </profile>  
-</profiles>  
+            </os>
+        </activation>
+    </profile>
+</profiles>
 ```
 
 系统属性来激活profile，比如执行`mvn package –Dhello=world `，将激活下面的profileTest1：
 
 ```xml
-<profiles>   
-    <profile>  
+<profiles>
+    <profile>
         <id>profileTest1</id>
-        <activation>  
-            <property>  
+        <activation>
+            <property>
                 <name>hello</name>
                 <!-- 如果value标签没设置，则只要系统属性hello存在，无论何值，都会激活 -->
-                <value>world</value> 
-            </property>  
-        </activation> 
-    </profile>  
+                <value>world</value>
+            </property>
+        </activation>
+    </profile>
 </profiles>
 ```
 
 文件是否存在激活profile
 
 ```xml
-<profiles>  
-    <profile>  
-        <id>profileTest1</id>  
+<profiles>
+    <profile>
+        <id>profileTest1</id>
         <activation>
-            <file> 
+            <file>
                 <!-- 子标签：exists/missing -->
                 <missing>target</missing>
-            </file>  
-        </activation>  
-    </profile>  
+            </file>
+        </activation>
+    </profile>
 </profiles>
 ```
 
@@ -373,4 +387,4 @@ maven调用仓库的顺序是：本地仓库 -> 中央仓库 -> 第三方仓库
 
 ### 1. 打包后部署
 
-[参考](https://segmentfault.com/a/1190000009849487) 
+[参考](https://segmentfault.com/a/1190000009849487)

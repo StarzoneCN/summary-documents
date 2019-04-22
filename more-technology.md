@@ -181,6 +181,10 @@
 * [stunnel]
 * [optaplanner]
 * `Ambari` - hadoop管理工具
+* `CountDownLatch` - 倒数计数器-jdk类
+* `CyclicBarrier` - 多线程相关类；还有`Semaphore`，`java.util.concurrent.Exchanger`，`ThreadLocal`等
+* `pact`微服务测试框架
+* `KeyDB`-redis的高性能分支，采用多线程模式
 
 #### 待处理任务
 

@@ -48,7 +48,7 @@
 
   ```bash
   $ webpack entry.js bundle.js --module-bind 'css=style-loader!css-loader'
-  
+
   # 有些环境下可能需要使用双引号
   $ webpack entry.js bundle.js --module-bind "css=style-loader!css-loader"
   ```
@@ -117,17 +117,17 @@
     entry: './app.js'
     //...
   };
-  
+
   module.exports = (env, argv) => {
-  
+
     if (argv.mode === 'development') {
       config.devtool = 'source-map';
     }
-  
+
     if (argv.mode === 'production') {
       //...
     }
-  
+
     return config;
   };
   ```
@@ -143,11 +143,11 @@
 
    当指定的路径是文件夹时，解析步骤：
 
-   > - 如果文件夹中包含 `package.json` 文件，则按照顺序查找 [`resolve.mainFields`](https://webpack.docschina.org/configuration/resolve/#resolve-mainfields) 配置选项中指定的字段。并且 `package.json` 中的第一个这样的字段确定文件路径。
-   > - 如果 `package.json` 文件不存在或者 `package.json` 文件中的 main 字段没有返回一个有效路径，则按照顺序查找 [`resolve.mainFiles`](https://webpack.docschina.org/configuration/resolve/#resolve-mainfiles) 配置选项中指定的文件名，看是否能在 import/require 目录下匹配到一个存在的文件名。
+   > - 如果文件夹中包含 `package.json` 文件，则按照顺序查找 [resolve.mainFields](https://webpack.docschina.org/configuration/resolve/#resolve-mainfields) 配置选项中指定的字段。并且 `package.json` 中的第一个这样的字段确定文件路径。
+   > - 如果 `package.json` 文件不存在或者 `package.json` 文件中的 main 字段没有返回一个有效路径，则按照顺序查找 [resolve.mainFiles](https://webpack.docschina.org/configuration/resolve/#resolve-mainfiles) 配置选项中指定的文件名，看是否能在 import/require 目录下匹配到一个存在的文件名。
    > - 文件扩展名通过 `resolve.extensions` 选项采用类似的方法进行解析。
 
-* Loader 解析遵循与文件解析器指定的规则相同的规则。但是 [`resolveLoader`](https://webpack.docschina.org/configuration/resolve/#resolveloader) 配置选项可以用来为 Loader 提供独立的解析规则
+* Loader 解析遵循与文件解析器指定的规则相同的规则。但是 [resolveLoader](https://webpack.docschina.org/configuration/resolve/#resolveloader) 配置选项可以用来为 Loader 提供独立的解析规则
 
 * [Manifest](https://webpack.docschina.org/concepts/manifest/#manifest)
 
@@ -195,36 +195,36 @@
 * 编译输出文件名，多模块入口时，可以有多个区分变量：
   * name - 入口名称
   * id - 内部chunk的id
-  * hash - 每次构建过程中，唯一生成的 hash 
+  * hash - 每次构建过程中，唯一生成的 hash
   * chunkhash - 每个 chunk 内容的 hash
   * query - 模块的 query，例如，文件名 `?` 后面的字符串
 
   **例**：[name].js
 
-* `[hash]` 和 `[chunkhash]` 的长度可以使用 `[hash:16]`（默认为20）来指定。或者，通过指定[`output.hashDigestLength`](https://webpack.docschina.org/configuration/output/#output-hashdigestlength) 在全局配置长度。
+* `[hash]` 和 `[chunkhash]` 的长度可以使用 `[hash:16]`（默认为20）来指定。或者，通过指定[output.hashDigestLength](https://webpack.docschina.org/configuration/output/#output-hashdigestlength) 在全局配置长度。
 
 * 虽然属性名叫“文件名（filename）”，但是也可以定义成文件路径：
 
   如：/[name]/[id].js
 
-* 此选项不会影响那些「按需加载 chunk」的输出文件。对于这些文件，请使用 [`output.chunkFilename`](https://webpack.docschina.org/configuration/output/#output-chunkfilename) 选项来控制输出。
+* 此选项不会影响那些「按需加载 chunk」的输出文件。对于这些文件，请使用 [output.chunkFilename](https://webpack.docschina.org/configuration/output/#output-chunkfilename) 选项来控制输出。
 
 * 通过 loader 创建的文件也不受影响。在这种情况下，你必须尝试 loader 特定的可用选项。
 
-* 在使用 [`ExtractTextWebpackPlugin`](https://webpack.docschina.org/plugins/extract-text-webpack-plugin) 时，可以用 `[contenthash]` 来获取提取文件的 hash（既不是 `[hash]` 也不是 `[chunkhash]`）。
+* 在使用 [ExtractTextWebpackPlugin](https://webpack.docschina.org/plugins/extract-text-webpack-plugin) 时，可以用 `[contenthash]` 来获取提取文件的 hash（既不是 `[hash]` 也不是 `[chunkhash]`）。
 
 
 
 #### 3.1.3 hashDigest
 
-* 在生成 hash 时使用的编码方式，默认为 `'hex'`。支持 Node.js [`hash.digest`](https://nodejs.org/api/crypto.html#crypto_hash_digest_encoding) 的所有编码。
+* 在生成 hash 时使用的编码方式，默认为 `'hex'`。支持 Node.js [hash.digest](https://nodejs.org/api/crypto.html#crypto_hash_digest_encoding) 的所有编码。
   * 对文件名使用 `'base64'`，可能会出现问题，因为 base64 字母表中具有 `/` 这个字符(character)。
 
 
 
 #### 3.1.4 hashFunction
 
-散列算法，默认为 `'md5'`。支持 Node.JS [`crypto.createHash`](https://nodejs.org/api/crypto.html#crypto_crypto_createhash_algorithm_options) 的所有功能。
+散列算法，默认为 `'md5'`。支持 Node.JS [crypto.createHash](https://nodejs.org/api/crypto.html#crypto_crypto_createhash_algorithm_options) 的所有功能。
 
 * 从 `4.0.0-alpha2` 开始，`hashFunction` 现在可以是一个返回自定义 hash 的构造函数。
 
@@ -232,7 +232,7 @@
 
 #### 3.1.5 hashSalt
 
-加盐值，通过 Node.JS [`hash.update`](https://nodejs.org/api/crypto.html#crypto_hash_update_data_inputencoding) 来更新哈希。
+加盐值，通过 Node.JS [hash.update](https://nodejs.org/api/crypto.html#crypto_hash_update_data_inputencoding) 来更新哈希。
 
 
 
@@ -295,7 +295,7 @@ resolve: {
 
 **例如:** 从 `app.js` `导入 './style.css'`，resource 是 `/path/to/style.css`. issuer 是 `/path/to/app.js`。
 
-* 在规则中，属性 [`test`](https://webpack.docschina.org/configuration/module/#rule-test), [`include`](https://webpack.docschina.org/configuration/module/#rule-include), [`exclude`](https://webpack.docschina.org/configuration/module/#rule-exclude) 和 [`resource`](https://webpack.docschina.org/configuration/module/#rule-resource) 对 resource 匹配，并且属性 [`issuer`](https://webpack.docschina.org/configuration/module/#rule-issuer) 对 issuer 匹配。
+* 在规则中，属性 [test](https://webpack.docschina.org/configuration/module/#rule-test), [include](https://webpack.docschina.org/configuration/module/#rule-include), [exclude](https://webpack.docschina.org/configuration/module/#rule-exclude) 和 [resource](https://webpack.docschina.org/configuration/module/#rule-resource) 对 resource 匹配，并且属性 [issuer](https://webpack.docschina.org/configuration/module/#rule-issuer) 对 issuer 匹配。
 
 ###### 3.3.1.1.2 结果 [#](https://webpack.docschina.org/configuration/module/#rule-结果)
 
@@ -319,13 +319,13 @@ resolve: {
 
 * 由于需要支持 `Rule.options` 和 `UseEntry.options`，`Rule.use`，`Rule.query` 已废弃。
 
-###### 3.3.1.1.7 options 
+###### 3.3.1.1.7 options
 
 字符串或对象。值可以传递到 loader 中，将其理解为 loader 选项。
 
 * 由于兼容性原因，也可能有 `query` 属性，它是 `options` 属性的别名。使用 `options` 属性替代。
 
-**注意**，webpack 需要生成资源和所有 loader 的独立模块标识，包括选项。它尝试对选项对象使用 `JSON.stringify`。 [#](https://webpack.docschina.org/configuration/module/#useentry) 
+**注意**，webpack 需要生成资源和所有 loader 的独立模块标识，包括选项。它尝试对选项对象使用 `JSON.stringify`。 [#](https://webpack.docschina.org/configuration/module/#useentry)
 
 
 
@@ -349,11 +349,11 @@ resolve: {
 
 ### 6.1 [html-webpack-plugin](https://webpack.docschina.org/plugins/html-webpack-plugin/)
 
-[`HtmlWebpackPlugin`](https://github.com/jantimon/html-webpack-plugin)简化了HTML文件的创建，以便为你的webpack包提供服务。
+[HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin)简化了HTML文件的创建，以便为你的webpack包提供服务。
 
 > 这对于在文件名中包含每次会随着编译而发生变化哈希的 webpack bundle 尤其有用。 你可以让插件为你生成一个HTML文件，使用[lodash模板](https://lodash.com/docs#template)提供你自己的模板，或使用你自己的[loader](https://webpack.docschina.org/loaders)。
 
-[官方文档](https://github.com/jantimon/html-webpack-plugin#options) 
+[官方文档](https://github.com/jantimon/html-webpack-plugin#options)
 
 
 
@@ -367,7 +367,7 @@ resolve: {
 
 ```js
 var portfinder = require('portfinder');
- 
+
 portfinder.getPort(function (err, port) {
     //
     // `port` is guaranteed to be a free port
@@ -380,7 +380,7 @@ portfinder.getPort(function (err, port) {
 
 ```js
   const portfinder = require('portfinder');
- 
+
   portfinder.getPortPromise()
     .then((port) => {
         //

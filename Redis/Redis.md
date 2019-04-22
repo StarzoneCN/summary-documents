@@ -83,9 +83,32 @@ save 900 1
 save 300 10
 save 60 10000
 ```
+##### 2.2.1.15 定时频率
+查看`hz`配置属性；
+##### 2.2.1.16 一致性延迟
+查看`repl-disable-tcp-nodelay no`设置；
+##### 2.2.1.17 复制积压缓冲区
+查看`repl-backlog-size`配置；
+##### 2.2.1.18 主从心跳检测
+查看`repl-ping-slave-period`配置；
 ##### 更多
 TODO `redis.conf`配置文件还有很多配置模块（`SNAPSHOTTING`、`REPLICATION`、`SECURITY`、`APPEND ONLY MODE`、`REDIS CLUSTER`、`SLOW LOG`、`LATENCY MONITOR`、`EVENT NOTIFICATION`、`ADVANCED CONFIG`），太多了，以后再搞吧！
 
+## 遗留疑问
+1. Hash类型的value的属性数量较少时，编码类型是zipmap，这个zipmap具体内部原理是啥？
+
+## 参考
+[redis原理详解](https://blog.51cto.com/gudaoqing/1601114 "文章中的应用场景示例比较不错")
+[redis为何采用单线程？](https://zhuanlan.zhihu.com/p/58038188)
+[LFU淘汰策略](https://zhuanlan.zhihu.com/p/44651811)
+[LFU淘汰策略2](https://yq.aliyun.com/articles/278922 '有介绍衰减算法')
+[Redis持久化磁盘IO方式及其带来的问题](https://blog.51cto.com/gudaoqing/1601114)
+[AOF重写](https://blog.csdn.net/hezhiqiang1314/article/details/69396887)
+[redis分区](http://blog.jobbole.com/102194/)
+[redis分区算法 - Consistent Hashing](http://blog.jobbole.com/101226/)
+[redis“命名空间”](https://www.cnblogs.com/EasonJim/p/7818004.html)
+[勿用redis的多库](http://blog.kankanan.com/article/52ff7528-redis-7684591a5e93.html)
+[主从复制](https://www.cnblogs.com/kismetv/p/9236731.html)
 
 
 

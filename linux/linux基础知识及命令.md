@@ -31,6 +31,10 @@
   * 修改~/`.bashrc`文件。  （每个用户目录下都有，ls -all，单独用户有效）
   * `source`命令使变量立即生效
 
+### 3.3 详解
+更多解释请[参考][linux-env-varible]
+
+
 ## 4. 命令
 
 ### 4.1 文件
@@ -89,7 +93,7 @@
 
   ```shell
   $ find ./ -size 0 -exec rm {} \; 删除文件大小为零的文件
-  $ rm -i `find ./ -size 0`  
+  $ rm -i `find ./ -size 0`
   $ find ./ -size 0 | xargs rm -f &
 
   为了用ls -l命令列出所匹配到的文件，可以把ls -l命令放在find命令的-exec选项中：
@@ -148,6 +152,10 @@
 
 * `~/.bashrc`中的`rc`意思 - [`run command`](https://superuser.com/questions/173165/what-does-the-rc-in-bashrc-etc-mean)
 
+### 5.2 linux/unix/BSD关系
+> 哎,老有人问这个，这么说吧,最早的unix是开放的，很多组织对unix都有修改，期中比较有名的就副白克利大学的修改版本，叫做bsd，是unix的分支，由于bsd的协议允许你直接使用/修改它的代码，并且可以作为商业用途，所以很多公司的unix都是从bsd衍生过来的，比如hp-unix,ibm的aix等。
+> linux呢,是一个完全没有参照unix代码的一个仿照unix架构,试图与unix相兼容的开源系统.换句话说,bsd是unix的分支，而linux是类unix系统或者说是仿unix系统.
+
 
 
 
@@ -157,3 +165,4 @@
 
 
 [usr]:https://segmentfault.com/a/1190000000497217
+[linux-env-varible]: https://blog.csdn.net/netwalk/article/details/9455893

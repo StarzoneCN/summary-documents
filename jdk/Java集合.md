@@ -133,6 +133,11 @@
   // 在HashMap类的final Node<K,V> getNode(int hash, Object key)方法中
   (n - 1) & hash;
   ```
+* 可以使用`Map m = Collections.synchronizedMap(new HashMap(...));`得到线程安全的map，但是这个实现中的所有方法均使用了`synchronized`关键字，此关键字对性能不友好；
+* `fail-fast`一旦创建了迭代器，除了迭代器自身的删除（remove）方法，其他任何元素删除方法都会抛出`ConcurrentModificationException`异常；（集合类通则）
+* 更多参考
+    - [Java 8 HashMap键与Comparable接口](http://www.importnew.com/20121.html)
+    - [HashMap的加载因子为何是0.75？](https://www.jianshu.com/p/64f6de3ffcc1 "杠精")
 
 ### TreeMap
 

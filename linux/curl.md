@@ -27,7 +27,7 @@
 
 ## 2. 格式
 
-**curl [options ...] url**
+**curl [options ...] [参数]**
 
 ### 2.1 option
 
@@ -44,11 +44,10 @@
 
 * [Linux 指令详解 curl 文件传输](https://blog.csdn.net/doiido/article/details/44015107)
 
-## 
+##
 
 
 
 ## N. 原理
 
 原理就先留着吧，涉及到libcurl以及源码和linux太底层的技术等鬼东西，时间有限，有机会再一探究竟。。。
-

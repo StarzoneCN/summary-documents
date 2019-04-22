@@ -13,21 +13,21 @@
         <version>4.11</version>
         <scope>test</scope>
     </dependency>
-    
+
     <!-- 添加log4j -->
     <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.16</version>
     </dependency>
-    
+
     <!-- 添加mybatis -->
     <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
         <version>3.2.6</version>
     </dependency>
-    
+
     <!-- 添加mysql驱动 -->
     <dependency>
         <groupId>mysql</groupId>
@@ -48,24 +48,24 @@
 
     <!-- 指定properties配置文件， 我这里面配置的是数据库相关 -->
     <properties resource="dbConfig.properties"></properties>
-  
+
     <!-- 指定Mybatis使用log4j -->
     <settings>
         <setting name="logImpl" value="LOG4J"/>
     </settings>
-      
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <!--
-                 如果上面没有指定数据库配置的properties文件，那么此处可以这样直接配置 
+                 如果上面没有指定数据库配置的properties文件，那么此处可以这样直接配置
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url" value="jdbc:mysql://localhost:3306/test1"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
                 -->
-         
+
                 <!-- 上面指定了数据库配置文件， 配置文件里面也是对应的这四个属性 -->
                 <property name="driver" value="${driver}"/>
                 <property name="url" value="${url}"/>
@@ -74,7 +74,7 @@
             </dataSource>
         </environment>
     </environments>
-  
+
     <!-- 映射文件，mybatis精髓， 后面才会细讲 -->
     <mappers>
         <mapper resource="com/dy/dao/userDao-mapping.xml"/>
@@ -148,7 +148,7 @@ if (context != null) {
 	<!--
 	通过package, 可以直接指定package的名字， mybatis会自动扫描你指定包下面的javabean,
 	并且默认设置一个别名，默认的名字为： javabean 的首字母小写的非限定类名来作为它的别名。
-	也可在javabean 加上注解@Alias 来自定义别名， 例如： @Alias(user) 
+	也可在javabean 加上注解@Alias 来自定义别名， 例如： @Alias(user)
 	<package name="com.dy.entity"/>
 	-->
 	<typeAlias alias="UserEntity" type="com.dy.entity.User"/>
@@ -162,7 +162,7 @@ if (context != null) {
 ```xml
 
 <typeHandlers>
-    <!-- 
+    <!--
           当配置package的时候，mybatis会去配置的package扫描TypeHandler
           <package name="com.dy.demo"/>
        -->
@@ -189,7 +189,7 @@ if (context != null) {
 需要实现**BaseTypeHandler**接口：
 
 ```java
-@MappedJdbcTypes(JdbcType.VARCHAR)  
+@MappedJdbcTypes(JdbcType.VARCHAR)
 //此处如果不用注解指定jdbcType, 那么，就可以在配置文件中通过"jdbcType"属性指定， 同理， javaType 也可通过 @MappedTypes指定
 public class ExampleTypeHandler extends BaseTypeHandler<String> {
 
@@ -245,14 +245,14 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
     <mappers>
         <!-- 第一种方式：通过resource指定 -->
         <mapper resource="com/dy/dao/userDao.xml"/>
-    
+
         <!-- 第二种方式， 通过class指定接口，进而将接口与对应的xml文件形成映射关系
-             不过，使用这种方式必须保证 接口与mapper文件同名(不区分大小写)， 
-             我这儿接口是UserDao,那么意味着mapper文件为UserDao.xml 
+             不过，使用这种方式必须保证 接口与mapper文件同名(不区分大小写)，
+             我这儿接口是UserDao,那么意味着mapper文件为UserDao.xml
         -->
         <mapper class="com.dy.dao.UserDao"/>
-      
-        <!-- 第三种方式，直接指定包，自动扫描，与方法二同理 
+
+        <!-- 第三种方式，直接指定包，自动扫描，与方法二同理
         -->
         <package name="com.dy.dao"/>
         <!-- 第四种方式：通过url指定mapper文件位置
@@ -268,15 +268,15 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 setting节点里配置的值会直接改写Configuration对应的变量值，这些变量描述的是Mybatis的全局运行方式；
 
 ```xml
-<settings> 
-    <setting name="cacheEnabled" value="true"/> 
-    <setting name="lazyLoadingEnabled" value="true"/> 
-    <setting name="multipleResultSetsEnabled" value="true"/> 
-    <setting name="useColumnLabel" value="true"/> 
-    <setting name="useGeneratedKeys" value="false"/> 
-    <setting name="enhancementEnabled" value="false"/> 
-    <setting name="defaultExecutorType" value="SIMPLE"/> 
-    <setting name="defaultStatementTimeout" value="25000"/> 
+<settings>
+    <setting name="cacheEnabled" value="true"/>
+    <setting name="lazyLoadingEnabled" value="true"/>
+    <setting name="multipleResultSetsEnabled" value="true"/>
+    <setting name="useColumnLabel" value="true"/>
+    <setting name="useGeneratedKeys" value="false"/>
+    <setting name="enhancementEnabled" value="false"/>
+    <setting name="defaultExecutorType" value="SIMPLE"/>
+    <setting name="defaultStatementTimeout" value="25000"/>
 </settings>
 ```
 
@@ -300,13 +300,13 @@ setting节点里配置的值会直接改写Configuration对应的变量值，这
 
 
 
-#### 3.3 statementType 
+#### 3.3 statementType
 
 STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement，PreparedStatement 或 CallableStatement，默认值：PREPARED。
 
 
 
-#### 3.4 keyProperty 
+#### 3.4 keyProperty
 
 （仅对 insert 和 update 有用）唯一标记一个属性，MyBatis 会通过 getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认：unset。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
 
@@ -337,17 +337,17 @@ ibatis 插入数据将selectKey放在insert之后，通过LAST_INSERT_ID() 获�
 **mysql**中：
 
 ```xml
-<insert id="insertUser" parameterClass="ibatis.User"> 
-    <!-- 至于statementType，与前面相同，MyBatis 支持 STATEMENT，PREPARED 和 CALLABLE 
+<insert id="insertUser" parameterClass="ibatis.User">
+    <!-- 至于statementType，与前面相同，MyBatis 支持 STATEMENT，PREPARED 和 CALLABLE
 			语句的映射类型，分别代表 PreparedStatement 和 CallableStatement 类型。 -->
-          <selectKey resultClass="long" keyProperty="id" order="AFTER" 
-                     statementType="PREPARED">  
-             SELECT LAST_INSERT_ID() AS ID  
-          </selectKey>  
-          insert into user 
-          (name,password) 
-          values 
-          (#name#,#password#) 
+          <selectKey resultClass="long" keyProperty="id" order="AFTER"
+                     statementType="PREPARED">
+             SELECT LAST_INSERT_ID() AS ID
+          </selectKey>
+          insert into user
+          (name,password)
+          values
+          (#name#,#password#)
 </insert>
 ```
 
@@ -355,13 +355,13 @@ ibatis 插入数据将selectKey放在insert之后，通过LAST_INSERT_ID() 获�
 
 ```xml
 <insert id="insertUser" parameterClass="ibatis.User">
-     <selectKey resultClass="long" order="BEFORE" keyProperty="id">  
-            SELECT LAST_INSERT_ID() AS ID  
+     <selectKey resultClass="long" order="BEFORE" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS ID
         </selectKey>
-          insert into user 
-          (name,password) 
-          values 
-          (#name#,#password#) 
+          insert into user
+          (name,password)
+          values
+          (#name#,#password#)
 </insert>
 ```
 
@@ -369,7 +369,7 @@ ibatis 插入数据将selectKey放在insert之后，通过LAST_INSERT_ID() 获�
 
 #### 3.6 keyColumn
 
-仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。 
+仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
 
 
 
@@ -397,7 +397,7 @@ useCache="true"；
 
 ```xml
 <trim prefix="WHERE" prefixOverrides="AND |OR ">
-    ... 
+    ...
 </trim>
 <!-- 其实，这何where标签的功能一样 -->
 ```
@@ -411,9 +411,9 @@ useCache="true"；
     update user
     	<!-- set能够自动处理结尾多余的逗号 -->
         <set>
-            <if test="name != null">name = #{name},</if> 
-            <if test="password != null">password = #{password},</if> 
-            <if test="age != null">age = #{age},</if> 
+            <if test="name != null">name = #{name},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="age != null">age = #{age},</if>
         </set>
         <where>
             <if test="id != null">
@@ -457,7 +457,7 @@ useCache="true"；
 public class ExamplePlugin implements Interceptor {
   	public Object intercept(Invocation invocation) throws Throwable {
       	/* 最后一个语句一定是return invocation.proceed(), 不然拦截器链就断了 */
-    	return invocation.proceed(); 
+    	return invocation.proceed();
   	}
   	public Object plugin(Object target) {
     	return Plugin.wrap(target, this);
@@ -511,191 +511,191 @@ public class ExamplePlugin implements Interceptor {
 #### 7.1.1 拦截器签名
 
 ```java
-@Intercepts({@Signature(type =StatementHandler.class, method = "prepare", 
-                        args ={Connection.class})})  
-public class PageInterceptor implements Interceptor {  
-    ...  
+@Intercepts({@Signature(type =StatementHandler.class, method = "prepare",
+                        args ={Connection.class})})
+public class PageInterceptor implements Interceptor {
+    ...
 }
 ```
 
 #### 7.1.2 实现intercept方法
 
 ```java
-public Object intercept(Invocation invocation) throws Throwable {  
-     StatementHandler statementHandler = (StatementHandler) invocation.getTarget();  
-     MetaObject metaStatementHandler = MetaObject.forObject(statementHandler,  
-     DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY);  
-     // 分离代理对象链(由于目标类可能被多个拦截器拦截，从而形成多次代理，通过下面的两次循环  
-     // 可以分离出最原始的的目标类)  
-     while (metaStatementHandler.hasGetter("h")) {  
-         Object object = metaStatementHandler.getValue("h");  
-         metaStatementHandler = MetaObject.forObject(object, DEFAULT_OBJECT_FACTORY,   
-         DEFAULT_OBJECT_WRAPPER_FACTORY);  
-     }  
-     // 分离最后一个代理对象的目标类  
-     while (metaStatementHandler.hasGetter("target")) {  
-         Object object = metaStatementHandler.getValue("target");  
-         metaStatementHandler = MetaObject.forObject(object, DEFAULT_OBJECT_FACTORY,   
-         DEFAULT_OBJECT_WRAPPER_FACTORY);  
-     }  
-     Configuration configuration = (Configuration) metaStatementHandler.  
-     getValue("delegate.configuration");  
-     dialect = configuration.getVariables().getProperty("dialect");  
-     if (null == dialect || "".equals(dialect)) {  
-         logger.warn("Property dialect is not setted,use default 'mysql' ");  
-         dialect = defaultDialect;  
-     }  
-     pageSqlId = configuration.getVariables().getProperty("pageSqlId");  
-     if (null == pageSqlId || "".equals(pageSqlId)) {  
-         logger.warn("Property pageSqlId is not setted,use default '.*Page$' ");  
-         pageSqlId = defaultPageSqlId;  
-     }  
-     MappedStatement mappedStatement = (MappedStatement)   
-     metaStatementHandler.getValue("delegate.mappedStatement");  
-     // 只重写需要分页的sql语句。通过MappedStatement的ID匹配，默认重写以Page结尾的  
-     //  MappedStatement的sql  
-     if (mappedStatement.getId().matches(pageSqlId)) {  
+public Object intercept(Invocation invocation) throws Throwable {
+     StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
+     MetaObject metaStatementHandler = MetaObject.forObject(statementHandler,
+     DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY);
+     // 分离代理对象链(由于目标类可能被多个拦截器拦截，从而形成多次代理，通过下面的两次循环
+     // 可以分离出最原始的的目标类)
+     while (metaStatementHandler.hasGetter("h")) {
+         Object object = metaStatementHandler.getValue("h");
+         metaStatementHandler = MetaObject.forObject(object, DEFAULT_OBJECT_FACTORY,
+         DEFAULT_OBJECT_WRAPPER_FACTORY);
+     }
+     // 分离最后一个代理对象的目标类
+     while (metaStatementHandler.hasGetter("target")) {
+         Object object = metaStatementHandler.getValue("target");
+         metaStatementHandler = MetaObject.forObject(object, DEFAULT_OBJECT_FACTORY,
+         DEFAULT_OBJECT_WRAPPER_FACTORY);
+     }
+     Configuration configuration = (Configuration) metaStatementHandler.
+     getValue("delegate.configuration");
+     dialect = configuration.getVariables().getProperty("dialect");
+     if (null == dialect || "".equals(dialect)) {
+         logger.warn("Property dialect is not setted,use default 'mysql' ");
+         dialect = defaultDialect;
+     }
+     pageSqlId = configuration.getVariables().getProperty("pageSqlId");
+     if (null == pageSqlId || "".equals(pageSqlId)) {
+         logger.warn("Property pageSqlId is not setted,use default '.*Page$' ");
+         pageSqlId = defaultPageSqlId;
+     }
+     MappedStatement mappedStatement = (MappedStatement)
+     metaStatementHandler.getValue("delegate.mappedStatement");
+     // 只重写需要分页的sql语句。通过MappedStatement的ID匹配，默认重写以Page结尾的
+     //  MappedStatement的sql
+     if (mappedStatement.getId().matches(pageSqlId)) {
          BoundSql boundSql = (BoundSql) metaStatementHandler
-             .getValue("delegate.boundSql");  
-         Object parameterObject = boundSql.getParameterObject();  
-         if (parameterObject == null) {  
-             throw new NullPointerException("parameterObject is null!");  
-         } else {  
-             // 分页参数作为参数对象parameterObject的一个属性  
-             PageParameter page = (PageParameter) metaStatementHandler  
-                     .getValue("delegate.boundSql.parameterObject.page");  
-             String sql = boundSql.getSql();  
-             // 重写sql  
-             String pageSql = buildPageSql(sql, page);  
-             metaStatementHandler.setValue("delegate.boundSql.sql", pageSql);  
-             // 采用物理分页后，就不需要mybatis的内存分页了，所以重置下面的两个参数  
-             metaStatementHandler.setValue("delegate.rowBounds.offset",   
-             RowBounds.NO_ROW_OFFSET);  
+             .getValue("delegate.boundSql");
+         Object parameterObject = boundSql.getParameterObject();
+         if (parameterObject == null) {
+             throw new NullPointerException("parameterObject is null!");
+         } else {
+             // 分页参数作为参数对象parameterObject的一个属性
+             PageParameter page = (PageParameter) metaStatementHandler
+                     .getValue("delegate.boundSql.parameterObject.page");
+             String sql = boundSql.getSql();
+             // 重写sql
+             String pageSql = buildPageSql(sql, page);
+             metaStatementHandler.setValue("delegate.boundSql.sql", pageSql);
+             // 采用物理分页后，就不需要mybatis的内存分页了，所以重置下面的两个参数
+             metaStatementHandler.setValue("delegate.rowBounds.offset",
+             RowBounds.NO_ROW_OFFSET);
              metaStatementHandler.setValue("delegate.rowBounds.limit",
-                                           RowBounds.NO_ROW_LIMIT);  
-             Connection connection = (Connection) invocation.getArgs()[0];  
-             // 重设分页参数里的总页数等  
-             setPageParameter(sql, connection, mappedStatement, boundSql, page);  
-         }  
-     }  
-     // 将执行权交给下一个拦截器  
-     return invocation.proceed();  
+                                           RowBounds.NO_ROW_LIMIT);
+             Connection connection = (Connection) invocation.getArgs()[0];
+             // 重设分页参数里的总页数等
+             setPageParameter(sql, connection, mappedStatement, boundSql, page);
+         }
+     }
+     // 将执行权交给下一个拦截器
+     return invocation.proceed();
 }
 
-private String buildPageSql(String sql, PageParameter page) {  
-    if (page != null) {  
-        StringBuilder pageSql = new StringBuilder();  
-        if ("mysql".equals(dialect)) {  
-            pageSql = buildPageSqlForMysql(sql, page);  
-        } else if ("oracle".equals(dialect)) {  
-            pageSql = buildPageSqlForOracle(sql, page);  
-        } else {  
-            return sql;  
-        }  
-        return pageSql.toString();  
-    } else {  
-        return sql;  
-    }  
-} 
+private String buildPageSql(String sql, PageParameter page) {
+    if (page != null) {
+        StringBuilder pageSql = new StringBuilder();
+        if ("mysql".equals(dialect)) {
+            pageSql = buildPageSqlForMysql(sql, page);
+        } else if ("oracle".equals(dialect)) {
+            pageSql = buildPageSqlForOracle(sql, page);
+        } else {
+            return sql;
+        }
+        return pageSql.toString();
+    } else {
+        return sql;
+    }
+}
 
 /* mysql-分页SQL拼接 */
-public StringBuilder buildPageSqlForMysql(String sql, PageParameter page) {  
-    StringBuilder pageSql = new StringBuilder(100);  
+public StringBuilder buildPageSqlForMysql(String sql, PageParameter page) {
+    StringBuilder pageSql = new StringBuilder(100);
     String beginrow = String
-        .valueOf((page.getCurrentPage() - 1) * page.getPageSize());  
-    pageSql.append(sql);  
-    pageSql.append(" limit " + beginrow + "," + page.getPageSize());  
-    return pageSql;  
-} 
+        .valueOf((page.getCurrentPage() - 1) * page.getPageSize());
+    pageSql.append(sql);
+    pageSql.append(" limit " + beginrow + "," + page.getPageSize());
+    return pageSql;
+}
 
 /* oracle-分页SQL拼接 */
-public StringBuilder buildPageSqlForOracle(String sql, PageParameter page) {  
-    StringBuilder pageSql = new StringBuilder(100);  
-    String beginrow = String.valueOf((page.getCurrentPage() - 1) * page.getPageSize());  
-    String endrow = String.valueOf(page.getCurrentPage() * page.getPageSize());  
-    pageSql.append("select * from ( select temp.*, rownum row_id from ( ");  
-    pageSql.append(sql);  
-    pageSql.append(" ) temp where rownum <= ").append(endrow);  
-    pageSql.append(") where row_id > ").append(beginrow);  
-    return pageSql;  
-} 
+public StringBuilder buildPageSqlForOracle(String sql, PageParameter page) {
+    StringBuilder pageSql = new StringBuilder(100);
+    String beginrow = String.valueOf((page.getCurrentPage() - 1) * page.getPageSize());
+    String endrow = String.valueOf(page.getCurrentPage() * page.getPageSize());
+    pageSql.append("select * from ( select temp.*, rownum row_id from ( ");
+    pageSql.append(sql);
+    pageSql.append(" ) temp where rownum <= ").append(endrow);
+    pageSql.append(") where row_id > ").append(beginrow);
+    return pageSql;
+}
 ```
 
 #### 7.1.3 总记录数/总页数
 
 ```java
-/** 
- * 从数据库里查询总的记录数并计算总页数，回写进分页参数<code>PageParameter</code>,这样调用  
- * 者就可用通过 分页参数<code>PageParameter</code>获得相关信息。 
- *  
- * @param sql 
- * @param connection 
- * @param mappedStatement 
- * @param boundSql 
- * @param page 
- */  
-private void setPageParameter(String sql, Connection connection, MappedStatement mappedStatement,  
-        BoundSql boundSql, PageParameter page) {  
-    // 记录总记录数  
-    String countSql = "select count(0) from (" + sql + ") as total";  
-    PreparedStatement countStmt = null;  
-    ResultSet rs = null;  
-    try {  
-        countStmt = connection.prepareStatement(countSql);  
-        BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,  
-                boundSql.getParameterMappings(), boundSql.getParameterObject());  
-        setParameters(countStmt, mappedStatement, countBS, boundSql.getParameterObject());  
-        rs = countStmt.executeQuery();  
-        int totalCount = 0;  
-        if (rs.next()) {  
-            totalCount = rs.getInt(1);  
-        }  
-        page.setTotalCount(totalCount);  
-        int totalPage = totalCount / page.getPageSize() + ((totalCount % page.getPageSize() == 0) ? 0 : 1);  
-        page.setTotalPage(totalPage);  
-    } catch (SQLException e) {  
-        logger.error("Ignore this exception", e);  
-    } finally {  
-        try {  
-            rs.close();  
-        } catch (SQLException e) {  
-            logger.error("Ignore this exception", e);  
-        }  
-        try {  
-            countStmt.close();  
-        } catch (SQLException e) {  
-            logger.error("Ignore this exception", e);  
-        }  
-    }  
-}  
-  
-/** 
- * 对SQL参数(?)设值 
- *  
- * @param ps 
- * @param mappedStatement 
- * @param boundSql 
- * @param parameterObject 
- * @throws SQLException 
- */  
-private void setParameters(PreparedStatement ps, MappedStatement mappedStatement, BoundSql boundSql,  
-        Object parameterObject) throws SQLException {  
-    ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);  
-    parameterHandler.setParameters(ps);  
-}  
+/**
+ * 从数据库里查询总的记录数并计算总页数，回写进分页参数<code>PageParameter</code>,这样调用
+ * 者就可用通过 分页参数<code>PageParameter</code>获得相关信息。
+ *
+ * @param sql
+ * @param connection
+ * @param mappedStatement
+ * @param boundSql
+ * @param page
+ */
+private void setPageParameter(String sql, Connection connection, MappedStatement mappedStatement,
+        BoundSql boundSql, PageParameter page) {
+    // 记录总记录数
+    String countSql = "select count(0) from (" + sql + ") as total";
+    PreparedStatement countStmt = null;
+    ResultSet rs = null;
+    try {
+        countStmt = connection.prepareStatement(countSql);
+        BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(), countSql,
+                boundSql.getParameterMappings(), boundSql.getParameterObject());
+        setParameters(countStmt, mappedStatement, countBS, boundSql.getParameterObject());
+        rs = countStmt.executeQuery();
+        int totalCount = 0;
+        if (rs.next()) {
+            totalCount = rs.getInt(1);
+        }
+        page.setTotalCount(totalCount);
+        int totalPage = totalCount / page.getPageSize() + ((totalCount % page.getPageSize() == 0) ? 0 : 1);
+        page.setTotalPage(totalPage);
+    } catch (SQLException e) {
+        logger.error("Ignore this exception", e);
+    } finally {
+        try {
+            rs.close();
+        } catch (SQLException e) {
+            logger.error("Ignore this exception", e);
+        }
+        try {
+            countStmt.close();
+        } catch (SQLException e) {
+            logger.error("Ignore this exception", e);
+        }
+    }
+}
+
+/**
+ * 对SQL参数(?)设值
+ *
+ * @param ps
+ * @param mappedStatement
+ * @param boundSql
+ * @param parameterObject
+ * @throws SQLException
+ */
+private void setParameters(PreparedStatement ps, MappedStatement mappedStatement, BoundSql boundSql,
+        Object parameterObject) throws SQLException {
+    ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
+    parameterHandler.setParameters(ps);
+}
 ```
 
 #### 7.1.4 plugin实现
 
 ```java
-public Object plugin(Object target) {  
-    // 当目标类是StatementHandler类型时，才包装目标类，否者直接返回目标本身,减少目标被代理的  
-    // 次数  
-    if (target instanceof StatementHandler) {  
-        return Plugin.wrap(target, this);  
-    } else {  
-        return target;  
-    }  
+public Object plugin(Object target) {
+    // 当目标类是StatementHandler类型时，才包装目标类，否者直接返回目标本身,减少目标被代理的
+    // 次数
+    if (target instanceof StatementHandler) {
+        return Plugin.wrap(target, this);
+    } else {
+        return target;
+    }
 }
 ```
 
@@ -718,71 +718,71 @@ public Object plugin(Object target) {
 需要配置SqlSessionFactoryBean，该配置会加入数据源和mybatis xml配置文件路径等信息：
 
 ```xml
-<bean id="sqlSessionFactory"   
-    class="org.mybatis.spring.SqlSessionFactoryBean">  
-    <property name="dataSource" ref="datasource"></property>  
-    <property name="configLocation" value="classpath:context/mybatis-config.xml"></property>  
-    <!-- 
+<bean id="sqlSessionFactory"
+    class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="datasource"></property>
+    <property name="configLocation" value="classpath:context/mybatis-config.xml"></property>
+    <!--
     mapperLocations：通过正则表达式，支持mybatis动态扫描添加mapper不用像ibatis，用一个还要蛋疼滴添加一个include
     -->
-    <property name="mapperLocations" 
+    <property name="mapperLocations"
               value="classpath*:/com/tx/demo/**/*SqlMap.xml" />
-    <!-- 
+    <!--
     typeHandlersPackage: 由于mybatis默认入参如果为空，又没有指定jdbcType时会抛出异常，在这里通过配置一些默认的类型空值插入的handle，以便处理mybatis的默认类型为空的情况。
     例如NullAbleStringTypeHandle通过实现当String字符串中为null是调用ps.setString(i,null)其他常用类型雷同。
-    -->  
-    <property name="typeHandlersPackage" 
+    -->
+    <property name="typeHandlersPackage"
               value="com.tx.core.mybatis.handler"></property>
-    <!-- 
+    <!--
     failFast：开启后将在启动时检查设定的parameterMap,resultMap是否存在，是否合法。个人建议设置为true,这样可以尽快定位解决问题。不然在调用过程中发现错误，会影响问题定位。
-    --> 
-    <property name="failFast" value="true"></property>  
-    <property name="plugins">  
-        <array>  
+    -->
+    <property name="failFast" value="true"></property>
+    <property name="plugins">
+        <array>
             <bean class="com.tx.core.mybatis.interceptor
-                         .PagedDiclectStatementHandlerInterceptor">  
-                <property name="dialect">  
-                    <bean class="org.hibernate.dialect.PostgreSQLDialect"></bean>  
-                </property>  
-            </bean>  
-        </array>  
-    </property>  
-</bean>  
+                         .PagedDiclectStatementHandlerInterceptor">
+                <property name="dialect">
+                    <bean class="org.hibernate.dialect.PostgreSQLDialect"></bean>
+                </property>
+            </bean>
+        </array>
+    </property>
+</bean>
 <!--
 myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该translator可以将mybatis异常转换为spring中定义的DataAccessException。
 -->
-<bean id="myBatisExceptionTranslator" 
-      class="org.mybatis.spring.MyBatisExceptionTranslator">  
-    <property name="dataSource">  
-        <ref bean="datasource"></ref>  
-    </property>  
-</bean>  
-  
-<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">  
-    <constructor-arg name="sqlSessionFactory" 
-                     ref="sqlSessionFactory"></constructor-arg>  
-    <constructor-arg name="executorType" ref="SIMPLE"></constructor-arg>  
-    <constructor-arg name="exceptionTranslator" 
-                     ref="myBatisExceptionTranslator"></constructor-arg>  
-</bean>  
-  
-<bean id="myBatisDaoSupport" class="com.tx.core.mybatis.support.MyBatisDaoSupport"> 
-    <property name="sqlSessionTemplate">  
-        <ref bean="sqlSessionTemplate"/>  
-    </property>  
+<bean id="myBatisExceptionTranslator"
+      class="org.mybatis.spring.MyBatisExceptionTranslator">
+    <property name="dataSource">
+        <ref bean="datasource"></ref>
+    </property>
+</bean>
+
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg name="sqlSessionFactory"
+                     ref="sqlSessionFactory"></constructor-arg>
+    <constructor-arg name="executorType" ref="SIMPLE"></constructor-arg>
+    <constructor-arg name="exceptionTranslator"
+                     ref="myBatisExceptionTranslator"></constructor-arg>
+</bean>
+
+<bean id="myBatisDaoSupport" class="com.tx.core.mybatis.support.MyBatisDaoSupport">
+    <property name="sqlSessionTemplate">
+        <ref bean="sqlSessionTemplate"/>
+    </property>
 </bean>
 ```
 
 ### 10.2 事务配置
 
 ```xml
-<!-- 配置事务 -->  
-<bean id="txManager"  
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
-    <property name="dataSource" ref="dataSource" />  
-</bean>  
-<!-- 配置基于注解的事务aop -->  
-<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/> 
+<!-- 配置事务 -->
+<bean id="txManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+</bean>
+<!-- 配置基于注解的事务aop -->
+<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
 ```
 
 或
@@ -792,7 +792,7 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource" />
 </bean>
- 
+
 <!-- 配置事务的传播特性 -->
 <bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
     <property name="transactionManager" ref="transactionManager" />
@@ -821,47 +821,47 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
 定义模板：
 
 ```xml
-<!--通过模板定制mybatis的行为 -->  
-<bean id="sqlSessionTemplateSimple" class="org.mybatis.spring.SqlSessionTemplate">     
-    <constructor-arg index="0" ref="sqlSessionFactory" />  
-    <!--更新采用单个模式 -->  
-    <constructor-arg index="1" value="SIMPLE"/>  
-</bean>  
-      
-<!--通过模板定制mybatis的行为 -->  
-<bean id="sqlSessionTemplateBatch" class="org.mybatis.spring.SqlSessionTemplate">     
-    <constructor-arg index="0" ref="sqlSessionFactory" />  
-    <!--更新采用批量模式 -->  
-    <constructor-arg index="1" value="BATCH"/>  
-</bean> 
+<!--通过模板定制mybatis的行为 -->
+<bean id="sqlSessionTemplateSimple" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="sqlSessionFactory" />
+    <!--更新采用单个模式 -->
+    <constructor-arg index="1" value="SIMPLE"/>
+</bean>
+
+<!--通过模板定制mybatis的行为 -->
+<bean id="sqlSessionTemplateBatch" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="sqlSessionFactory" />
+    <!--更新采用批量模式 -->
+    <constructor-arg index="1" value="BATCH"/>
+</bean>
 ```
 
 配置：
 
 ```xml
-<bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">  
-    <property name="mapperInterface" value="com.xxx.dao.UserDao" />  
-    <property name="sqlSessionTemplate" ref="sqlSessionTemplateBatch" />  
-</bean> 
+<bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.xxx.dao.UserDao" />
+    <property name="sqlSessionTemplate" ref="sqlSessionTemplateBatch" />
+</bean>
 ```
 
 * 批量设置：
 
   ```xml
-  <!-- 采用自动扫描方式创建mapper bean(单个更新模式) -->  
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-      <property name="basePackage" value="com.xxx.dao" />  
-      <property name="sqlSessionTemplateBeanName" 
-                value="sqlSessionTemplateSimple" />  
-      <property name="markerInterface" value="com.xxx.dao.SimpleDao" />  
-  </bean>  
-         
-  <!-- 采用自动扫描方式创建mapper bean(批量更新模式) -->  
-  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-      <property name="basePackage" value="com.xxx.dao" />  
-      <property name="sqlSessionTemplateBeanName" 
-                value="sqlSessionTemplateBatch" />  
-      <property name="markerInterface" value="com.xxx.dao.BatchDao" />  
+  <!-- 采用自动扫描方式创建mapper bean(单个更新模式) -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+      <property name="basePackage" value="com.xxx.dao" />
+      <property name="sqlSessionTemplateBeanName"
+                value="sqlSessionTemplateSimple" />
+      <property name="markerInterface" value="com.xxx.dao.SimpleDao" />
+  </bean>
+
+  <!-- 采用自动扫描方式创建mapper bean(批量更新模式) -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+      <property name="basePackage" value="com.xxx.dao" />
+      <property name="sqlSessionTemplateBeanName"
+                value="sqlSessionTemplateBatch" />
+      <property name="markerInterface" value="com.xxx.dao.BatchDao" />
   </bean>
   ```
 
@@ -911,7 +911,7 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
 
 4. 如果没命中：
 
-    4.1 去数据库中查询数据，得到查询结果； 
+    4.1 去数据库中查询数据，得到查询结果；
 
    4.2 将key和查询到的结果分别作为key,value对存储到Cache中；
 
@@ -983,7 +983,7 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
   ```java
   @CacheNamespaceRef(RoleMapper.class)
   public interface RoleMapper{
-   
+
   }
   ```
 
@@ -1024,29 +1024,29 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
   原理很简单，就是 当执行了某个update操作时，根据配置信息去清空指定的查询语句在Cache中所产生的缓存数据。
 
   ```xml
-  <plugins>  
+  <plugins>
       <plugin interceptor="org.luanlouis.mybatis
-                        .plugin.cache.EnhancedCachingExecutor">  
+                        .plugin.cache.EnhancedCachingExecutor">
           <!-- dependencys.xml是StatementId之间的依赖关系的配置文件路径 -->
-         <property name="dependency" value="dependencys.xml"/>  
-         <property name="cacheEnabled" value="true"/>  
-      </plugin>  
+         <property name="dependency" value="dependencys.xml"/>
+         <property name="cacheEnabled" value="true"/>
+      </plugin>
   </plugins>
   ```
 
   dependencys.xml如下：
 
   ```xml
-  <?xml version="1.0" encoding="UTF-8"?>  
-  <dependencies>  
-      <statements>  
+  <?xml version="1.0" encoding="UTF-8"?>
+  <dependencies>
+      <statements>
           <statement id="com.louis.mybatis.dao
-                         .DepartmentsMapper.updateByPrimaryKey">  
+                         .DepartmentsMapper.updateByPrimaryKey">
               <observer id="com.louis.mybatis.dao
-                            .EmployeesMapper.selectWithDepartments" />  
-          </statement>  
-      </statements>  
-  </dependencies>  
+                            .EmployeesMapper.selectWithDepartments" />
+          </statement>
+      </statements>
+  </dependencies>
   ```
 
   每个mapper.xml中还需要配置`<cache>`；
@@ -1062,69 +1062,69 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
 #### 12.1.1 代码示例：
 
 ```java
-public static List<Map<String,Object>> queryForList(){  
-    Connection connection = null;  
-    ResultSet rs = null;  
-    PreparedStatement stmt = null;  
-    List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();  
-          
-    try {  
-        // 加载JDBC驱动  
-        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();  
-        String url = "jdbc:oracle:thin:@localhost:1521:ORACLEDB";  
-              
-        String user = "trainer";   
-        String password = "trainer";   
-              
-        // 获取数据库连接  
-        connection = DriverManager.getConnection(url,user,password);   
-              
-        String sql = "select * from userinfo where user_id = ? ";  
-        // 创建Statement对象（每一个Statement为一次数据库执行请求）  
-        stmt = connection.prepareStatement(sql);  
-              
-        // 设置传入参数  
-        stmt.setString(1, "zhangsan");  
-              
-        // 执行SQL语句  
-        rs = stmt.executeQuery();  
-              
-        // 处理查询结果（将查询结果转换成List<Map>格式）  
-        ResultSetMetaData rsmd = rs.getMetaData();  
-        int num = rsmd.getColumnCount();  
-              
-        while(rs.next()){  
-            Map map = new HashMap();  
-            for(int i = 0;i < num;i++){  
-                String columnName = rsmd.getColumnName(i+1);  
-                map.put(columnName,rs.getString(columnName));  
-            }  
-            resultList.add(map);  
-        }  
-              
-    } catch (Exception e) {  
-        e.printStackTrace();  
-    } finally {  
-        try {  
-            // 关闭结果集  
-            if (rs != null) {  
-                rs.close();  
-                rs = null;  
-            }  
-            // 关闭执行  
-            if (stmt != null) {  
-                stmt.close();  
-                stmt = null;  
-            }  
-            if (connection != null) {  
-                connection.close();  
-                connection = null;  
-            }  
-        } catch (SQLException e) {  
-            e.printStackTrace();  
-        }  
-    }        
-    return resultList;  
+public static List<Map<String,Object>> queryForList(){
+    Connection connection = null;
+    ResultSet rs = null;
+    PreparedStatement stmt = null;
+    List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+
+    try {
+        // 加载JDBC驱动
+        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+        String url = "jdbc:oracle:thin:@localhost:1521:ORACLEDB";
+
+        String user = "trainer";
+        String password = "trainer";
+
+        // 获取数据库连接
+        connection = DriverManager.getConnection(url,user,password);
+
+        String sql = "select * from userinfo where user_id = ? ";
+        // 创建Statement对象（每一个Statement为一次数据库执行请求）
+        stmt = connection.prepareStatement(sql);
+
+        // 设置传入参数
+        stmt.setString(1, "zhangsan");
+
+        // 执行SQL语句
+        rs = stmt.executeQuery();
+
+        // 处理查询结果（将查询结果转换成List<Map>格式）
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int num = rsmd.getColumnCount();
+
+        while(rs.next()){
+            Map map = new HashMap();
+            for(int i = 0;i < num;i++){
+                String columnName = rsmd.getColumnName(i+1);
+                map.put(columnName,rs.getString(columnName));
+            }
+            resultList.add(map);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            // 关闭结果集
+            if (rs != null) {
+                rs.close();
+                rs = null;
+            }
+            // 关闭执行
+            if (stmt != null) {
+                stmt.close();
+                stmt = null;
+            }
+            if (connection != null) {
+                connection.close();
+                connection = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    return resultList;
 }
 ```
 
@@ -1192,29 +1192,29 @@ public static List<Map<String,Object>> queryForList(){
 * 采取嵌套resultMap方式；
 
   ```xml
-  <resultMap type="com.foo.bean.BlogInfo" id="BlogInfo">  
-      <id column="blog_id" property="blogId"/>  
-      <result column="title" property="title"/>  
-      <association property="author" column="blog_author_id" 
-               javaType="com.foo.bean.Author">  
+  <resultMap type="com.foo.bean.BlogInfo" id="BlogInfo">
+      <id column="blog_id" property="blogId"/>
+      <result column="title" property="title"/>
+      <association property="author" column="blog_author_id"
+               javaType="com.foo.bean.Author">
           <!-- 作者-博客：一对多 -->
-          <id column="author_id" property="authorId"/>  
-          <result column="user_name" property="userName"/>  
-          <result column="password" property="password"/>  
-          <result column="email" property="email"/>  
-          <result column="biography" property="biography"/>  
-      </association>  
-      <collection property="posts" column="blog_post_id" 
-                  ofType="com.foo.bean.Post"> 
+          <id column="author_id" property="authorId"/>
+          <result column="user_name" property="userName"/>
+          <result column="password" property="password"/>
+          <result column="email" property="email"/>
+          <result column="biography" property="biography"/>
+      </association>
+      <collection property="posts" column="blog_post_id"
+                  ofType="com.foo.bean.Post">
           <!-- 博客-评论：一对多 -->
-          <id column="post_id" property="postId"/>  
-          <result column="blog_id" property="blogId"/>  
-          <result column="create_time" property="createTime"/>  
-          <result column="subject" property="subject"/>  
-          <result column="body" property="body"/>  
-          <result column="draft" property="draft"/>  
-      </collection>    
-  </resultMap>  
+          <id column="post_id" property="postId"/>
+          <result column="blog_id" property="blogId"/>
+          <result column="create_time" property="createTime"/>
+          <result column="subject" property="subject"/>
+          <result column="body" property="body"/>
+          <result column="draft" property="draft"/>
+      </collection>
+  </resultMap>
   ```
 
   这种方式，只查询一次，然后，组装查询到的结果；
@@ -1243,7 +1243,7 @@ Object-Graph Navigation Language（OGNL）是一种表达式语言；Mybatis的�
 
 `MetaObject是Mybatis提供的一个的工具类，通过它包装一个对象后可以获取或设置该对象的原本不可访问的属性（比如那些私有属性）`。它有个三个重要方法经常用到：
 
-* MetaObject forObject(Object object,ObjectFactory objectFactory, ObjectWrapperFactory objectWrapperFactory) 用于包装对象； 
+* MetaObject forObject(Object object,ObjectFactory objectFactory, ObjectWrapperFactory objectWrapperFactory) 用于包装对象；
 * Object getValue(String name) 用于获取属性的值（支持OGNL的方法）；
 * void setValue(String name, Object value) 用于设置属性的值（支持OGNL的方法）；
 
