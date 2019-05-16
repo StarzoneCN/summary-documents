@@ -91,8 +91,18 @@ save 60 10000
 查看`repl-backlog-size`配置；
 ##### 2.2.1.18 主从心跳检测
 查看`repl-ping-slave-period`配置；
+
+
+
+### 2.3 数据类型
+#### 2.3.1 Set
+* set类型会根据score进行排序，如果score相同，会进行字典排序；
+
+
 ##### 更多
-TODO `redis.conf`配置文件还有很多配置模块（`SNAPSHOTTING`、`REPLICATION`、`SECURITY`、`APPEND ONLY MODE`、`REDIS CLUSTER`、`SLOW LOG`、`LATENCY MONITOR`、`EVENT NOTIFICATION`、`ADVANCED CONFIG`），太多了，以后再搞吧！
+TODO
+1. `redis.conf`配置文件还有很多配置模块（`SNAPSHOTTING`、`REPLICATION`、`SECURITY`、`APPEND ONLY MODE`、`REDIS CLUSTER`、`SLOW LOG`、`LATENCY MONITOR`、`EVENT NOTIFICATION`、`ADVANCED CONFIG`），太多了，以后再搞吧！
+2. redis可以通过Lua脚本实现原子性；
 
 ## 遗留疑问
 1. Hash类型的value的属性数量较少时，编码类型是zipmap，这个zipmap具体内部原理是啥？

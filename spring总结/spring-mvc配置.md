@@ -25,3 +25,18 @@
   </property>
 </bean>
 ```
+
+### \<context:annotation-config/\>
+这条配置的作用是式地向Spring容器注册
+* AutowiredAnnotationBeanPostProcessor
+  支持`@Autowired`、`@Value`，以及`JSR-330`的`@Inject`;
+  > NOTE: Annotation injection will be performed before XML injection; thus the latter configuration will override the former for properties wired through both approaches.
+  > 注意：注解注入是在xml注入之前执行的，所以如果2种注入方式都配置了，前面的注入会被后面的注入覆盖掉；
+* CommonAnnotationBeanPostProcessor
+  主要是对`JSR-250`的支持，支持`PostConstruct`和`PreDestroy`，此外还有支持`javax.xml.ws.WebServiceRef`、`javax.ejb.EJB`等；
+  > A default CommonAnnotationBeanPostProcessor will be registered by the "context:annotation-config" and "context:component-scan" XML tags. Remove or turn off the default annotation configuration there if you intend to specify a custom CommonAnnotationBeanPostProcessor bean definition!
+
+* PersistenceAnnotationBeanPostProcessor
+* RequiredAnnotationBeanPostProcessor
+
+这些后处理器的作用就是处理对应注解的bean；
