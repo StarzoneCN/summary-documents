@@ -21,7 +21,9 @@
 
 但被`@RedisHash`注解的实体类中没有使用`@Id`时，默认使用id字段的值为索引值（`setValue`），如果想自定义索引值（`setValue`），可以使用`@Id`注解自定义字段；
 
-
+### 4. \@ControllerAdvice
+[\@ControllerAdvice详解][]
 
 
 [scopeOfBean]: https://www.jianshu.com/p/fcdcbaace675 '查看“使用会话和请求作用域”部份'
+[\@ControllerAdvice详解]: https://my.oschina.net/zhangxufeng/blog/2222434

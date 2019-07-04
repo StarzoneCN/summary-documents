@@ -220,7 +220,7 @@ commit生成的镜像会越来越臃肿，详细[参考][docker-commit]
    ```
 
 ##### 5.3.1.3 更多指令
-[参考][docker-commands]
+[参考][docker-commands] | [ONBUILD][docker最佳实践]
 
 
 
@@ -234,7 +234,7 @@ $ docker  build --help
 ```
 
 #### 5.3.3 构建镜像上下文
-[参考][docker-image-build-context]
+参考: [docker-image-build-context][] / [镜像构建上下文][]
 > 一般来说，应该会将 Dockerfile 置于一个空目录下，或者项目根目录下。如果该目录下没有所需文件，那么应该把所需文件复制一份过来。如果目录下有些东西确实不希望构建时传给 Docker 引擎，那么可以用 .gitignore 一样的语法写一个 .dockerignore，该文件是用于剔除不需要作为上下文传递给 Docker 引擎的。
 
 #### 5.3.4 [其他构建方法][multi-build-way]
@@ -259,6 +259,23 @@ REPOSITORY                                               TAG                    
 ubuntu                                                   18.04                  275d79972a86        6 days ago          94.6MB
 username/ubuntu                                          18.04                  275d79972a86
 ```
+
+### 5.6 镜像推送
+对于自定义仓库的地址(如：`127.0.0.1:5000`，对外ip为`192.168.199.100`)，如果跨主机进行镜像推送的话（如：`docker push 192.168.199.100:5000/ubuntu:latest`），是会推送失败的，因为 Docker 默认不允许非 HTTPS 方式推送镜像，解决方式： (对于`Ubuntu 16.04+, Debian 8+, centos 7`)在`/etc/docker/daemon.json`中添加`insecure-registries`配置
+```json
+{
+  "registry-mirror": [
+    "https://registry.docker-cn.com"
+  ],
+  "insecure-registries": [
+    "192.168.199.100:5000"
+  ]
+}
+```
+[参考][私有镜像仓库]
+
+### 5.7 多阶段构建
+参考[多阶段构建][]
 
 ## 6. 容器
 ### 6.1 启动
@@ -305,7 +322,7 @@ $ docker attach <容器id>
 
 
 #### 6.4.2 exec
-使用此命令进入容器，在通过`exit`退出时，容器不会关闭：
+使用此命令进入容器，在通过`exit`退出时，容器不会关闭，所以推荐使用这种方式操作容器：
 ```sh
 $ docker exec -it <容器id>
 ```
@@ -361,6 +378,9 @@ $ docker run -d -P \
     training/webapp \
     python app.py
 ```
+> 注意：Docker挂载点（上面的`target`参数）不支持相对路径
+> Docker does not support relative paths for mount points inside the container.
+
 查看数据卷的具体信息:
 ```sh
 # 使用以下命令可以查看 web 容器的信息
@@ -386,7 +406,12 @@ $ docker inspect web
 废弃的数据卷需要手动删除，如果需要在删除容器的同时移除数据卷。可以在删除容器的时候使用 docker rm -v 这个命令；
 可以通过`$ docker volume prune`命令，清理无主的数据卷；
 
+#### 7.1.3 共享
+* 在创建容器的时候，如果有数据卷挂载操作，容器内待挂载的目录下又有文件或子目录，那么docker会先将目录下的内容（文件和子目录）拷贝到卷中（宿主机中的目录），然后再挂载卷；如果此时其他容器也使用了相同的卷，那么其他容器也可以看见拷贝的文件
+  > If you start a container which creates a new volume, as above, and the container has files or directories in the directory to be mounted (such as /app/ above), the directory’s contents are copied into the volume. The container then mounts and uses the volume, and other containers which use the volume also have access to the pre-populated content.
+
 ## 8. 网络
+[Docker的网络模式][]
 ### 8.1 映射端口
 有`-P`（大写），`-p`（小写）两个参数：
 * 当使用 -P 标记时，Docker 会随机映射一个 49000~49900 的端口到内部容器开放的网络端口
@@ -424,20 +449,24 @@ $ docker network create -d bridge my-net
 
 
 
-## 7. 更多命令
-不解释，直接贴命令
+## 9. 更多命令
+*`docker --help`可以帮到你*
 * 查看某个镜像后创建的镜像
   ```sh
   $ docker image inspect --format='{{.RepoTags}} {{.Id}} {{.Parent}}' $(docker image ls -q --filter since=<imageId>)
   ```
 
-## 8. 扩展
-### 8.1 自制SSL证书
+## 10. 扩展
+### 10.1 自制SSL证书
 使用openssl自行签发站点SSL证书[请参考][create-certificate]
 
+## 11. 注意
+[docker最佳实践][]
+### 11.1 RUN
+* 永远将 RUN apt-get update 和 apt-get install 放在一条 RUN 中；
+  > `固定版本`会迫使构建过程检索特定的版本，而不管缓存中有什么。这项技术也可以减少因所需包中未预料到的变化而导致的失败。
 
-
-
+* 不要使用 RUN apt-get upgrade 或 dist-upgrade；
 
 
 
@@ -477,3 +506,8 @@ $ docker network create -d bridge my-net
 [Swarm mode]: https://yeasy.gitbooks.io/docker_practice/swarm_mode
 [Docker Compose]: https://yeasy.gitbooks.io/docker_practice/compose
 [connect-network]: https://yeasy.gitbooks.io/docker_practice/network/linking.html#连接容器
+[镜像构建上下文]: https://www.qikqiak.com/k8s-book/docs/4.Dockerfile\%20%E5%AE%9A%E5%88%B6%E9%95%9C%E5%83%8F.html
+[私有镜像仓库]: https://www.qikqiak.com/k8s-book/docs/5.%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.html '文章最后有相关说明'
+[Docker的网络模式]: https://www.qikqiak.com/k8s-book/docs/7.Docker%E7%9A%84%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F.html
+[docker最佳实践]: https://www.qikqiak.com/k8s-book/docs/13.Dockerfile%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html
+[多阶段构建]:https://www.qikqiak.com/k8s-book/docs/12.Docker%E7%9A%84%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA.html

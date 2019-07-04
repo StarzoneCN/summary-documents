@@ -186,6 +186,8 @@
 * `pact`微服务测试框架
 * `KeyDB`-redis的高性能分支，采用多线程模式
 * `contiperf` - 性能测试工具
+* `SOFATracer` - 蚂蚁金服开源分布式系统调用跟踪组件
+* `MyExcel` - Excel java工具包
 
 #### 待处理任务
 

@@ -91,7 +91,7 @@
 
 1. Contains the security namespace parsing code & Java configuration code.
 
-   > You need it if you are using the Spring Security XML namespace for configuration or Spring Security’s Java Configuration support. 
+   > You need it if you are using the Spring Security XML namespace for configuration or Spring Security’s Java Configuration support.
 
 2. None of the classes are intended for direct use in an application.
 
@@ -103,7 +103,7 @@
 
 ### 3.1 springSecurityFilterChain
 
-> `springSecurityFilterChain` which is responsible for all the security (protecting the application URLs, validating submitted username and passwords, redirecting to the log in form, etc) within your application. 
+> `springSecurityFilterChain` which is responsible for all the security (protecting the application URLs, validating submitted username and passwords, redirecting to the log in form, etc) within your application.
 
 意思：springSecurityFilterChain会拦截一切；
 
@@ -160,7 +160,7 @@ protected void configure(HttpSecurity http) throws Exception {
             .anyRequest().authenticated()
             .and()
         .formLogin()
-            .loginPage("/login") 
+            .loginPage("/login")
             .permitAll();        
 }
 ```
@@ -195,7 +195,7 @@ login.jsp如下：
 </form>
 ```
 
-关于**_csrf**：防止跨站请求伪造攻击
+关于_csrf：防止跨站请求伪造攻击
 
 > We must [the section called “Include the CSRF Token”](https://docs.spring.io/spring-security/site/docs/5.2.0.BUILD-SNAPSHOT/reference/htmlsingle/#csrf-include-csrf-token) To learn more read the [Section 10.6, “Cross Site Request Forgery (CSRF)”](https://docs.spring.io/spring-security/site/docs/5.2.0.BUILD-SNAPSHOT/reference/htmlsingle/#csrf) section of the reference
 

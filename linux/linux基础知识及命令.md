@@ -22,6 +22,7 @@
 * **/etc/fstab**  - 挂载点配置文件
 * **etc**：etc不是什么缩写，是and so on的意思 来源于 法语的 et cetera 翻译成中文就是 等等 的意思. 至于为什么在/etc下面存放配置文件， 按照原始的UNIX的说法(Linux文件结构参考UNIX的教学实现MINIX) 这下面放的都是一堆零零碎碎的东西, 就叫etc, 这其实是个历史遗留.
 
+更多请参考[Linux下各目录的默认含义][]
 ## 3. 环境变量
 
 ### 3.1 临时变量
@@ -171,3 +172,4 @@
 
 [usr]:https://segmentfault.com/a/1190000000497217
 [linux-env-varible]: https://blog.csdn.net/netwalk/article/details/9455893
+[Linux下各目录的默认含义]: https://muxiaobai.github.io/2016/06/27/Linux%E4%B8%8B%E5%90%84%E7%9B%AE%E5%BD%95%E7%9A%84%E9%BB%98%E8%AE%A4%E5%90%AB%E4%B9%89/

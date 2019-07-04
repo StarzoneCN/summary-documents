@@ -4,6 +4,7 @@
 
 ### 1.1 起步
 
+```xml
 <!--lombok - 代码去冗余工具-->
 <dependency>
 ​	<groupId>org.projectlombok</groupId>
@@ -23,6 +24,7 @@
 ​	<artifactId>mybatis-plus-boot-starter</artifactId>
 ​	<version>3.0.1</version>
 </dependency>
+```
 
 spring-boot配置文件：
 
@@ -57,7 +59,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.multi.springBoot.mybatisPlus.entity.User;
 
 public interface UserMapper extends BaseMapper<User> {
-    
+
 }
 ```
 
@@ -104,7 +106,7 @@ mybatis-plus:
   check-config-location: false
 ```
 
-#### 1.2.3 executorType 
+#### 1.2.3 executorType
 
 通过该属性可指定 MyBatis 的执行器，MyBatis 的执行器总共有三种：
 
@@ -214,7 +216,7 @@ public class User {
     private Integer age;
     private String email;
     @TableLogic  // 关键注解
-    private Boolean delFlag; 
+    private Boolean delFlag;
 }
 ```
 
@@ -478,4 +480,3 @@ public IPage<User> selectUserPage(Page<User> page, Integer state) {
 ```java
 System.getProperty("user.dir")
 ```
-

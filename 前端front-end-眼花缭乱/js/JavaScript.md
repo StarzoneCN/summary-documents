@@ -100,7 +100,16 @@ json是js的严格子集；
 > ES6 的尾调用优化只在严格模式下开启，正常模式无效
 > 了解：尾递归
 
-
+### 深拷贝
+```js
+var deepCopy = function(src) {
+    var ret = {}
+    for (var k in src) {
+        ret[k] = typeof src[k] ==='object' ? deepCopy(src[k]) : src[k]
+    }
+    return ret
+}
+```
 
 
 ## 踩坑

@@ -23,6 +23,11 @@ Docker 镜像是怎么实现增量的修改和维护的？ 每个镜像都由很
 
 通常 Union FS 有两个用途, 一方面可以实现不借助 LVM、RAID 将多个 disk 挂到同一个目录下,另一个更常用的就是将一个只读的分支和一个可写的分支联合在一起，Live CD 正是基于此方法可以允许在镜像不变的基础上允许用户在其上进行一些写操作。 Docker 在 AUFS 上构建的容器也是利用了类似的原理。
 ```
+> AUFS是一种Union File System，所谓UnionFS就是把不同物理位置的目录合并mount到同一个目录中
+
+>典型的Linux文件系统由`bootfs`和`rootfs`两部分组成，bootfs(boot file system)主要包含 bootloader和kernel，bootloader主要是引导加载kernel，当kernel被加载到内存中后 bootfs就被umount了。 rootfs (root file system) 包含的就是典型 Linux 系统中的/dev，/proc，/bin，/etc等标准目录和文件。
+
+[Docker文件系统层次结构][docker-fs-structure]
 #### 使用到的Linux底层技术
 
 ##### 命名空间机制
@@ -36,7 +41,7 @@ Docker 镜像是怎么实现增量的修改和维护的？ 每个镜像都由很
 #### 命令
 
 * 获取镜像：`docker pull ubuntu:12.04` 或 `docker pull registry.hub.docker.com/ubuntu:12.04`
-* 运行镜像： `ocker run -t -i ubuntu:12.04 /bin/bash`   
+* 运行镜像： `docker run -t -i ubuntu:12.04 /bin/bash`   
   * <font color="#E6A23C">*注：如果不指定具体的标记，则默认使用 `latest` 标记信息;*</font>
   * `--name`  为容器命名
   * `-t` 选项让`Docker`分配一个伪终端`pseudo-tty`,并绑定到容器的标准输入上;
@@ -114,3 +119,21 @@ CMD /usr/sbin/nginx  # 指定运行容器时的操作指令
 * 高级网络配置：[传送门](http://www.dockerinfo.net/%E9%AB%98%E7%BA%A7%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE)
 #### 安全介绍
 * 安全配置值得注意：[传送门](http://www.dockerinfo.net/%E5%AE%89%E5%85%A8%E4%BB%8B%E7%BB%8D)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[docker-fs-structure]: https://zhidao.baidu.com/question/1178119070785710419.html
