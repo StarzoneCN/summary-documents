@@ -233,8 +233,11 @@ $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Docum
 # 或
 $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
 ```
-#### 1.8 安装Dashboard 
+#### 1.8 安装Dashboard
 参考[安装 Dashboard 插件][]
+
+#### 1.9 More
+> kubeadm还处于 beta 状态，还不能用于生产环境，对于现阶段想要用于生产环境的，建议还是参考[手动搭建高可用的kubernetes 集群][]
 
 [2019最新k8s集群搭建教程(centos k8s 搭建)]: https://juejin.im/post/5cb7dde9f265da034d2a0dba
 [kubelet服务启动失败，错误代码255]:https://blog.csdn.net/nklinsirui/article/details/80583971
@@ -242,3 +245,4 @@ $ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a28
 [kubeadm token]:https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/
 [pod-network]:https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
 [安装 Dashboard 插件]:https://www.qikqiak.com/k8s-book/docs/17.%E5%AE%89%E8%A3%85%20Dashboard%20%E6%8F%92%E4%BB%B6.html
+[手动搭建高可用的kubernetes 集群]:https://www.qikqiak.com/post/manual-install-high-available-kubernetes-cluster/

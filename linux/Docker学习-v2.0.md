@@ -84,6 +84,12 @@ OCI是一个专门制定系统级虚拟化技术开源标准的组织；
    # 如果要添加标签，可以如下
    docker pull ubuntu:18.04
    ```
+   命令格式：
+   ```sh
+   $ docker pull [选项] [Docker Registry 地址[:端口]/]仓库名[:标签]
+   ```
+   > 仓库名：这里的仓库名是两段式名称，即 <用户名>/<软件名>。对于 Docker Hub，如果不给出用户名，则默认为 library，也就是官方镜像
+
 2. 运行镜像
    ```sh
    # -i 表示交互式执行命令
@@ -157,6 +163,8 @@ $ docker image rm $(docker image ls -q redis)
 > 当我们运行一个容器的时候（如果不使用卷的话），我们做的任何文件修改都会被记录于容器存储层里。
 > Docker 提供了一个 docker commit 命令，可以将容器的存储层保存下来成为镜像。
 
+> 注意： docker commit 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 docker commit 定制镜像，定制镜像应该使用Dockerfile来完成。
+
 #### 5.2.1 命令
 docker commit 的语法格式，请查看help信息：
 ```sh
@@ -181,7 +189,9 @@ commit生成的镜像会越来越臃肿，详细[参考][docker-commit]
    FROM scratch
    ...
    ```
-   > 不以任何系统为基础，直接将可执行文件复制进镜像的做法并不罕见，比如 swarm、coreos/etcd。对于 Linux 下静态编译的程序来说，并不需要有操作系统提供运行时支持，所需的一切库都已经在可执行文件里了，因此直接 FROM scratch 会让镜像体积更加小巧。使用 Go 语言 开发的应用很多会使用这种方式来制作镜像，这也是为什么有人认为 Go 是特别适合容器微服务架构的语言的原因之一。
+   > 不以任何系统为基础，直接将可执行文件复制进镜像的做法并不罕见，比如 swarm、coreos/etcd。对于 Linux 下静态编译的程序来说，并不需要有操作系统提供运行时支持，所需的一切库都已经在可执行文件里了，因此直接 FROM scratch 会让镜像体积更加小巧。使用 Go 语言开发的应用很多会使用这种方式来制作镜像，这也是为什么有人认为 Go 是特别适合容器微服务架构的语言的原因之一。
+
+   
 
 
 ##### 5.3.1.2 RUN
@@ -451,10 +461,19 @@ $ docker network create -d bridge my-net
 
 ## 9. 更多命令
 *`docker --help`可以帮到你*
-* 查看某个镜像后创建的镜像
-  ```sh
-  $ docker image inspect --format='{{.RepoTags}} {{.Id}} {{.Parent}}' $(docker image ls -q --filter since=<imageId>)
-  ```
+```sh
+# 镜像实际占用硬盘空间
+$ docker system df
+
+# 启动终止的容器
+$ docker container start
+
+# 重启运行中的容器
+$ docker container restart
+
+#  查看某个镜像后创建的镜像
+$ docker image inspect --format='{{.RepoTags}} {{.Id}} {{.Parent}}' $(docker image ls -q --filter since=<imageId>)
+```
 
 ## 10. 扩展
 ### 10.1 自制SSL证书
