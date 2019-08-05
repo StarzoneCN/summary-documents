@@ -53,12 +53,12 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
   ```java
   @Configuration
-      class MultipartSupportConfig {
-          @Bean
-          public Encoder feignFormEncoder() {
-              return new SpringFormEncoder();
-          }
-      }
+  class MultipartSupportConfig {
+    @Bean
+    public Encoder feignFormEncoder() {
+      return new SpringFormEncoder();
+    }
+  }
   ```
 
 * 最后调用文件上传服务
