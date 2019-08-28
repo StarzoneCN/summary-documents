@@ -5,6 +5,7 @@
 ### 变量
 
 * 变量提升
+   更多请参考[深入理解JavaScript的作用域与变量提升（hoisting）][]
 * “use strict”
 *
 
@@ -141,3 +142,4 @@ function startTime(){
 
 [isNaN]:https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/isNaN
 [JavaScript字符串转数字的5种方法及其陷阱]: https://blog.fundebug.com/2018/07/07/string-to-number/
+[深入理解JavaScript的作用域与变量提升（hoisting）]:https://www.jianshu.com/p/28ede2f4f30f

@@ -1,7 +1,7 @@
 # <div style="text-align:center;color:#FF9900">SpringCloud</div>
 _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
-## [Spring Cloud Eureka](http://blog.didispace.com/spring-cloud-starter-dalston-1/)
+## 1. [Spring Cloud Eureka](http://blog.didispace.com/spring-cloud-starter-dalston-1/)
 
 *<font color="gray">Spring Cloud Eureka是Spring Cloud Netflix项目下的服务治理模块</font>*
 
@@ -15,15 +15,19 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
 
 
-## [Spring Cloud Ribbon](http://blog.didispace.com/spring-cloud-starter-dalston-2-2/)
+## 2. [Spring Cloud Ribbon](http://blog.didispace.com/spring-cloud-starter-dalston-2-2/)
 
 *<font color="gray">负载均衡工具</font>*
 
+### 2.1 与Eureka
+* Ribbon可以在通过客户端中配置的ribbonServerList服务端列表去轮询访问以达到均衡负载的作用。
+* 当Ribbon与Eureka联合使用时，ribbonServerList会被DiscoveryEnabledNIWSServerList重写，扩展成从Eureka注册中心中获取服务端列表。同时它也会用NIWSDiscoveryPing来取代IPing，它将职责委托给Eureka来确定服务端是否已经启动。
 
 
 
 
-## [Spring Cloud Feign](http://blog.didispace.com/spring-cloud-starter-dalston-2-3/)
+
+## 3. [Spring Cloud Feign](http://blog.didispace.com/spring-cloud-starter-dalston-2-3/)
 
  *<font color="gray">服务调用客户端</font>*
 
@@ -89,7 +93,7 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
 
 
-## [spring-cloud-config](http://blog.didispace.com/spring-cloud-starter-dalston-3/)
+## 4. [spring-cloud-config](http://blog.didispace.com/spring-cloud-starter-dalston-3/)
 
  *<font color="gray">可以研究一下git的权限管理，考虑spring-cloud-config是否能够实现apollo那样细致的权限管理</font>*
 
@@ -146,13 +150,13 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
   * 注意：`yml`文件是不能使用加密/解密的
 
-## Spring Cloud Bus
+## 5. Spring Cloud Bus
 
  *<font color="gray">可实现更改配置后自动应用到应用</font>*
 
 
 
-## [Spring Cloud Hystrix](http://blog.didispace.com/spring-cloud-starter-dalston-4-1/)
+## 6. [Spring Cloud Hystrix](http://blog.didispace.com/spring-cloud-starter-dalston-4-1/)
 
  *<font color="gray">实现了线程隔离、断路器 </font>*
 
@@ -208,7 +212,7 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
 ### [Hystrix Dashboard ](http://blog.didispace.com/spring-cloud-starter-dalston-5-1/)
 
-## [服务网关zuul](http://blog.didispace.com/spring-cloud-starter-dalston-6-1/)
+## 7. [服务网关zuul](http://blog.didispace.com/spring-cloud-starter-dalston-6-1/)
 
 *zuul除了路由功能外，还有负载均衡和权限控制*
 
@@ -224,14 +228,6 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 
 ### [服务接口文档汇总](http://blog.didispace.com/Spring-Cloud-Zuul-use-Swagger-API-doc/)
 
-
-
-
-
-
-
-
-
 ### 深入阅读
 
 - [Spring Cloud源码分析（四）Zuul：核心过滤器](http://blog.didispace.com/spring-cloud-source-zuul/)
@@ -240,6 +236,7 @@ _[<font size="3" color="green">programmer-DD</font>][programmer-DD]_
 - [Spring Cloud实战小贴士：Zuul统一异常处理（二）](http://blog.didispace.com/spring-cloud-zuul-exception-2/)
 - [Spring Cloud实战小贴士：Zuul统一异常处理（三）【Dalston版】](http://blog.didispace.com/spring-cloud-zuul-exception-3/)
 
-
+## 8. 扩展
+* [Spring Cloud版本(Brixton/Camden/Dalston/Finchley等等)说明](https://blog.csdn.net/chen497147884/article/details/79896141)
 
 [programmer-DD]:http://blog.didispace.com/Spring-Cloud%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/
