@@ -30,13 +30,11 @@
   * 8位幂值全为1，并且小数部分是0，则表示`±无穷大`（正负和符号位有关)
   * 8位幂值全为1，并且小数部分非0，则表示`NaN`
 
-* 关于**浮点集合**和**扩展指数集合**
-
-  [![image.png](https://s15.postimg.cc/n1rytxhqz/image.png)](https://postimg.cc/image/sd6ven3tj/)
-
-  上图中的几种集合是经过精心设计的，从左到右是被包含的关系：
+* 关于**浮点集合**和**扩展指数集合**，包含的关系：
 
   * `单精度浮点数集合` < `单精度扩展指数集合` < `双精度浮点集合` < `双精度扩展指数集合`
+
+  参考[IEEE浮点标准详解][]，
 
 * `NaN`与任何数进行比较和等值操作都会返回`false`，包括`NaN`自己，eg：NaN == NaN  --`false`
 
@@ -106,6 +104,7 @@ jvm有2种运行模式：server和client  [传送门1](https://blog.csdn.net/zhu
 1. 对象一定保存在堆中吗？
 Ans: NO!  
 Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
+参考：[对象并不一定都是在堆上分配内存的][]、[Java中的逃逸分析][]
 2. `永久代`是jvm规范中的吗？
    Ans: No! 只是HotSpot的特例；
    > 对于习惯在HotSpot虚拟机上开发、部署程序的开发者来说，很多人都更愿意把方法区称为“永久代”（Permanent Generation），本质上两者并不等价，仅仅是因为HotSpot虚拟机的设计团队选择把GC分代收集扩展至方法区，或者说使用永久代来实现方法区而已，这样HotSpot的垃圾收集器可以像管理Java堆一样管理这部分内存，能够省去专门为方法区编写内存管理代码的工作。对于其他虚拟机（如BEA JRockit、IBM J9等）来说是不存在永久代的概念的。
@@ -121,6 +120,9 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
 
 
 
+[对象并不一定都是在堆上分配内存的]:https://blog.csdn.net/w372426096/article/details/80333657
 [float-ieee755]:https://blog.csdn.net/k346k346/article/details/50487127
 [utf-16与char类型]:https://cloud.tencent.com/developer/article/1356804
 [《String：字符串常量池》]:https://segmentfault.com/a/1190000009888357
+[Java中的逃逸分析]:https://blog.csdn.net/w372426096/article/details/80938788
+[IEEE浮点标准详解]:https://blog.csdn.net/sinat_33248998/article/details/51828844

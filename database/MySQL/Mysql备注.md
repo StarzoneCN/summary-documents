@@ -36,3 +36,7 @@ java.sql.SQLException: The server time zone value 'ÃÃÂ¹ÃºÂ±ÃªÃ�
 jdbc:mysql://localhost:3306/4mybatis_plus?seUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
 ```
 
+
+## 最大长度
+`varchar`类型最大长度是`2^16-1`：
+> 因为当长度小于256（小于等于255）时使用一个字节存储`varchar`的长度，大于255的时候，使用2个字节存储`varchar`长度，而2个字节能表示的最大值是`2^16-1`。
