@@ -116,10 +116,18 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
 *  *文中的所有页码都是指`《java虚拟机规范 java se8》`中文版对应页码；*
 * 文中的`《书》`指的是：*<span id="jvm_zhouzhiming_book">深入理解Java虚拟机 第二版</span>*
 
+### 其他
+##### 优秀博客/文章
+[JVM参数类型][] / [JVM调优工具之jps][] / [jvm 性能调优工具之jstat][] / [jstat详解][] / [jvm指针压缩][] / [jdk8 Metaspace 调优][] / [Java 8: 从永久代（PermGen）到元空间（Metaspace）][]
 
 
-
-
+[Java 8: 从永久代（PermGen）到元空间（Metaspace）]:https://blog.csdn.net/zhushuai1221/article/details/52122880/
+[jdk8 Metaspace 调优]:https://blog.csdn.net/bolg_hero/article/details/78189621
+[jvm指针压缩]: https://blog.csdn.net/weixin_34279061/article/details/88014879
+[jstat详解]: https://www.cnblogs.com/lizhonghua34/p/7307139.html
+[jvm 性能调优工具之jstat]: https://www.jianshu.com/p/213710fb9e40
+[JVM调优工具之jps]:https://www.jianshu.com/p/d39b2e208e72
+[JVM参数类型]:https://www.jianshu.com/p/d21e152cdd04
 [对象并不一定都是在堆上分配内存的]:https://blog.csdn.net/w372426096/article/details/80333657
 [float-ieee755]:https://blog.csdn.net/k346k346/article/details/50487127
 [utf-16与char类型]:https://cloud.tencent.com/developer/article/1356804
