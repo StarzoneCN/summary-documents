@@ -28,3 +28,4 @@ $ sudo make install
 
 
 [linux-install]: https://tunsafe.com/user-guide/linux
+[WireGuard 配置和上网流量优化]:https://blog.mozcp.com/wireguard-usage/

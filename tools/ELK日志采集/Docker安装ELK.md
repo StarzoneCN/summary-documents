@@ -26,7 +26,8 @@ $ docker pull elasticsearch:7.3.0
    ```sh
    curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
    ```
-
+## 扩展
+[日志排查问题困难？分布式日志链路跟踪来帮你][]
 
 
 
@@ -38,3 +39,4 @@ $ docker pull elasticsearch:7.3.0
 
 [docker.elastic.co]:https://www.docker.elastic.co/
 [向 Docker Hub提交 ELK 官方镜像方便国内拉取]:https://blog.csdn.net/enenand/article/details/81282424
+[日志排查问题困难？分布式日志链路跟踪来帮你]:https://mp.weixin.qq.com/s/NG-RIPDBkJsH3qo6_rJGWQ

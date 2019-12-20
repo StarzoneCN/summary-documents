@@ -215,3 +215,21 @@ Url url = ClassLoader.getSystemClassLoader().getResources("application.yml");
 // 获取资源properties
 Properties properties = PropertiesLoaderUtils.loadProperties(new UrlResource(url));
 ```
+
+
+## 4. 原子操作
+JDK中包路径：*java.util.concurrent.atomic*，参考：[Description][java.util.concurrent.atomic Description]
+### 4.1 方法
+#### 4.1.1 weakCompareAndSet
+参考：[AtomicBoolean][]
+#### 4.1.2 lazySet
+参考：[AtomicInteger的lazySet探究][]
+
+## 5. 类的hashCode
+参考：`System.identityHashCode(Object obj)`方法，比如在未重写`toString()`方法时，打印出来的`Xxx@46046c06`就是调用的此方法；
+**identityHashCode(Object obj)**：始终返回相同的值，不管类是否重写了`hashCode()`方法；
+
+
+[AtomicBoolean]:http://www.466dd.com/apidoc/jdk-1.8-google/java/util/concurrent/atomic/AtomicBoolean.html
+[java.util.concurrent.atomic Description]:http://www.466dd.com/apidoc/jdk-1.8-google/java/util/concurrent/atomic/package-summary.html#weakCompareAndSet
+[AtomicInteger的lazySet探究]:http://footmanff.com/2018/03/27/2018-03-27-unsafe-lazyset/

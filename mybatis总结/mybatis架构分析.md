@@ -1,3 +1,4 @@
+# <div style="text-align:center;color:#FF9900">Mybatis-plus</div>
 * `SqlSessionFactoryBuilder`获取并解析`xml`配置，传递解析后的`xml`配置文件给`DefaultSqlSessionFactory`，通过`new DefaultSqlSessionFactory(config)`创建`SqlSessionFactory`，一旦创建了 `SqlSessionFactory`，就不再需要它了；  
 
 * `SqlSessionFactory`是核心：每个基于`MyBatis`的应用都是以一个 `SqlSessionFactory`的实例为中心的
@@ -37,43 +38,43 @@
 
   ```java
   package com.bytebeats.mybatis3.interceptor;
-  
+
   import org.apache.ibatis.executor.statement.StatementHandler;
   import org.apache.ibatis.mapping.BoundSql;
   import org.apache.ibatis.plugin.*;
   import org.slf4j.Logger;
   import org.slf4j.LoggerFactory;
-  
+
   import java.sql.Connection;
   import java.util.Properties;
-  
+
   /**
    * ${DESCRIPTION}
    *
    * @author Ricky Fung
    * @date 2017-02-17 11:52
    */
-  @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", 
+  @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare",
                            args = { Connection.class, Integer.class}) })
   public class SQLStatsInterceptor implements Interceptor {
       private final Logger logger = LoggerFactory.getLogger(this.getClass());
-  
+
       @Override
       public Object intercept(Invocation invocation) throws Throwable {
-  
-          StatementHandler statementHandler 
+
+          StatementHandler statementHandler
               = (StatementHandler) invocation.getTarget();
           BoundSql boundSql = statementHandler.getBoundSql();
           String sql = boundSql.getSql();
           logger.info("mybatis intercept sql:{}", sql);
           return invocation.proceed();
       }
-  
+
       @Override
       public Object plugin(Object target) {
           return Plugin.wrap(target, this);
       }
-  
+
       @Override
       public void setProperties(Properties properties) {
           String dialect = properties.getProperty("dialect");
@@ -88,9 +89,9 @@
   <?xml version="1.0" encoding="UTF-8" ?>
   <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
           "http://mybatis.org/dtd/mybatis-3-config.dtd">
-  
+
   <configuration>
-  
+
       <plugins>
           <plugin interceptor="com.bytebeats.mybatis3
                                .interceptor.SQLStatsInterceptor">
@@ -115,10 +116,6 @@
 [博客][mybatis-architecture] 待总结。。。
 
 [系列博客](https://my.oschina.net/xianggao/blog/548873)
-
------
-
-# <div style="text-align:center;color:#FF9900">Mybatis-plus</div>
 
 
 

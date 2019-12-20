@@ -1055,6 +1055,9 @@ myBatisExceptionTranslator：用以支持spring的异常转换，通过配置该
 
 自己实现`org.apache.ibatis.cache.Cache`接口，并通过`<cache type="">`配置；
 
+### 11.1.3 参考：
+[聊聊MyBatis缓存机制][]
+
 ## 12 Mybatis原理篇 [#](https://my.oschina.net/xianggao/blog/591482)
 
 ### 12.1 回顾JDBC
@@ -1250,3 +1253,6 @@ Object-Graph Navigation Language（OGNL）是一种表达式语言；Mybatis的�
 [系列博客](https://my.oschina.net/xianggao/blog/548873)
 
 [MyBatis中的N+1问题](http://blog.51cto.com/legend2011/1131629)
+
+
+[聊聊MyBatis缓存机制]:https://tech.meituan.com/2018/01/19/mybatis-cache.html

@@ -32,10 +32,10 @@
 > 	注：Reason-Phrase - 状态代码的文本描述
 
 * 状态码
-  * 1xx：指示信息--表示请求已接收，继续处理 
-  * 2xx：成功--表示请求已被成功接收、理解、接受 
-  * 3xx：重定向--要完成请求必须进行更进一步的操作 
-  * 4xx：客户端错误--请求有语法错误或请求无法实现 
+  * 1xx：指示信息--表示请求已接收，继续处理
+  * 2xx：成功--表示请求已被成功接收、理解、接受
+  * 3xx：重定向--要完成请求必须进行更进一步的操作
+  * 4xx：客户端错误--请求有语法错误或请求无法实现
   * 5xx：服务器端错误--服务器未能实现合法的请求
 
 ### 1.3 报头
@@ -115,11 +115,11 @@
 
   ```java
    String body = "<a href=''>点击访问当前链接</a>";
-  
+
    //弱实体，“W/”开头，如： W/"etag值"
    String etag = "W/\"" + md5(body) + "\"";
    MultiValueMap<String, String> headers = new HttpHeaders();
-   headers.add("ETag", etag); 
+   headers.add("ETag", etag);
   ```
 
   > 此处我们使用了弱实体W\”343sda”，弱实体（”343sda”）只要内容语义没变即可，比如内容的gzip版和非gzip版可以使用弱实体验证；而强实体指字节必须完全一致（gzip和非gzip情况是不一样的），因此建议首先选择使用弱实体。
@@ -128,9 +128,9 @@
 
   ```nginx
   ngx_sprintf(etag->value.data,"\"%xT-%xO\"",
-  
+
                                    r->headers_out.last_modified_time,
-  
+
                                    r->headers_out.content_length_n)
   ```
 
@@ -264,7 +264,7 @@
   * **Etag**：web服务器`响应`请求时，告诉浏览器当前资源在服务器的唯一标识（生成规则由服务器决定）。Apache中，ETag的值，默认是对文件的索引节（INode），大小（Size）和最后修改时间（MTime）进行Hash后得到的。
   * **If-None-Match**：当资源过期时（使用Cache-Control标识的max-age），发现资源具有Etage声明，则再次向web服务器`请求`时带上头If-None-Match （Etag的值）。web服务器收到请求后发现有头If-None-Match 则与被请求资源的相应校验串进行比对，决定返回200或304。
   * **If-Match: ETag-value** ：告诉服务器如果没有匹配到ETag，或者收到了“*”值而当前并没有该资源实体，则应当返回`412`(Precondition Failed) 状态码给客户端
-* **既生Last-Modified何生Etag？**你可能会觉得使用Last-Modified已经足以让浏览器知道本地的缓存副本是否足够新，为什么还需要Etag（实体标识）呢？HTTP1.1中Etag的出现主要是为了解决几个Last-Modified比较难解决的问题： 
+* **既生Last-Modified何生Etag？**你可能会觉得使用Last-Modified已经足以让浏览器知道本地的缓存副本是否足够新，为什么还需要Etag（实体标识）呢？HTTP1.1中Etag的出现主要是为了解决几个Last-Modified比较难解决的问题：
   - Last-Modified标注的最后修改只能精确到秒级，如果某些文件在1秒钟以内，被修改多次的话，它将不能准确标注文件的修改时间如果某些文件会被定期生成，当有时内容并没有任何变化，但Last-Modified却改变了，导致文件没法使用缓存有可能存在服务器没有准确获取文件修改时间，或者与代理服务器时间不一致等情形
   - Etag是服务器自动生成或者由开发者生成的对应资源在服务器端的唯一标识符，能够更加准确的控制缓存。Last-Modified与ETag一起使用时，服务器会优先验证ETag。
 * yahoo的Yslow法则中则提示**谨慎设置Etag**：需要注意的是`分布式系统`里多台机器间文件的last-modified必须保持一致，以免负载均衡到不同机器导致比对失败，Yahoo建议分布式系统尽量关闭掉Etag(每台机器生成的etag都会不一样，因为除了 last-modified、inode 也很难保持一致)
@@ -301,3 +301,10 @@
 
   > via: cache24.l2cn126[59,200-0,C], cache39.l2cn126[54,0], cache6.cn598[0,200-0,H], cache4.cn598[1,0]
 
+
+
+## 其他参考
+[跨域和OPTIONS这对欢喜冤家][]、[减少跨域中的OPTIONS请求][]
+
+[跨域和OPTIONS这对欢喜冤家]:http://www.veryitman.com/2019/08/31/%E8%B7%A8%E5%9F%9F%E5%92%8COPTIONS%E8%BF%99%E5%AF%B9%E6%AC%A2%E5%96%9C%E5%86%A4%E5%AE%B6/
+[减少跨域中的OPTIONS请求]:http://www.veryitman.com/2019/09/08/%E5%87%8F%E5%B0%91%E8%B7%A8%E5%9F%9F%E4%B8%AD%E7%9A%84OPTIONS%E8%AF%B7%E6%B1%82/
