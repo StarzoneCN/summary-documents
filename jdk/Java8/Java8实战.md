@@ -778,6 +778,21 @@ CompletableFuture 能够将回调放到与任务不同的线程中执行，也�
 
   **注**：Java 是不支持尾调/尾递的；
 
+### 10.3 注解
+* 语法糖：[Java 8 可重复注解的理解与应用][]
+* 注解：
+  ```
+  RuntimeVisibleAnnotations：运行时可见的注解
+  RuntimeInVisibleAnnotations：运行时不可见的注解
+  RuntimeVisibleParameterAnnotations：运行时可见的方法参数注解
+  RuntimeInVisibleParameterAnnotations：运行时不可见的方法参数注解
+  AnnotationDefault：注解类元素的默认值
+  ```
+#### 10.3.1 更多接口
+* **AnnotatedElement**
+  请详细阅读此类的Javadoc，其中详细介绍了注解和注解元素的`关系分类`（`directly present`, `indirectly present`, `present`, and `associated`），方法返回的注解数组的元素`顺序`，
+
+
 ## 扩展
 
 - **Spliterator**
@@ -850,6 +865,8 @@ CompletableFuture 能够将回调放到与任务不同的线程中执行，也�
   - 此语法必须存在于重写方法内；
   - 只能取到直接父接口中的 m 方法；
 
+
+
 ## Questions
 
 - 《Java8 实战》- P<small>168</small> ： 对“有条件的延迟执行”小节不能理解；
@@ -857,3 +874,4 @@ CompletableFuture 能够将回调放到与任务不同的线程中执行，也�
 [composeandthen]: http://www.importnew.com/17209.html
 [joda-time]: https://www.jianshu.com/p/efdeda608780
 [reduce]: https://blog.csdn.net/IO_Field/article/details/54971679
+[Java 8 可重复注解的理解与应用]:https://yanbin.blog/java8-repeatable-annotations/

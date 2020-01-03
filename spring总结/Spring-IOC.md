@@ -118,10 +118,19 @@
 * resources的编码可以配置，默认是`ISO-8859-1`；
 * 关于`JDK9+`，自行阅读此类的javadoc；
 
+#### 1.11 <span id="BeanDefinition">BeanDefinition</span>
+**作用**：定义了各种字段，用于组装bean实例；
+##### 1.11.1 在spring中的保存
+* 保存地方：`BeanFactory`
+* 保存方式：`BeanFactory`的一个Map类型的字段，key=`beanName`，value=BeanDefinition（包含`RootBeanDefinition`/`ChildBeanDefinition`）；
+* `AbstractBeanFactory.getMergedBeanDefinition()`方法
+
+
 ### 更多
-参考：[Spring IOC 容器源码分析][]
+参考：[Spring IOC 容器源码分析][]、[spring源码阅读4——BeanDefinition][]
 
 
 [Spring IOC 容器源码分析]:https://javadoop.com/post/spring-ioc
 [SmartInitializingSingleton的作用和原理]:https://yq.aliyun.com/articles/704443
 [Spring BeanPostProcessor接口使用]:https://www.jianshu.com/p/e1c3c6e90e8a
+[spring源码阅读4——BeanDefinition]:https://www.jianshu.com/p/1d06f6342357
