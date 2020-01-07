@@ -146,12 +146,13 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
 
 ### 其他
 ##### 优秀博客/文章
-[JVM参数类型][] / [JVM调优工具之jps][] / [jvm 性能调优工具之jstat][] / [jstat详解][] / [jvm指针压缩][] / [jdk8 Metaspace 调优][] / [Java 8: 从永久代（PermGen）到元空间（Metaspace）][] / [深入解析String#intern][] / [Java Hotspot G1 GC的一些关键技术][] / [Java 垃圾回收算法之G1][]
+[JVM参数类型][] / [JVM调优工具之jps][] / [jvm 性能调优工具之jstat][] / [jstat详解][] / [jvm指针压缩][] / [jdk8 Metaspace 调优][] / [Java 8: 从永久代（PermGen）到元空间（Metaspace）][] / [深入解析String#intern][] / [Java Hotspot G1 GC的一些关键技术][] / [Java 垃圾回收算法之G1][]  / [JAVA Launcher简析][]
 
 ##### 调试工具
 [Java命令学习系列（一）——Jps][]
 [jstat命令总结][]、[jstat官方文档][]
 [jinfo命令详解][]、[jinfo官方文档][]
+[Why HouseMD][]、[HouseMD-UserGuideCN][]
 
 
 [Java 8: 从永久代（PermGen）到元空间（Metaspace）]:https://blog.csdn.net/zhushuai1221/article/details/52122880/
@@ -178,3 +179,6 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
 [jinfo命令详解]:https://www.jianshu.com/p/c321d0808a1b
 [jinfo官方文档]:https://docs.oracle.com/javase/7/docs/technotes/tools/share/jinfo.html
 [Java 垃圾回收算法之G1]:https://juejin.im/post/5d346aedf265da1bbc701332
+[Why HouseMD]:https://my.oschina.net/zhongl/blog/62291
+[HouseMD-UserGuideCN]:https://github.com/CSUG/HouseMD/wiki/UserGuideCN
+[JAVA Launcher简析]:https://www.javatt.com/p/5272

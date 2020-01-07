@@ -119,7 +119,7 @@ TODO
 [redis“命名空间”](https://www.cnblogs.com/EasonJim/p/7818004.html)
 [勿用redis的多库](http://blog.kankanan.com/article/52ff7528-redis-7684591a5e93.html)
 [主从复制](https://www.cnblogs.com/kismetv/p/9236731.html)
-
+[Redis 的多线程版本(keyDB)比 Redis 本身要快 5 倍](https://zhuanlan.zhihu.com/p/85884427)
 
 
 
