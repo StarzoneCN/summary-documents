@@ -37,8 +37,8 @@ org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingIni
 * SharedMetadataReaderFactoryContextInitializer相关：internalCachingMetadataReaderFactory、CachingMetadataReaderFactoryPostProcessor
 * AutoConfigurationReportLoggingInitializer相关：添加监听器AutoConfigurationReportListener、
 
-### 2.2 <span id="listeners">listeners</span>
-`SpringApplication`默认加载的listeners包含如下实现（排序后）：
+### 2.2 <span id="ApplicationListeners">ApplicationListeners</span>
+`SpringApplication`默认加载的ApplicationListeners包含如下实现（排序后）：
 ```
 org.springframework.boot.context.config.ConfigFileApplicationListener
 org.springframework.boot.context.config.AnsiOutputApplicationListener
@@ -57,3 +57,19 @@ org.springframework.boot.liquibase.LiquibaseServiceLocatorApplicationListener
 ```
 org.springframework.boot.context.event.EventPublishingRunListener
 ```
+
+## 更多
+### 博文
+[打开BeanFactory ignoreDependencyInterface方法的正确姿势][]
+[java中什么是bridge method（桥接方法）][]
+[JDK 泛型之 Type][]
+[【Java】泛型中 extends 和 super 的区别？][]
+[Spring 是如何解析泛型 - ResolvalbeType][]
+
+
+
+[打开BeanFactory ignoreDependencyInterface方法的正确姿势]:https://www.jianshu.com/p/3c7e0608ff1f
+[java中什么是bridge method（桥接方法）]:https://blog.csdn.net/mhmyqn/article/details/47342577
+[JDK 泛型之 Type]:https://www.cnblogs.com/binarylei/p/8485609.html
+[【Java】泛型中 extends 和 super 的区别？]:https://itimetraveler.github.io/2016/12/27/%E3%80%90Java%E3%80%91%E6%B3%9B%E5%9E%8B%E4%B8%AD%20extends%20%E5%92%8C%20super%20%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/
+[Spring 是如何解析泛型 - ResolvalbeType]:https://www.cnblogs.com/binarylei/p/10344262.html

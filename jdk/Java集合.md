@@ -295,3 +295,11 @@
 * `EnumMap`的key不能是null，不然抛出异常 ， value可以为null；
 * `EnumMap`的key必须是枚举类型；
 * `EnumMap`是保证顺序的，输出是按照键（`枚举`）顺序；
+
+
+### 扩展
+[哈希表中数组的容量为什么是质数]  | [为什么一般hashtable的桶数会取一个素数]
+
+
+[哈希表中数组的容量为什么是质数]:https://blog.csdn.net/Mark2When/article/details/71076416
+[为什么一般hashtable的桶数会取一个素数]:https://blog.csdn.net/liuqiyao_01/article/details/14475159

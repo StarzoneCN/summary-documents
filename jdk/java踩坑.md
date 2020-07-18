@@ -34,3 +34,9 @@ System.out.println(false ? i : x);
 
 ### 5. `e:`和`e:\\`
 [参考](https://blog.csdn.net/u011004037/article/details/45369887)
+
+### 更多
+[Java 大神的十个私藏避坑绝技]
+
+
+[Java 大神的十个私藏避坑绝技]:https://cloud.tencent.com/developer/article/1516772

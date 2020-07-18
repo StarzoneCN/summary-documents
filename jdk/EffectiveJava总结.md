@@ -1247,7 +1247,7 @@ public class Singleton {
 ----
 ##  延伸
 
-- [Java.util.concurrent包研究](http://www.null.null "待补充")
+- [Java.util.concurrent包研究](http://www.null.null "待补充")  | [三目运算符的类型转换]
 
 
 ## 唠唠其他，开小差
@@ -1262,3 +1262,4 @@ public class Singleton {
 
 
 [javadocGuide]:http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
+[三目运算符的类型转换]:https://www.bbsmax.com/A/Ae5R8v78zQ/

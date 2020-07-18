@@ -163,6 +163,8 @@
 > linux呢,是一个完全没有参照unix代码的一个仿照unix架构,试图与unix相兼容的开源系统.换句话说,bsd是unix的分支，而linux是类unix系统或者说是仿unix系统.
 
 
+## 更多
+[sar 找出系统瓶颈的利器]
 
 
 
@@ -173,3 +175,4 @@
 [usr]:https://segmentfault.com/a/1190000000497217
 [linux-env-varible]: https://blog.csdn.net/netwalk/article/details/9455893
 [Linux下各目录的默认含义]: https://muxiaobai.github.io/2016/06/27/Linux%E4%B8%8B%E5%90%84%E7%9B%AE%E5%BD%95%E7%9A%84%E9%BB%98%E8%AE%A4%E5%90%AB%E4%B9%89/
+[sar 找出系统瓶颈的利器]:https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/sar.html

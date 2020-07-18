@@ -1,4 +1,4 @@
-# <div style="text-align:center;color:#FF9900">Spring-Security</div>
+	# <div style="text-align:center;color:#FF9900">Spring-Security</div>
 
 *<small>由于之前写的《Spring-security》比较杂乱，这里重启炉灶！</small>*
 
@@ -23,7 +23,7 @@
 
 ```java
 @PreAuthorize("#userId == authentication.principal.userId or hasAuthority(‘ADMIN’)")
-public void changePassword(@P("userId") long userId ){ 
+public void changePassword(@P("userId") long userId ){
 
 }
 ```
@@ -140,7 +140,7 @@ protected void configure(HttpSecurity http) throws Exception {
 
 ```java
 public class SpringSecurityUtil {
- 
+
     //session 由controller 注入参数传入
     public static String currentUser(HttpSession session) {
         SecurityContextImpl securityContext = (SecurityContextImpl) session
@@ -149,9 +149,20 @@ public class SpringSecurityUtil {
                 .getPrincipal()).getUsername();
     }
 }
+
+// 或者
+
+SecurityContextHolder.getContext().getAuthentication();
 ```
 
+## 4. 笔记
+### 4.1 关于JWT
+> The JSON Web Token (JWT) version of the store encodes all the data about the grant into the token itself (so no back end store at all which is a significant advantage). One disadvantage is that you can't easily revoke an access token, so they normally are granted with short expiry and the revocation is handled at the refresh token. Another disadvantage is that the tokens can get quite large if you are storing a lot of user credential information in them. The JwtTokenStore is not really a "store" in the sense that it doesn't persist any data, but it plays the same role of translating betweeen token values and authentication information in the DefaultTokenServices.
+
+## 优秀博客|教程
+[Authenticating Spring Security 5 users with JDBC and MySQL]
 
 
 
 
+[Authenticating Spring Security 5 users with JDBC and MySQL]:https://grobmeier.solutions/spring-security-5-using-jdbc.html

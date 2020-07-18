@@ -40,7 +40,7 @@
 
   *从容地重启nginx，一般用来重启nginx，或重新加载配置*
 
-  * 执行过程：发送kill命令道master进程，master加载新配置，master通知老worker进程停止接收请求（处理完正在处理的请求后，就退出），新worker接管请求；
+  * 执行过程：发送kill命令到master进程，master加载新配置，master通知老worker进程停止接收请求（处理完正在处理的请求后，就退出），新worker接管请求；
 
 * nginx在0.8版本之后，引入了一系列命令行参数，来方便我们管理。
 
@@ -147,14 +147,14 @@
   3. 最长的通配符名称以星号结尾，例如“mail.**”
   4. 首先匹配正则表达式（按照配置文件中的顺序）
 
-* [正则表达式注意](http://tengine.taobao.org/nginx_docs/cn/docs/http/server_names.html "搜索'正则表达式名字'")
+* [正则表达式注意](http://tengine.taobao.org/nginx_docs/cn/docs/http/server_names.html "搜索'正则表达式名字'")  | [正则表达式-捕获组] | [.NET正则基础之——平衡组]
 
 * 命名的正则表达式捕获组在后面可以作为变量使用：
 
   ```nginx
   server {
       server_name   ~^(www\.)?(?<domain>.+)$;  #命名捕获组
-  
+
       location / {
           root   /sites/$domain;
       }
@@ -198,7 +198,7 @@
 
    * [特殊的名字](http://tengine.taobao.org/nginx_docs/cn/docs/http/server_names.html "搜索'特殊的名字'")
 
-* `确切名字`和`通配符名字`存储在哈希表中。哈希表和监听端口关联。哈希表的尺寸在配置阶段进行了优化，可以以最小的CPU缓存命中失败来找到名字。设置哈希表的细节参见[这篇文档](http://tengine.taobao.org/nginx_docs/cn/docs/hash.html) 
+* `确切名字`和`通配符名字`存储在哈希表中。哈希表和监听端口关联。哈希表的尺寸在配置阶段进行了优化，可以以最小的CPU缓存命中失败来找到名字。设置哈希表的细节参见[这篇文档](http://tengine.taobao.org/nginx_docs/cn/docs/hash.html)
 
 #### location
 
@@ -371,7 +371,7 @@ upstream backend {
 
 **注意**：在添加和删除服务器的时候，会重新计算hash对request进行分配；
 
->  Note that when a server is added or removed from the pool, the hashed requests will be redistributed. 
+>  Note that when a server is added or removed from the pool, the hashed requests will be redistributed.
 
 ```nginx
 upstream backend {
@@ -489,7 +489,7 @@ upstream backend {
 upstream backend {
  server backend1.example.com:8080;
  server backend2.example.com:8081;
-    
+
  sticky learn
  create=$upstream_cookie_cookiename
  lookup=$cookie_cookiename
@@ -565,7 +565,7 @@ nginx检测所有server的connection和response，判断server是否正常；
 
 **优点**：负载低
 
-### 5.2 active 
+### 5.2 active
 
 **兼容版本**：nginx-plus
 
@@ -582,7 +582,7 @@ nginx会定期主动创建connection到server，并分析response是否正确；
 ```nginx
 upstream {
  zone backend 64k;
-    
+
  server server1.example.com slow_start=20s;
  server server2.example.com slow_start=15s;
 }
@@ -658,7 +658,7 @@ http {
 
 **兼容性**：nginx-plus， 需要安装`nginx-ha-keepalived`包
 
-> Use NGINX Plus’s HA mode with keepalived by installing the nginx-ha-keepalived package from the NGINX Plus repository. 
+> Use NGINX Plus’s HA mode with keepalived by installing the nginx-ha-keepalived package from the NGINX Plus repository.
 
 这个HA包是基于keepalived的，管理着一个暴露给客户端的virtual IP：
 
@@ -666,7 +666,7 @@ http {
 
 会有一个额外的程序在nginx server上运行，确保nginx-plus和keepalived的正常运行：
 
-> Another process is run on the NGINX server that ensures that NGINX Plus and the keepalived process are running. 
+> Another process is run on the NGINX server that ensures that NGINX Plus and the keepalived process are running.
 
 > **Keepalived**:
 >
@@ -706,7 +706,7 @@ proxy_cache CACHE;
 * 目录最大容量为20G（20 * 1024 * 1024k）
 * proxy_cache指具体使用哪个缓存区；
 
->  The `proxy_cache_path` is valid in the HTTP context, and the `proxy_cache` directive is valid in the HTTP, server, and location contexts. 
+>  The `proxy_cache_path` is valid in the HTTP context, and the `proxy_cache` directive is valid in the HTTP, server, and location contexts.
 
 个人理解：内容缓存其实是将request的hash值保存在内存中，真实的response是保存在硬盘中，重复请求的时候是先计算hash值，再通过hash值去硬盘查找response；
 
@@ -739,10 +739,10 @@ proxy_cache_bypass $http_cache_bypass;
 ```nginx
 location ~* \.(css|js)$ {
  expires 1y; # 有效期1年
-    
+
  # public表示所有客户端都可以获取缓存，提高性能，避免每个client存一份；
  # private表示每个client私有的，每个client缓存一份；
- add_header Cache-Control "public"; 
+ add_header Cache-Control "public";
 }
 
 ```
@@ -780,3 +780,5 @@ location ~* \.(css|js)$ {
 
 
 [Nginx VS Apache]:https://blog.csdn.net/liutengteng130/article/details/46700939 "搜索-‘Nginx VSApache’ "
+[正则表达式-捕获组]:https://blog.csdn.net/lxcnn/article/details/4146148
+[.NET正则基础之——平衡组]:https://blog.csdn.net/lxcnn/article/details/4402808

@@ -5,7 +5,7 @@
 
 * `reference`类型表示一个对象的`引用`，可以想象成指向对象的`指针`；
 
-  * `reference`和`int`、`long`、`float`、`double`等基本类型是一个层次的；前者是具体的数据类型，后者是某种数据类型的统称；（*书本P5*）
+  * `reference`和`int`、`long`、`float`、`double`等基本类型是一个层次的；后者是具体的数据类型，前者是某种数据类型的统称；（*书本P5*）
 
 * jvm数据类型分为`原始类型`和`引用类型`
 
@@ -35,6 +35,8 @@
   * `单精度浮点数集合` < `单精度扩展指数集合` < `双精度浮点集合` < `双精度扩展指数集合`
 
   参考[IEEE浮点标准详解][]，
+  > 扩展：关于2进制可以表示的十进制数的长度
+  > `扩展双精度类型有64位有效位，因此有效数字是0.301×64=19.2，即扩展双精度类型有19~20位有效数字`
 
 * `NaN`与任何数进行比较和等值操作都会返回`false`，包括`NaN`自己，eg：NaN == NaN  --`false`
 
@@ -72,7 +74,7 @@
 ### 2.2 Java虚拟机栈
 
 * 每个线程一个Java虚拟机栈（Java栈），和传统栈功能一样，用于保存局部变量和一些计算中间量；
-* 除了栈帧出栈和入栈之外，虚拟机栈不会再受其他因素影响，所以可以栈帧可以在堆中分配；
+* 除了栈帧出栈和入栈之外，虚拟机栈不会再受其他因素影响，所以栈帧可以在堆中分配；
 * 虚拟机栈所使用的内存不必保证连续；
 * Java栈可以设计为固定长度，也可以动态扩展和收缩；虚拟机的实现应该提供给使用者调节Java栈的手段；
 * 创建栈相关异常
@@ -96,9 +98,9 @@ jvm有2种运行模式：server和client  [传送门1](https://blog.csdn.net/zhu
 
 
 
-## 其他
+## 扩展
 
-* `class`文件中有一些`惯例`，比如：`字节序`的选用，这样做事为了统一某些操作，如此才能更好地做到`平台无关性`；
+* `class`文件中有一些`惯例`，比如：`字节序`的选用，这样做是为了统一某些操作，如此才能更好地做到`平台无关性`；
 * `堆`的唯一目的：保存`对象`实例；（是`GC`回收的主要操作目标）
 * 线程共享的`堆`中可能划分出多个线程`私有的缓冲区`（Thread Local Allocation Buffer - **TLAB**）
 * Java`堆`在内存中物理地址可以不连续，逻辑地址连续即可；
@@ -111,7 +113,7 @@ jvm有2种运行模式：server和client  [传送门1](https://blog.csdn.net/zhu
 ### Q&A
 1. 对象一定保存在堆中吗？
 Ans: NO!  
-Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
+Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量（相对：聚合量）替换`)
 参考：[对象并不一定都是在堆上分配内存的][]、[Java中的逃逸分析][]
 2. `永久代`是jvm规范中的吗？
    Ans: No! 只是HotSpot的特例；
@@ -147,6 +149,7 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
 ### 其他
 ##### 优秀博客/文章
 [JVM参数类型][] / [JVM调优工具之jps][] / [jvm 性能调优工具之jstat][] / [jstat详解][] / [jvm指针压缩][] / [jdk8 Metaspace 调优][] / [Java 8: 从永久代（PermGen）到元空间（Metaspace）][] / [深入解析String#intern][] / [Java Hotspot G1 GC的一些关键技术][] / [Java 垃圾回收算法之G1][]  / [JAVA Launcher简析][]
+[关于虚拟机栈中的局部变量表的slot][] / [java对象在内存中的结构（HotSpot虚拟机）][] / [解密新一代 Java JIT 编译器 Graal] / [一个字符到底占几个字节]
 
 ##### 调试工具
 [Java命令学习系列（一）——Jps][]
@@ -182,3 +185,7 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量替换`)
 [Why HouseMD]:https://my.oschina.net/zhongl/blog/62291
 [HouseMD-UserGuideCN]:https://github.com/CSUG/HouseMD/wiki/UserGuideCN
 [JAVA Launcher简析]:https://www.javatt.com/p/5272
+[关于虚拟机栈中的局部变量表的slot]:https://hllvm-group.iteye.com/group/topic/38400
+[java对象在内存中的结构（HotSpot虚拟机）]:https://www.cnblogs.com/duanxz/p/4967042.html '锁标识位、重量级锁'
+[解密新一代 Java JIT 编译器 Graal]:https://www.infoq.cn/article/Graal-Java-JIT-Compiler
+[一个字符到底占几个字节]:https://www.jianshu.com/p/ad4bff4d9fa3 "一个字符到底占几个字节"

@@ -106,6 +106,12 @@ TODO
 
 ## 遗留疑问
 1. Hash类型的value的属性数量较少时，编码类型是zipmap，这个zipmap具体内部原理是啥？
+2. HyperLog
+[走近源码：神奇的HyperLogLog]
+3. GeoHash
+GeoHash貌似有点问题呀
+4. Stream
+
 
 ## 参考
 [redis原理详解](https://blog.51cto.com/gudaoqing/1601114 "文章中的应用场景示例比较不错")
@@ -120,8 +126,16 @@ TODO
 [勿用redis的多库](http://blog.kankanan.com/article/52ff7528-redis-7684591a5e93.html)
 [主从复制](https://www.cnblogs.com/kismetv/p/9236731.html)
 [Redis 的多线程版本(keyDB)比 Redis 本身要快 5 倍](https://zhuanlan.zhihu.com/p/85884427)
-
-
+[rehash实现](http://redisbook.com/preview/dict/incremental_rehashing.html)
+[Redis基本数据类型]
+[Redis内部数据结构详解(1)——dict]
+[Redis内部数据结构详解(7)——intset]
+[Redis持久化磁盘IO方式及其带来的问题]
+[选择合适Redis数据结构，减少80%的内存占用]
+[Redis内部数据结构详解(5)——quicklist]
+[关闭持久化时，复制的安全性]
+[Redis踩坑1]
+[Redis数据结构（汇总）]
 
 
 
@@ -131,3 +145,14 @@ TODO
 
 [databases1]:http://blog.kankanan.com/article/52ff7528-redis-7684591a5e93.html
 [backlog1]:https://blog.csdn.net/varyall/article/details/79681562
+[走近源码：神奇的HyperLogLog]:https://zhuanlan.zhihu.com/p/58519480 "待研究"
+[Redis基本数据类型]:https://www.jianshu.com/p/f09480c05e42
+[Redis内部数据结构详解(1)——dict]:http://zhangtielei.com/posts/blog-redis-dict.html "这里的dict其他地方也叫ht"
+[Redis内部数据结构详解(7)——intset]:http://zhangtielei.com/posts/blog-redis-intset.html
+[Redis持久化磁盘IO方式及其带来的问题]:https://www.jianshu.com/p/501c6c8421f4
+[选择合适Redis数据结构，减少80%的内存占用]:https://zhuanlan.zhihu.com/p/98033960 "注意最后一个Hash改造案例"
+[Redis内部数据结构详解(5)——quicklist]:http://zhangtielei.com/posts/blog-redis-quicklist.html
+[关闭持久化时，复制的安全性]:https://juejin.im/post/5d80ac83e51d45620821cf87 "关闭持久化同时又配置了自动重启---非常危险"
+[Redis 集群实现原理探讨]:https://juejin.im/entry/593a498aac502e006ccd6656
+[Redis踩坑1]:http://www.ltang.me/2019/07/02/redis-cluster-problems/
+[Redis数据结构（汇总）]:https://changui.top/2019/02/18/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E6%B1%87%E6%80%BB%EF%BC%89/

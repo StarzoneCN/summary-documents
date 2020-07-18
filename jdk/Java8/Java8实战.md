@@ -507,6 +507,10 @@ List<Integer> result =
      .collect(toList());
 ```
 
+### 3.14 性能
+`StreamApi`貌似对`Graal编译器`并不友好：
+> Inlining 被业内戏称为优化之母，其原因在于它能引发更多优化。然而在实践中我们往往受制于编译单元大小或编译时间的限制，无法无限制地递归 inline。因此，inlining 的算法及策略很大程度上决定了编译器的优劣，尤其是在使用 Java 8 的 stream API 或使用 Scala 语言的场景下。这两种场景对应的 Java bytecode 包含大量的多层单方法调用。
+
 ## 4. Fork/Join 框架
 
 ### 4.0 原理

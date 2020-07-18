@@ -31,48 +31,15 @@ public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveT
     * **BlockingQueue + maximumPoolSize >= 最高突发任务数**
 
       当所需线程数大于BlockingQueue容量的时候，多出的无法进入队列的任务就会创建新线程来执行，如果maximumPoolSize设置为有限值（如：maximumPoolSize=8），那么，当无法进入队列的任务数超过8（maximumPoolSize）时，就会抛出异常，所以，始终要保证: *BlockingQueue + maximumPoolSize >= 最高突发任务数*
+      **个人理解**：如果曾经corePoolSize执行过task，再添加N个task（假设N大于queue的长度，假设queue长度为Q），那么线程池会先填满queue（即添加Q个task到queue中），然后创建N-Q个线程去执行没有添加到queue中的task，假设remaining-thread（剩余可创建线程数，假设RT，corePoolSize ≤ RT ≤ maximumPoolSize）小于N-Q（即剩余的N-Q个任务有线程可执行），那么线程池就会报错RejectedExecutionException，线程池不会利用已经存在的线程（即使你认为这些线程中的task已经执行完成）
+      > **补充**：当添加的task数量大于Q之后，需要注意`BlockingQueue`的特性(`BlockingQueue.put`执行后，被`BlockingQueue.take`阻塞的`线程`不能够立马获取到element<队列元素>，element从放入队列到被取出队列，中间有时间间隔，一般间隔长度是jvm命令执行时间的量级`ns纳秒`， 上面的问题就在于此)，最好保证队列的`head`元素与即将插入的元素之间`有一定的时间间隔`，比如：
+      > ```java
+      >   fixedThreadPool.submit(newRunnable());
+      >   // 添加一个时间间隔，保证之前的element被及时取走，留下空位给即将插入的element
+      >   Thread.sleep(1);
+      >   fixedThreadPool.submit(newRunnable());
+      >```
 
-      * 特殊情况（corePoolSize=0）时，需要满足**BlockingQueue + maximumPoolSize -1 >= 最高突发任务数**，否则抛出异常；但是，这种特殊情况对**CachedThreadPool**又没有影响；（不知道为啥)
-
-        示例代码：
-
-        ```java
-            @Test
-            public void test() throws InterruptedException {
-                ExecutorService es = new ThreadPoolExecutor(1, 2, 60L,
-                        TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-                es.submit(runnable);
-                es.submit(runnable);
-                Thread.sleep(4000);
-            }
-
-            @Test
-            public void testLinked() throws InterruptedException {
-                ExecutorService es = new ThreadPoolExecutor(1, 2, 60L,
-                        TimeUnit.SECONDS, new LinkedBlockingQueue<>(1));
-                es.submit(runnable);
-                es.submit(runnable);
-                Thread.sleep(4000);
-            }
-
-            private Runnable runnable = () -> {
-                System.out.println("开始线程" + Thread.currentThread().getId());
-                try {
-                    Thread.sleep(3000);
-                    System.out.println("执行线程" +
-                                       Thread.currentThread().getId());
-                } catch (InterruptedException e) {
-                }
-                System.out.println("完成线程" + Thread.currentThread().getId());
-            };
-        ```
-根据上面代码`testLinked`方法总结(c-`corePoolSize`, m-`maximumPoolSize`, B-`BlockingQueue`, actual-`实际task(runnable)数量`)：
-|四者关系|运行结果|
-| :--: | :--: |
-| actual < B  | 直接创建c个线程，多线程执行queue中任务  |
-| B < actual <= B+c  | 直接创建c个线程，多线程执行queue中任务  |
-| B+c < actual <= B+m   | 直接创建`actual-B`个线程，多线程执行queue中任务 |
-| actual > B+m | 报错  |
 
 
 ### 1.2 CachedThreadPool
@@ -116,13 +83,26 @@ public static ExecutorService newCachedThreadPool() {
   `newSingleThreadScheduledExecutor`
 ### 1.5 newWorkStealingPool()
 
-  作用：貌似是尽可能地利用所有处理器，生成一个线程池；
+  作用：貌似是尽可能地利用所有处理器，生成一个线程池；[参考](https://cloud.tencent.com/developer/article/1362826)
 
 #### 1.5.1 newWorkStealingPool(int parallelism)
 作用：最大线程数为`parallelism`，即使`parallelism`大于/小于处理器核心数量；
 
 ## 2. 原理与概念
 
-* > 在刚刚创建ThreadPoolExecutor的时候，线程并不会立即启动，而是要等到有任务提交时才会启动，除非调用了`prestartCoreThread-启动一个coreThread`/`prestartAllCoreThreads-启动所有coreThread`事先启动核心线程
+* 在刚刚创建ThreadPoolExecutor的时候，线程并不会立即启动，而是要等到有任务提交时才会启动，除非调用了`prestartCoreThread-启动一个coreThread`/`prestartAllCoreThreads-启动所有coreThread`事先启动核心线程
 
 * `largestPoolSize` - 该变量记录了线程池在整个生命周期中`曾经`出现的最大线程个数
+
+
+## 3. 遗留问题
+* corePoolSize是如何维持的？
+  **已解决**：`Worker.runWorker`中的`getTask`（Jdk8-ThreadPoolExecutor-1127行）方法中`BlockingQueue`进行阻塞，以达到保持corePool线程的目的；
+
+
+## 4. 链接
+[多线程异常处理] | [AIO详解]
+
+
+[多线程异常处理]:https://juejin.im/post/5d27c3e6518825451f65ee15
+[AIO详解]:https://segmentfault.com/a/1190000020364149
