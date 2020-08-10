@@ -140,6 +140,8 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量（相对：聚合�
 6. OopMap与Gc
    参考：[我爱学Java之JVM中的OopMap][]
 
+7. > 当我们使用Server模式下的ParallelGC收集器组合（Parallel Scavenge+Serial Old的组合）下，担保机制的实现和之前的Client模式下（SerialGC收集器组合）有所变化。在GC前还会进行一次判断，如果要分配的内存>=Eden区大小的一半，那么会直接把要分配的内存放入老年代中。否则才会进入担保机制。[参考](https://cloud.tencent.com/developer/article/1082730)
+
 
 
 ### 说明
@@ -149,7 +151,7 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量（相对：聚合�
 ### 其他
 ##### 优秀博客/文章
 [JVM参数类型][] / [JVM调优工具之jps][] / [jvm 性能调优工具之jstat][] / [jstat详解][] / [jvm指针压缩][] / [jdk8 Metaspace 调优][] / [Java 8: 从永久代（PermGen）到元空间（Metaspace）][] / [深入解析String#intern][] / [Java Hotspot G1 GC的一些关键技术][] / [Java 垃圾回收算法之G1][]  / [JAVA Launcher简析][]
-[关于虚拟机栈中的局部变量表的slot][] / [java对象在内存中的结构（HotSpot虚拟机）][] / [解密新一代 Java JIT 编译器 Graal] / [一个字符到底占几个字节]
+[关于虚拟机栈中的局部变量表的slot][] / [java对象在内存中的结构（HotSpot虚拟机）][] / [解密新一代 Java JIT 编译器 Graal] / [一个字符到底占几个字节] / [深入剖析JVM：G1收集器+回收流程+推荐用例]
 
 ##### 调试工具
 [Java命令学习系列（一）——Jps][]
@@ -189,3 +191,4 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量（相对：聚合�
 [java对象在内存中的结构（HotSpot虚拟机）]:https://www.cnblogs.com/duanxz/p/4967042.html '锁标识位、重量级锁'
 [解密新一代 Java JIT 编译器 Graal]:https://www.infoq.cn/article/Graal-Java-JIT-Compiler
 [一个字符到底占几个字节]:https://www.jianshu.com/p/ad4bff4d9fa3 "一个字符到底占几个字节"
+[深入剖析JVM：G1收集器+回收流程+推荐用例]:https://zhuanlan.zhihu.com/p/59861022

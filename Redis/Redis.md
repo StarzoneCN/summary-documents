@@ -103,6 +103,8 @@ save 60 10000
 TODO
 1. `redis.conf`配置文件还有很多配置模块（`SNAPSHOTTING`、`REPLICATION`、`SECURITY`、`APPEND ONLY MODE`、`REDIS CLUSTER`、`SLOW LOG`、`LATENCY MONITOR`、`EVENT NOTIFICATION`、`ADVANCED CONFIG`），太多了，以后再搞吧！
 2. redis可以通过Lua脚本实现原子性；
+3. 可以了解一下[client-side-caching](https://redis.io/topics/client-side-caching)，可能对解决热点key问题有所帮助
+4. [聊聊Linux IO]
 
 ## 遗留疑问
 1. Hash类型的value的属性数量较少时，编码类型是zipmap，这个zipmap具体内部原理是啥？
@@ -114,28 +116,39 @@ GeoHash貌似有点问题呀
 
 
 ## 参考
-[redis原理详解](https://blog.51cto.com/gudaoqing/1601114 "文章中的应用场景示例比较不错")
-[redis为何采用单线程？](https://zhuanlan.zhihu.com/p/58038188)
-[LFU淘汰策略](https://zhuanlan.zhihu.com/p/44651811)
-[LFU淘汰策略2](https://yq.aliyun.com/articles/278922 '有介绍衰减算法')
-[Redis持久化磁盘IO方式及其带来的问题](https://blog.51cto.com/gudaoqing/1601114)
-[AOF重写](https://blog.csdn.net/hezhiqiang1314/article/details/69396887)
-[redis分区](http://blog.jobbole.com/102194/)
-[redis分区算法 - Consistent Hashing](http://blog.jobbole.com/101226/)
-[redis“命名空间”](https://www.cnblogs.com/EasonJim/p/7818004.html)
-[勿用redis的多库](http://blog.kankanan.com/article/52ff7528-redis-7684591a5e93.html)
-[主从复制](https://www.cnblogs.com/kismetv/p/9236731.html)
-[Redis 的多线程版本(keyDB)比 Redis 本身要快 5 倍](https://zhuanlan.zhihu.com/p/85884427)
-[rehash实现](http://redisbook.com/preview/dict/incremental_rehashing.html)
-[Redis基本数据类型]
-[Redis内部数据结构详解(1)——dict]
-[Redis内部数据结构详解(7)——intset]
-[Redis持久化磁盘IO方式及其带来的问题]
-[选择合适Redis数据结构，减少80%的内存占用]
-[Redis内部数据结构详解(5)——quicklist]
-[关闭持久化时，复制的安全性]
-[Redis踩坑1]
-[Redis数据结构（汇总）]
+[redis原理详解](https://blog.51cto.com/gudaoqing/1601114 "文章中的应用场景示例比较不错") |
+[redis为何采用单线程？](https://zhuanlan.zhihu.com/p/58038188) |
+[LFU淘汰策略](https://zhuanlan.zhihu.com/p/44651811) |
+[Redis中的LFU算法-详细版] |
+[LFU淘汰策略2](https://yq.aliyun.com/articles/278922 '有介绍衰减算法') |
+[Redis持久化磁盘IO方式及其带来的问题](https://blog.51cto.com/gudaoqing/1601114) |
+[AOF重写](https://blog.csdn.net/hezhiqiang1314/article/details/69396887) |
+[勿用redis的多库](http://blog.kankanan.com/article/52ff7528-redis-7684591a5e93.html) |
+[Redis 的多线程版本(keyDB)比 Redis 本身要快 5 倍](https://zhuanlan.zhihu.com/p/85884427) |
+[rehash实现](http://redisbook.com/preview/dict/incremental_rehashing.html) |
+[Redis基本数据类型] |
+[Redis内部数据结构详解(1)——dict] |
+[Redis内部数据结构详解(7)——intset] |
+[Redis持久化磁盘IO方式及其带来的问题] |
+[选择合适Redis数据结构，减少80%的内存占用] |
+[Redis内部数据结构详解(5)——quicklist] |
+[关闭持久化时，复制的安全性] |
+[Redis踩坑1] |
+[Redis数据结构（汇总）] |
+[Redis的内存淘汰策略] |
+[Redis热点Key发现及常见解决方案] |
+[如何快速定位 Redis 热 key] |
+[redis数据库结构] |
+[embstr为何是39或44] |
+[redis数据结构(二) - 字符串] |
+[Redis 中的数据持久化策略（AOF）] |
+[Redis数据持久化之RDB-AOF混合方式] |
+[主从复制] |
+[Redis 集群实现原理探讨]
+
+<br/>
+
+> 如果master节点写并发很高，复制挤压缓冲区又设置的比较小的话，可能会每次向slave同步完数据以后，每次复制挤压缓冲区都会溢出，造成主从之间循环的全量复制。这确实是应该规避的问题！ [参考][主从复制]
 
 
 
@@ -156,3 +169,14 @@ GeoHash貌似有点问题呀
 [Redis 集群实现原理探讨]:https://juejin.im/entry/593a498aac502e006ccd6656
 [Redis踩坑1]:http://www.ltang.me/2019/07/02/redis-cluster-problems/
 [Redis数据结构（汇总）]:https://changui.top/2019/02/18/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E6%B1%87%E6%80%BB%EF%BC%89/
+[Redis的内存淘汰策略]:https://juejin.im/post/5d674ac2e51d4557ca7fdd70
+[Redis热点Key发现及常见解决方案]:https://zhuanlan.zhihu.com/p/50668153
+[如何快速定位 Redis 热 key]:https://www.infoq.cn/article/3L3zAQ4H8xpNoM2glSyi
+[redis数据库结构]:https://www.jianshu.com/p/60e0496c3711
+[embstr为何是39或44]:https://www.zhihu.com/question/25624589
+[redis数据结构(二) - 字符串]:https://segmentfault.com/a/1190000021486242
+[Redis 中的数据持久化策略（AOF）]:https://cloud.tencent.com/developer/article/1585302
+[Redis数据持久化之RDB-AOF混合方式]:https://www.codenong.com/js446b12e4740f/
+[主从复制]:https://juejin.im/post/6844904098773352455
+[Redis中的LFU算法-详细版]:https://www.cnblogs.com/linxiyue/p/10955533.html
+[聊聊Linux IO]:https://zhuanlan.zhihu.com/p/71149410 "更像C开发"

@@ -779,6 +779,14 @@ location ~* \.(css|js)$ {
 
 
 
+
+## 2. 博客
+[SLB技术原理浅析]
+
+
+
 [Nginx VS Apache]:https://blog.csdn.net/liutengteng130/article/details/46700939 "搜索-‘Nginx VSApache’ "
 [正则表达式-捕获组]:https://blog.csdn.net/lxcnn/article/details/4146148
 [.NET正则基础之——平衡组]:https://blog.csdn.net/lxcnn/article/details/4402808
+[Nginx 高可用集群解决方案 Nginx + Keepalived]:https://zhuanlan.zhihu.com/p/108577218
+[SLB技术原理浅析]:https://developer.aliyun.com/article/1803

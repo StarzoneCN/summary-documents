@@ -3,6 +3,9 @@
 
 ## 优化点
 1. [关于对MySQL的SQL_NO_CACHE的理解和用法举例]
+2. utf8mb4中的`mb4`表示**max byte 4**，即最大4个字节；
+3. utf8mb4_\*\*\_ci中的ci表示**case ignore**，即大小写不敏感；
+   utf8mb4_\*\*\_cs中的cs表示**case sensitive**，即大小写敏感；
 
 ## 优秀博文
 [Innodb中的事务隔离级别和锁的关系][] | [何为幻读？][] | [更多关于ORDER BY][Mysql应用之类似Oracle null first/last用法]
@@ -10,7 +13,7 @@
 ```
 select * from A order by IF(ISNULL(a),1,0),a desc
 ```
-[行级锁、表级锁、索引锁] | [MySQL的锁机制 - 记录锁、间隙锁、临键锁] | [全面了解mysql锁机制（InnoDB）与问题排查] | [SSD基本原理]
+[行级锁、表级锁、索引锁] | [MySQL的锁机制 - 记录锁、间隙锁、临键锁] | [全面了解mysql锁机制（InnoDB）与问题排查] | [SSD基本原理] | [聊聊MVCC和Next-key Locks] | [数据库MVCC如何解决可重复读问题？]
 
 
 
@@ -23,3 +26,5 @@ select * from A order by IF(ISNULL(a),1,0),a desc
 [全面了解mysql锁机制（InnoDB）与问题排查]:https://juejin.im/post/5b82e0196fb9a019f47d1823
 [SSD基本原理]:http://oserror.com/backend/ssd-principle/
 [关于对MySQL的SQL_NO_CACHE的理解和用法举例]:https://blog.csdn.net/csd753111111/article/details/100428394?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase
+[聊聊MVCC和Next-key Locks]:https://juejin.im/post/5cd8283ae51d453a907b4b29
+[数据库MVCC如何解决可重复读问题？]:https://www.zhihu.com/question/333421386
