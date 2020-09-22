@@ -40,3 +40,6 @@
 * RequiredAnnotationBeanPostProcessor
 
 这些后处理器的作用就是处理对应注解的bean；
+
+
+[关于Spring事务传播机制-NESTED]:https://zhuanlan.zhihu.com/p/148504094

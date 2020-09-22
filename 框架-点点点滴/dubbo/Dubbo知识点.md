@@ -13,6 +13,10 @@
     **尝试方案**：暂无
     **暂时参考**：[一次生产问题的排查][]
 
+### 博文
+[既然有 HTTP 请求，为什么还要用 RPC 调用？]
+
 
 [crashDownIssueDemo]:https://github.com/wuqke/crashDownIssueDemo
 [一次生产问题的排查]:https://www.twblogs.net/a/5cfed077bd9eee14029f43a4/zh-cn
+[既然有 HTTP 请求，为什么还要用 RPC 调用？]:https://www.zhihu.com/question/41609070

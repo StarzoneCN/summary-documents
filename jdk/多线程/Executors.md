@@ -101,8 +101,10 @@ public static ExecutorService newCachedThreadPool() {
 
 
 ## 4. 链接
-[多线程异常处理] | [AIO详解]
+[多线程异常处理] | [AIO详解] | [Java并发控制：ReentrantLock Condition使用详解] | [ThreadLocal]
 
 
 [多线程异常处理]:https://juejin.im/post/5d27c3e6518825451f65ee15
 [AIO详解]:https://segmentfault.com/a/1190000020364149
+[Java并发控制：ReentrantLock Condition使用详解]:https://www.cnblogs.com/hongdada/p/6150699.html
+[ThreadLocal]:https://developer.aliyun.com/article/772194
