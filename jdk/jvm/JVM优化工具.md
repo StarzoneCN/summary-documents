@@ -44,10 +44,12 @@ Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
 
 
 ### 更多
-[JVM 监控以及内存分析]
+[JVM 监控以及内存分析] | [jcmd] | [GC时间]
 
 
 
 
 [Code Tools: jol]:https://openjdk.java.net/projects/code-tools/jol/
 [JVM 监控以及内存分析]:https://windmt.com/2016/08/01/jvm-monitoring/
+[jcmd]:https://segmentfault.com/a/1190000022602330
+[GC时间]:https://juejin.im/post/6844904168121958413

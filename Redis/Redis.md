@@ -144,7 +144,10 @@ GeoHash貌似有点问题呀
 [Redis 中的数据持久化策略（AOF）] |
 [Redis数据持久化之RDB-AOF混合方式] |
 [主从复制] |
-[Redis 集群实现原理探讨]
+[Redis 集群实现原理探讨] |
+[关于Redlock应该注意的点] |
+[对SDSHDR5是否使用的疑问] |
+[hash一致性-hash环]
 
 <br/>
 
@@ -180,3 +183,6 @@ GeoHash貌似有点问题呀
 [主从复制]:https://juejin.im/post/6844904098773352455
 [Redis中的LFU算法-详细版]:https://www.cnblogs.com/linxiyue/p/10955533.html
 [聊聊Linux IO]:https://zhuanlan.zhihu.com/p/71149410 "更像C开发"
+[关于Redlock应该注意的点]:https://juejin.im/post/6844903465181773831
+[对SDSHDR5是否使用的疑问]:https://segmentfault.com/a/1190000017450295
+[hash一致性-hash环]:https://writings.sh/post/consistent-hashing-algorithms-part-2-consistent-hash-ring

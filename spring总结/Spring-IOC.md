@@ -127,10 +127,12 @@
 
 
 ### 更多
-参考：[Spring IOC 容器源码分析][]、[spring源码阅读4——BeanDefinition][]
+参考：[Spring IOC 容器源码分析]、[spring源码阅读4——BeanDefinition] 、[Spring依赖注入的三种方式（好的 坏的和丑的）]、[【Spring】浅谈spring为什么推荐使用构造器注入]
 
 
 [Spring IOC 容器源码分析]:https://javadoop.com/post/spring-ioc
 [SmartInitializingSingleton的作用和原理]:https://yq.aliyun.com/articles/704443
 [Spring BeanPostProcessor接口使用]:https://www.jianshu.com/p/e1c3c6e90e8a
 [spring源码阅读4——BeanDefinition]:https://www.jianshu.com/p/1d06f6342357
+[Spring依赖注入的三种方式（好的 坏的和丑的）]:https://blog.csdn.net/xindoo/article/details/86408810
+[【Spring】浅谈spring为什么推荐使用构造器注入]:https://www.cnblogs.com/joemsu/p/7688307.html

@@ -36,7 +36,7 @@
 ### 3.3 MappedByteBuffer
 
 直接缓冲区。物理内存中创建缓冲区，而不在堆中创建。
-
+> 使用 MappedByteBuffer类要注意的是：mmap的文件映射，在full gc时才会进行释放。当close时，需要手动清除内存映射文件，可以反射调用sun.misc.Cleaner方法。
 
 
 ### 3.4 子类性能
@@ -151,8 +151,10 @@ writableByteChannel.write(byteBuffer);
 
 * [Java NIO学习笔记之二-图解ByteBuffer](https://my.oschina.net/flashsword/blog/159613)
 * [ByteBuffer实现解析Direct vs Heapped性能比较](https://blog.csdn.net/chenxinl/article/details/7497197)
-* [DirectByteBuffer vs. HeapByteBuffer选择问题](http://gqm.iteye.com/blog/1936760) - 还没好好研究
 * [DirectByteBuffer更快吗？](https://my.oschina.net/astute/blog/93902)
+* [Java NIO中，关于DirectByteBuffer，HeapByteBuffer的疑问？]
+* [IO 基础——用户空间与内核空间] | [IO 基础——用户空间与内核空间2]
+* [Java为何需要DirectByteBuffer]
 
 
 
@@ -161,4 +163,7 @@ writableByteChannel.write(byteBuffer);
 
 
 
-
+[Java NIO中，关于DirectByteBuffer，HeapByteBuffer的疑问？]:https://www.zhihu.com/question/57374068
+[IO 基础——用户空间与内核空间]:https://xie.infoq.cn/article/8ade06535a85e49f196cf79c7
+[IO 基础——用户空间与内核空间2]:https://www.toutiao.com/i6851822729302114823/?group_id=6851822729302114823
+[Java为何需要DirectByteBuffer]:https://www.zhihu.com/question/60892134

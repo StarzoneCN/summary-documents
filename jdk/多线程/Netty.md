@@ -61,11 +61,7 @@
 
 ---
 ### 博客
-[用户指南\&文档] |
-[User guide for 4.x] |
-[浅谈NIO与零拷贝] |
-[netty性能优化] |
-[用Netty开发中间件：高并发性能优化]
+[用户指南\&文档] | [User guide for 4.x] | [浅谈NIO与零拷贝] | [netty性能优化] | [用Netty开发中间件：高并发性能优化] | [计算机组成 -- DMA] | [同步/异步/阻塞/非阻塞/BIO/NIO/AIO讲的最清楚的好文章] | [AIO示例] | [IO 基础——用户空间与内核空间] | [零拷贝原理] | [ByteBuf内存规格] | [内存规格] | [Netty堆外内存泄漏排查]
 
 
 
@@ -80,3 +76,11 @@
 [浅谈NIO与零拷贝]:https://juejin.im/post/6844903745340309517
 [netty性能优化]:https://www.jianshu.com/p/6a490f5f0702
 [用Netty开发中间件：高并发性能优化]:https://blog.csdn.net/dc_726/article/details/48978891
+[计算机组成 -- DMA]:http://zhongmingmao.me/2020/02/03/computer-organization-dma/
+[同步/异步/阻塞/非阻塞/BIO/NIO/AIO讲的最清楚的好文章]:https://juejin.im/post/6844903863510630408
+[AIO示例]:https://www.codenong.com/cs106131549/
+[IO 基础——用户空间与内核空间]:https://xie.infoq.cn/article/8ade06535a85e49f196cf79c7
+[零拷贝原理]:https://xie.infoq.cn/article/6812aff8e492886e4562f5c02
+[ByteBuf内存规格]:https://blog.csdn.net/qq_33347239/article/details/104270629?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param
+[Pooled内存规格]:https://juejin.im/post/6844904158772887559
+[Netty堆外内存泄漏排查]:https://juejin.im/post/6844904036672471048
