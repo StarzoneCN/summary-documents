@@ -151,7 +151,7 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量（相对：聚合�
 ### 其他
 ##### 优秀博客/文章
 [JVM参数类型][] / [JVM调优工具之jps][] / [jvm 性能调优工具之jstat][] / [jstat详解][] / [jvm指针压缩][] / [jdk8 Metaspace 调优][] / [Java 8: 从永久代（PermGen）到元空间（Metaspace）][] / [深入解析String#intern][] / [Java Hotspot G1 GC的一些关键技术][] / [Java 垃圾回收算法之G1][]  / [JAVA Launcher简析][]
-[关于虚拟机栈中的局部变量表的slot][] / [java对象在内存中的结构（HotSpot虚拟机）][] / [解密新一代 Java JIT 编译器 Graal] / [一个字符到底占几个字节] / [深入剖析JVM：G1收集器+回收流程+推荐用例] / [深入理解堆外内存 Metaspace] / [JVM参数MetaspaceSize的误解]
+[关于虚拟机栈中的局部变量表的slot][] / [java对象在内存中的结构（HotSpot虚拟机）][] / [解密新一代 Java JIT 编译器 Graal] / [一个字符到底占几个字节] / [深入剖析JVM：G1收集器+回收流程+推荐用例] / [深入理解堆外内存 Metaspace] / [JVM参数MetaspaceSize的误解] / [深入理解Major GC, Full GC, CMS]
 
 ##### 调试工具
 [Java命令学习系列（一）——Jps][]
@@ -194,3 +194,4 @@ Tip: `逃逸分析`(`栈上分配`、`同步消除`、`标量（相对：聚合�
 [深入剖析JVM：G1收集器+回收流程+推荐用例]:https://zhuanlan.zhihu.com/p/59861022
 [JVM参数MetaspaceSize的误解]:https://www.jianshu.com/p/b448c21d2e71
 [深入理解堆外内存 Metaspace]:https://www.javadoop.com/post/metaspace
+[深入理解Major GC, Full GC, CMS]:https://blog.csdn.net/hellozhxy/article/details/80649342
