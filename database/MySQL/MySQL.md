@@ -1,4 +1,4 @@
-# <div style="text-align:center;color:#FF9900">MariaDB</div>
+# <div style="text-align:center;color:#FF9900">MySQL</div>
 *对于加锁的处理，可以说就是数据库对于事务处理的精髓所在*
 
 ## 优化点
