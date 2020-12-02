@@ -40,6 +40,7 @@
 6. Gap（`间隙锁`）只在 RR 事务隔离级别存在。因为幻读问题是在 RR 事务通过临键锁和 MVCC 解决的，而临键锁=间隙锁+记录锁，所以间隙锁只在 RR 事务隔离级别存在。； *[MySQL InnoDB 锁]*
 7. innodb不支持FULLTEXT类型的全文索引，但是innodb可以使用sphinx插件支持全文索引，并且效果更好。（`sphinx`是一个开源软件，提供多种语言的API接口，可以优化mysql的各种查询）
 8. **清空表数据** 参考[TRUNCATE_TABLE](https://www.yiibai.com/mysql/truncate-table.html)；
+9. 一些字段和索引限制【[参考](https://my.oschina.net/u/3412738/blog/4765505)】
 
 ## 优秀博文
 [Innodb中的事务隔离级别和锁的关系][] | [何为幻读？][] | [更多关于ORDER BY][Mysql应用之类似Oracle null first/last用法]
