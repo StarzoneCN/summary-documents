@@ -13,17 +13,29 @@
 
 
 ### 2. 知识点
-* Producers可以`异步的`并行的向kafka发送消息，但是通常producer在发送完消息之后会得到一个future响应，返回的是offset值或者发送过程中遇到的错误。这其中有个非常重要的参数`acks`,这个参数决定了**producer要求leader partition 收到确认的副本个数**，如果`acks`设置数量为`0`，表示**producer不会等待broker的响应**，所以，producer无法知道消息是否发送成功，这样有可能会导致数据丢失，但同时，**acks值为0会得到最大的系统吞吐量**。若`acks`设置为`1`，表示producer会在leader partition收到消息时得到broker的一个确认，这样会有更好的可靠性，因为客户端会等待直到broker确认收到消息。若设置为`-1`，producer会在所有备份的partition收到消息时得到broker的确认，这个设置可以得到**最高的可靠性保证**。
-* Kafka 消息有一个`定长的header`和`变长的字节数组`组成；
-* Producer端可以通过`GZIP`或`Snappy`或`ZigZag(kafka-0.11.0+)`格式对消息集合进行压缩；
-* 采用`sendfile`/`zero-copy`；
-* 经验证，**顺序写磁盘效率比随机写内存还要高**，这是Kafka高吞吐率的一个很重要的保证;
+1. Producers可以`异步的`并行的向kafka发送消息，但是通常producer在发送完消息之后会得到一个future响应，返回的是offset值或者发送过程中遇到的错误。这其中有个非常重要的参数`acks`,这个参数决定了**producer要求leader partition 收到确认的副本个数**，如果`acks`设置数量为`0`，表示**producer不会等待broker的响应**，所以，producer无法知道消息是否发送成功，这样有可能会导致数据丢失，但同时，**acks值为0会得到最大的系统吞吐量**。若`acks`设置为`1`，表示producer会在leader partition收到消息时得到broker的一个确认，这样会有更好的可靠性，因为客户端会等待直到broker确认收到消息。若设置为`-1`，producer会在所有备份的partition收到消息时得到broker的确认，这个设置可以得到**最高的可靠性保证**。
+2. Kafka 消息有一个`定长的header`和`变长的字节数组`组成；
+3. Producer端可以通过`GZIP`或`Snappy`或`ZigZag(kafka-0.11.0+)`格式对消息集合进行压缩；
+4. 采用`sendfile`/`zero-copy`；
+5. 经验证，**顺序写磁盘效率比随机写内存还要高**，这是Kafka高吞吐率的一个很重要的保证;
+6. 【[参考](https://blog.csdn.net/qichangjian/article/details/88193766)】
+    * topic的分区（partiiton）策略 ：`轮询` OR `hash`；
+    * hash分区：如果增加分区，message不会进行重新分配；
+    * 每个 partiton 相当于是一个 子 queue
+    * 每个 partition 对应一个物理的目录，文件夹命名是 `[topicname][partition][序号]`
+    * partition数量可以动态调整；
+    * 每一个consumer组维护一个下标文件，叫做offset
+    * 不同组的consumer可以消费同一个topic的同一个分区的数据。
+    * 一个分区只能被一个消费者组中的一个成员消费；一个成员可以消费一个topic的多个分区
+    * 文件结构：(7)segment
+
+
 
 
 
 
 参考：
-[Kafka 设计与原理详解][]（推）、[kafka存储结构][]、[kafka持久化原理][]、[观察者模式与发布订阅模式微妙区别][]、[官方文档-英文][]、[一文看懂Kafka消息格式的演变][]（精）
+[Kafka 设计与原理详解][]（推） | [kafka存储结构][] | [kafka持久化原理][] | [观察者模式与发布订阅模式微妙区别][] | [官方文档-英文][] | [一文看懂Kafka消息格式的演变][]（精） | [Acks参数] | [kafka中的key有啥作用？]
 
 [Kafka 设计与原理详解]:https://blog.csdn.net/suifeng3051/article/details/48053965
 [kafka存储结构]:https://blog.csdn.net/yaolong336/article/details/80047701
@@ -31,3 +43,5 @@
 [观察者模式与发布订阅模式微妙区别]:https://juejin.im/post/5a14e9edf265da4312808d86
 [官方文档-英文]:http://kafka.apache.org/documentation.html#topic-config
 [一文看懂Kafka消息格式的演变]:https://blog.csdn.net/u013256816/article/details/80300225
+[Acks参数]:https://developer.51cto.com/art/201904/595538.htm
+[kafka中的key有啥作用？]:https://www.jianshu.com/p/769814211a81

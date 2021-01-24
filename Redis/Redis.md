@@ -97,14 +97,20 @@ save 60 10000
 ### 2.3 数据类型
 #### 2.3.1 Set
 * set类型会根据score进行排序，如果score相同，会进行字典排序；
-
-
 ##### 更多
 TODO
 1. `redis.conf`配置文件还有很多配置模块（`SNAPSHOTTING`、`REPLICATION`、`SECURITY`、`APPEND ONLY MODE`、`REDIS CLUSTER`、`SLOW LOG`、`LATENCY MONITOR`、`EVENT NOTIFICATION`、`ADVANCED CONFIG`），太多了，以后再搞吧！
 2. redis可以通过Lua脚本实现原子性；
 3. 可以了解一下[client-side-caching](https://redis.io/topics/client-side-caching)，可能对解决热点key问题有所帮助
 4. [聊聊Linux IO]
+
+## 3. 知识碎片
+> 在RDB中是以快照的形式获取内存中某一时间点的数据副本，在创建RDB文件的时候可以通过save和bgsave命令执行创建RDB文件。
+这两个命令都不会把过期的key保存到RDB文件中，这样也能达到删除过期key的效果。
+当在启动Redis载入RDB文件的时候，Master不会把过期的key载入，而Slave会把过期的key载入。
+在AOF模式下，Redis提供了Rewite的优化措施，执行的命令分别是REWRITEAOF和BGREWRITEAOF，这两个命令都不会把过期的key写入到AOF文件中，也能删除过期key。
+
+
 
 ## 遗留疑问
 1. Hash类型的value的属性数量较少时，编码类型是zipmap，这个zipmap具体内部原理是啥？
@@ -147,7 +153,11 @@ GeoHash貌似有点问题呀
 [Redis 集群实现原理探讨] |
 [关于Redlock应该注意的点] |
 [对SDSHDR5是否使用的疑问] |
-[hash一致性-hash环]
+[hash一致性-hash环] |
+[哨兵模式选举机制] |
+[Redis 6.0 新特性-多线程连环13问！] |
+[为什么 Redis 快照使用子进程] |
+[Redis 布隆过滤器实战「缓存击穿、雪崩效应」]
 
 <br/>
 
@@ -186,3 +196,7 @@ GeoHash貌似有点问题呀
 [关于Redlock应该注意的点]:https://juejin.im/post/6844903465181773831
 [对SDSHDR5是否使用的疑问]:https://segmentfault.com/a/1190000017450295
 [hash一致性-hash环]:https://writings.sh/post/consistent-hashing-algorithms-part-2-consistent-hash-ring
+[哨兵模式选举机制]:https://clawhub.club/posts/2019/10/16/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3Redis/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3Redis%E3%80%90%E5%8D%81%E4%BA%94%E3%80%91%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%E4%B8%8E%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95/#哨兵选举机制
+[Redis 6.0 新特性-多线程连环13问！]:https://mp.weixin.qq.com/s/FZu3acwK6zrCBZQ_3HoUgw
+[为什么 Redis 快照使用子进程]:https://draveness.me/whys-the-design-redis-bgsave-fork/
+[Redis 布隆过滤器实战「缓存击穿、雪崩效应」]:https://juejin.im/post/6844903801908887566 '了解“计数过滤器”'

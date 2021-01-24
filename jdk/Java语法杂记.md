@@ -99,3 +99,40 @@ public <T> T genericMethod(Class<T> tClass)throws InstantiationException ,
 ```
 
 **注**：没有声明\<T>的方法不是泛型方法；
+
+
+***
+1. `Queue`的`add/remove/element`和`offer/poll/peek`有点区别（当操作到达边界时是否抛出异常），但是不同的实现类又做了不同的处理，`PriorityQueue`；
+2. 一般`Queue`是不能插入`null`元素的，因为`null`是判断队列是否为empty的依据，但是也有例外，如：`LinkedList`（它的元素进行了封装，`java.util.LinkedList.Node`）；
+3. `BlockingQueue`是`Queue`的子接口，多出了`put/take`方法，会阻塞；
+4. 清空`BlockingQueue`的方法`drainTo()`；
+5. 对象头大小是2个字长或3个字长（数组，需要一个字长保存数据大小）；
+6. 锁升级：无 ——> 自旋  ——>  偏向锁 ——> 轻量级 ——> 重量级（自旋是发生在`偏向锁`的过程中【（[参考][深入分析Synchronized原理]）】）
+7. 自旋锁解决的问题：线程的阻塞和唤醒需要CPU从用户态转为核心态（[参考][深入分析Synchronized原理]）
+8. 自旋锁适用于锁保护的临界区很小的情况，临界区很小的话，锁占用的时间就很短（[参考][深入分析Synchronized原理]）
+9. 自旋等待不能替代阻塞，虽然它可以避免线程切换带来的开销，但是它占用了CPU处理器的时间。（[参考][深入分析Synchronized原理]）
+10. 如果并发数较大同时同步代码块执行时间较长，则被多个线程同时访问的概率就很大，就可以使用参数-XX:-UseBiasedLocking来禁止偏向锁（[参考][深入分析Synchronized原理]）
+11. 轻量级锁的加锁解锁操作是需要依赖多次CAS原子指令的，而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令；轻量级锁是为了在线程交替执行同步块时提高性能，而偏向锁则是在只有一个线程执行同步块时进一步提高性能。（[参考][深入分析Synchronized原理]）
+12. 本质上偏向锁就是为了消除CAS，降低Cache一致性流量（[参考][深入分析Synchronized原理]）
+13. 对于轻量级锁，其性能提升的依据是 “对于绝大部分的锁，在整个生命周期内都是不会存在竞争的”（[参考][深入分析Synchronized原理]）
+14. 轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，必然就会导致轻量级锁膨胀为重量级锁。（[参考][深入分析Synchronized原理]）
+15. 重量级锁的`重`在于重量级锁会使用到`底层操作系统级互斥锁Mutex`，会导致`用户态/内核态`之间的切换，这是个性能消耗大户；
+16. 锁升级过程[图](https://upload-images.jianshu.io/upload_images/2062729-61dfb07d48d8588c.png)
+17. 代码实现线程阻塞的方法：`LockSupport.park(Object)`；
+18. CLH锁也是一种基于链表的可扩展、高性能、公平的自旋锁，申请线程只在本地变量上自旋，它不断轮询前驱的状态，如果发现前驱释放了锁就结束自旋（[参考](https://coderbee.net/index.php/concurrent/20131115/577)），`AQS`也是基于CLH队列锁，只不过内部维护的队列是一个双向链表，链表节点是一个Node对象（[参考](https://zhuanlan.zhihu.com/p/50984817)）
+19. `HashTable`和`ConcurrentHashMap`的key和value都不能为null；
+20. `ConcurrentSkipListMap`的增序遍历（iterate）比逆序性能更好；（参见javadoc）
+21. 多线程协调，可使用`CountDownLatch`非常有用；还有`CyclicBarrier`（await方法是借助Condition实现的）；
+22. `ParallelScavenge`收集器会自动调整S0和S1的大小，所以，此收集器下，S0和S1大小不一定相等，如果想避免应用动态调整，可以参考`-XX:-UseAdaptiveSizePolicy`参数；
+23. 动态年龄判断机制，可以借助`-XX:+PrintTenuringDistribution`参数进行观察；
+24. 查看JVM实际参数，请[参考](https://www.cnblogs.com/cellei/p/12164708.html)
+25. CPU负载高时，代码位置定位步骤：
+    A. top命令找出负载高的`进程`；
+    B. `top -Hp 进程id`，找出进程里负载高的`线程`
+    C. 使用jstack打印出对应线程的栈信息；
+26. SpringBoot的配置文件优先级（[参考](https://blog.csdn.net/J080624/article/details/80508606)）
+27. SpringCloud开启自我保护时，假设A服务的部分节点由于网络异常触发自我保护，那么消费者还会调用异常的服务吗？还是只调用正常的服务？【<font color="red">待解决</font>】
+
+
+
+[深入分析Synchronized原理]:https://www.cnblogs.com/aspirant/p/11470858.html
